@@ -185,6 +185,7 @@ public partial class Handler {
         }
 
         RegisterRepos(services);
+        services.AddScoped<GoogleLocationService, GoogleLocationService>();
 
         switch(_swagger){
             case SwaggerOptions.JSON:
