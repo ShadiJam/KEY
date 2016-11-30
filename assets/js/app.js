@@ -5,19 +5,21 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location, NewAdventForm, NewAdvanceForm, NewEmployeeForm, NewSectionForm, NewCategoryForm, NewOptionForm , NewRootObjectForm, NewRegisterForm, LoginForm } from './components'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location, NewAdventForm, NewAdvanceForm, NewEmployeeForm, NewSectionForm, NewCategoryForm, NewOptionForm , NewRootObjectForm } from './components'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 
 console.log(Boot) // what hast thou provided?
 
 // Utility methods
 // --------------
-const log = (...a) => console.log(...a)
+// const log = (...a) => console.log(...a)
 
 const get = (url) =>
     fetch(url, {credentials: 'same-origin'})
-    .then(r => r.json())
-    .catch(e => log(e))
+    .then(r => {
+        return r.json()
+    })
+    .catch(e => console.log(e))
 
 const post = (url, data) => 
     fetch(url, { 
@@ -26,91 +28,78 @@ const post = (url, data) =>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
-    .catch(e => log(e))
-    .then(r => r.json())
+    .catch(e => console.log(e))
+    // .then(r => r.json())
 // ----------------
 
-
-
-
-class RegisterBox extends Component {
+class LoginForm extends React.Component {
     constructor(props){
         super(props)
         this.state = {}
-    }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        //forms by default will refresh the page
-        var formE1 = eventObject.target
-        window.form = formE1
-        var inputEmail = formE1.theEmail.value, 
-            inputPassword = formE1.thePassword.value
-        // the .value property on an input reveals what the user has entered for this input 
-        var promise = post('/account/register',{
-            email: inputEmail,
-            password: inputPassword
-        })
-        promise.then(
-            (resp) => log(resp),
-            (err) => log(err)
-        )
-    }
-    render() {
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
         }
-        return (
-            <div>
-                <form id="register-form" onSubmit={this._handleSubmit}>
-                    <NewRegisterForm />
-                </form>
-            </div>
-        )
-    }
-}
-
-class LoginBox extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        //forms by default will refresh the page
-        var formE2 = eventObject.target
-        window.form = formE2
-        var inputEmail = formE2.theEmail.value, 
-            inputPassword = formE2.thePassword.value
-        // the .value property on an input reveals what the user has entered for this input 
-        var promise = post('/account/login',{
-            email: inputEmail,
-            password: inputPassword
-        })
-        promise.then(
-            (resp) => log(resp),
-            (err) => log(err)
-        )
+    submit(e) {
+        e.preventDefault()
+        post('account/login', {
+            email: this.refs.email.value,
+            eassword: this.refs.password.value
+       }).catch(e => console.log(e))
     }
     render(){
-        var err
+        var err 
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                    {this.state.errors.map(x => <li>{x}</li>)}
                 </ul>
         }
-        return (
+        return <form onSubmit={e => this.submit(e)}>
+            <p>Please Log In</p>   
             <div>
-                <form id="login-form" onSubmit={this._handleSubmit}>
-                    <LoginForm />
-                </form>
+                <input name="Email" ref="email" type="EmailAddress" placeholder="user@email.com" required/>
+                <input name="Password" ref="password" type="DataType.Password" placeholder="Your Password"/>
             </div>
-        )
+            <div>
+                <a className="login-button" href="#/">
+                    <button type="submit">Log In</button>
+                </a>
+            </div>
+        </form>
     }
 }
 
+
+class RegisterForm extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {}
+        }
+    submit(e) {
+        e.preventDefault()
+        post('account/register',{
+            email: this.refs.email.value,
+            password: this.refs.password.value
+        }).catch(e => console.log(e))
+    }
+    render(){
+        var err 
+        if(this.state.errors){
+            err = <ul className="compose-errors">
+                    {this.state.errors.map(x => <li>{x}</li>)}
+                </ul>
+        }
+        return <form onSubmit={e => this.submit(e)}>
+            <p>Or Register</p>   
+            <div>
+                <input name="email" ref="email" type="EmailAddress" placeholder="user@email.com" required/>
+                <input name="password" ref="password" type="DataType.Password" placeholder="Your Password"/>
+            </div>
+            <div>
+                <a className="register-button" href="#/">
+                    <button type="submit">Register</button>
+                </a>
+            </div>
+        </form>
+    }
+}
 class Login extends Component {
     constructor(props){
         super(props)
@@ -126,7 +115,7 @@ class Login extends Component {
         return (
             <div className="login-stuff">
                 <LoginForm />
-                <NewRegisterForm />
+                <RegisterForm />
             </div>
         )
     }
@@ -152,8 +141,8 @@ class NewEmployee extends Component {
             Department: inputDepartment,
             Phone: inputPhone
         })
-        promise.then((resp) => log(resp),
-            (err) => log(err)
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
         )
     }
     render(){
@@ -188,7 +177,7 @@ class EmployeeView extends Component {
         get('/api/advent').then(advents => {
                 advents = advents.reverse()
                 this.setState({items: advents})
-            }).catch(e => log(e))
+            }).catch(e => console.log(e))
     }
     render(){
         return <div className="grid grid-3-600">
@@ -278,8 +267,8 @@ class NewAdvent extends Component {
             startDate: inputStartDate,
             endDate: inputEndDate
         })
-        promise.then((resp) => log(resp),
-            (err) => log(err)
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
         )
     }
     render(){
@@ -331,16 +320,19 @@ class NewAdvance extends Component {
         super(props)
         this.state = {}
     }
-    submit(e){
-        e.preventDefault()
-        post('/api/advance'+this.state.id, {
-            AdvanceName: this.refs.AdvanceName.value,
-            dueDate: this.refs.dueDate.value 
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+    _handleSubmit(eventObject) {
+        eventObject.preventDefault()
+        var formE5 = eventObject.target
+        window.form = formE5
+        var inputAdvanceName = formE5.theAdvanceName.value,
+            inputDueDate = formE5.theDueDate.value
+        var promise = post('api/advance',{
+            advanceName: inputAdvanceName,
+            dueDate: inputDueDate,
+        })
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
+        )
     }
     render(){
         var err
@@ -350,19 +342,22 @@ class NewAdvance extends Component {
                 </ul>
         }
 
-        return <div>
+        return <div className="new-advance-form">
                 <div>
                     {this.state.errors ? <p>There were errors with your Advance:</p> : null}
                     {err}
                 </div>
                 <div>
-                    <form className="new-advance-form" onSubmit={e => this.submit(e)}>
+                    <form onSubmit={e => this.submit(e)}>
                         <NewAdvanceForm />
                     </form>
                     <NewSection />
                     <NewCategory />
                     <NewOption />
                     <NewRootObject />
+                    <div>
+                        <button type="submit">Create</button>
+                    </div>
                 </div>
                 </div> 
     }
@@ -373,17 +368,19 @@ class NewSection extends Component {
         super(props)
         this.state = {}
     }
-    submit(e){
-        e.preventDefault()
-        post('/api/section'+this.state.id, {
-            SectionName: this.refs.SectionName.value,
-            SectionDescription: this.refs.SectionDescription.value, 
-            Cost: this.refs.Cost.value
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+    _handleSubmit(eventObject) {
+        eventObject.preventDefault()
+        var formE6 = eventObject.target
+        window.form = formE6
+        var inputSectionName = formE6.theSectionName.value,
+            inputSectionDescription = formE6.theSectionDescription.value
+        var promise = post('api/section',{
+            SectionName: inputSectionName,
+            SectionDescription: inputSectionDescription
+        })
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
+        )
     }
     render(){
         var err
@@ -412,15 +409,17 @@ class NewCategory extends Component {
         super(props)
         this.state = {}
     }
-    submit(e){
-        e.preventDefault()
-        post('/api/category'+this.state.id, {
-            CategoryName: this.refs.CategoryName.value,
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+    _handleSubmit(eventObject) {
+        eventObject.preventDefault()
+        var formE7 = eventObject.target
+        window.form = formE7
+        var inputCategoryName = formE7.theCategoryName.value
+        var promise = post('api/category',{
+            CategoryName: inputCategoryName
+        })
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
+        )
     }
     render(){
         var err
@@ -449,15 +448,17 @@ class NewOption extends Component {
         super(props)
         this.state = {}
     }
-    submit(e){
-        e.preventDefault()
-        post('/api/option'+this.state.id, {
-            OptionName: this.refs.OptionName.value,
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+    _handleSubmit(eventObject) {
+        eventObject.preventDefault()
+        var formE8 = eventObject.target
+        window.form = formE8
+        var inputOptionName = formE8.theOptionName.value
+        var promise = post('api/option', {
+            OptionName: inputOptionName
+        })
+        promise.then((resp) => console.log(resp),
+            (err) => console.log(err)
+        )
     }
     render(){
         var err
@@ -490,10 +491,17 @@ const Layout = ({children}) =>
             {children}
     </div>
 
+// const checkIsLoggedIn = () => 
+//     auth.isLoggedIn()
+//         .then(x => setPathToEmployeeView())
+//         .catch(x => setPathToHomePage())
+
 const reactApp = () => 
     render(
     <Layout>
         <Router history={hashHistory}>
+            <Route path="/" component={EmployeeView}/>
+
             <Route path="/Login" component={Login}/>
             <Route path="/status/:employeeId" component={EmployeeView}/>
             <Route path="/newEmployee" component={NewEmployee}/>
@@ -508,6 +516,7 @@ const reactApp = () =>
         </Router>
     </Layout>,
     document.querySelector('.app'))
+
 reactApp()
 
 // Flow types supported (for pseudo type-checking at runtime)

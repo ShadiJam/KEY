@@ -1,13 +1,3 @@
-// export const LoginForm = () => 
-//     <form className="navbar-form navbar-right">
-//         <div className="form-group">
-//             <input type="text" placeholder="Email" className="form-control" />
-//         </div>
-//         <div className="form-group">
-//             <input type="password" placeholder="Password" className="form-control" />
-//         </div>
-//         <button type="submit" className="btn btn-success">Sign in</button>
-//     </form>
 
 export const Nav = ({includeLogin}) => 
     <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -67,30 +57,6 @@ export const HomeContents = () =>
 
 
 export const Error = () => <div>Page Not Found</div>
-
-export const LoginForm = () =>
-        <div>
-            <p>Please Log In</p>   
-            <div>
-                <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
-                <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
-            </div>
-                <a className="login-button" href="#/">
-                    <button type="submit">Log In</button>
-                </a>
-        </div>
-
-export const NewRegisterForm = () =>
-    <div>
-        <p> Or Create an Account </p>
-        <div>
-            <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
-            <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
-        </div>
-            <a className="register-button" href="/newEmployee">
-                <button type="submit">Register</button>
-            </a>
-    </div>
 export const Employee = (employee) =>
     <div className="employee">
         <a href={`#/status/${employee.id}`}>
@@ -185,9 +151,6 @@ export const NewAdvanceForm = () =>
         </div>
         </div>  
             <hr/>
-            <div>
-                <button type="submit">Create</button>
-            </div>
         </div>
 
 export const NewEmployeeForm = () =>
@@ -205,7 +168,7 @@ export const NewEmployeeForm = () =>
 
 export const NewSectionForm = () =>
     <div>
-        <div>
+        <div className="new-section-form">
             <input name="theSectionName" ref="SectionName" type="text" placeholder="Name your section" required/>
             <input name="theSectionDescription" ref="SectionDescription" type="text" placeholder="Add a short description about this section - not required"/>
             <input name="theCost" ref="Cost" type="int" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."/>
@@ -217,7 +180,7 @@ export const NewSectionForm = () =>
 
 export const NewCategoryForm = () =>
     <div>
-        <div>
+        <div className="new-category-form">
             <input name="theCategoryName" ref="CategoryName" type="text" placeholder="Name your category" required/>
         </div>
             <div>
@@ -227,7 +190,7 @@ export const NewCategoryForm = () =>
           
 
 export const NewOptionForm = () =>
-    <div>
+    <div className="new-option-form">
         <div>
             <input name="theOptionName" ref="OptionName" type="text" placeholder="Name your first option" required/>
             <input name="theOptionName" ref="OptionName" type="text" placeholder="Include any additional options"/>
@@ -239,7 +202,7 @@ export const NewOptionForm = () =>
     </div>
           
 export const NewRootObjectForm = () =>
-    <div>
+    <div className="new-RO-form">
         <div>
             <input name="theAddress" ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
         </div>
@@ -247,6 +210,9 @@ export const NewRootObjectForm = () =>
                 <button type="submit">Add Location</button>
             </div>
     </div>
+
+
+
 
 
 // var DatePicker = require("react-bootstrap-date-picker");
