@@ -1,13 +1,13 @@
-export const LoginForm = () => 
-    <form className="navbar-form navbar-right">
-        <div className="form-group">
-            <input type="text" placeholder="Email" className="form-control" />
-        </div>
-        <div className="form-group">
-            <input type="password" placeholder="Password" className="form-control" />
-        </div>
-        <button type="submit" className="btn btn-success">Sign in</button>
-    </form>
+// export const LoginForm = () => 
+//     <form className="navbar-form navbar-right">
+//         <div className="form-group">
+//             <input type="text" placeholder="Email" className="form-control" />
+//         </div>
+//         <div className="form-group">
+//             <input type="password" placeholder="Password" className="form-control" />
+//         </div>
+//         <button type="submit" className="btn btn-success">Sign in</button>
+//     </form>
 
 export const Nav = ({includeLogin}) => 
     <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -68,6 +68,34 @@ export const HomeContents = () =>
 
 export const Error = () => <div>Page Not Found</div>
 
+export const LoginForm = () =>
+        <div>
+        <form id="login-form" onSubmit={this._handleSubmit}>
+                <p>Please Log In</p>   
+                <div>
+                    <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
+                    <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
+                </div>
+                    <a className="login-button" href="#/">
+                    <button type="submit">Log In</button>
+                    </a>
+            </form>
+        </div>
+
+export const NewRegisterForm = () =>
+    <div>
+    <form id="register-form" onSubmit={this._handleSubmit}>
+        
+                <p> Or Create an Account </p>
+                <div>
+                    <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
+                    <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
+                </div>
+                    <a className="register-button" href={`#/status/${employee.id}`}>
+                    <button type="submit">Register</button>
+                    </a>
+            </form> 
+        </div>
 export const Employee = (employee) =>
     <div className="employee">
         <a href={`#/status/${employee.id}`}>
@@ -82,6 +110,9 @@ export const Advent = (advent) =>
     <div className="advent">
     <a href={`#/status/${advent.id}`}>
         <h1>{this.props.advent.name}</h1>
+        <p>{this.props.advent.startDate}</p>
+        <p>{this.props.advent.endDate}</p>
+        <p>{this.props.advent.RootObject}</p>
     </a>
     </div>
 
@@ -97,40 +128,35 @@ export const Advance = (advance) =>
 
 export const Section = (section) =>
     <div className="section">
-        <a href={`#/status/${section.id}`}>
-            <h1>{this.props.section.SectionName}</h1>
-            <p>{this.props.section.SectionDescription}</p>
-            <p>{this.props.section.Cost}</p>
-            <p>{this.props.section.Category}</p>
-        </a>
+        <h1>{this.props.section.SectionName}</h1>
+        <p>{this.props.section.SectionDescription}</p>
+        <p>{this.props.section.RootObject}</p>
+        <p>{this.props.section.Cost}</p>
+        <p>{this.props.section.Category}</p>
     </div>
 
 export const Category = (category) =>
     <div className="category">
-        <a href={`#/status/${category.id}`}>
             <h1>{this.props.category.CategoryName}</h1>
             <p>{this.props.category.Options}</p>
-        </a>
     </div>
 
 export const Option = (option) =>
     <div className="option">
-        <a href={`#/status/${option.id}`}>
-            <h1>{this.props.option.OptionName}</h1>
-        </a>
+        <h1>{this.props.option.OptionName}</h1>
     </div>
 
 export const RootObject = (rootObject) =>
-    <div className="rootObject">
+        <div className="rootObject">
             <p>{this.props.rootObject.Results}</p>
-    </div>
+        </div>
 
 export const Result = (result) =>
-    <div>
+        <div>
             <p>{this.props.result.AdventId}</p>
             <p>{this.props.result.formatted_address}</p>
             <p>{this.props.result.Geometry}</p>
-    </div>
+        </div>
 
 export const Location = (location) =>
     <div>
@@ -144,18 +170,146 @@ export const Geometry = (geometry) =>
     </div>
 
 export const NewAdventForm = () =>
-        <form className="advent-form" onSubmit={e => this.submit(e)}>
+        <div>
+        <form className="new-advent-form" onSubmit={e => this.submit(e)}>
             <div>
                 <textarea ref="name" type="text" placeholder="Event Name" required></textarea>
                 <textarea ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required></textarea>
                 <textarea ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required></textarea>
             </div>
             <div>
-                <a href="/status/advent.Id">
+                <a href={`#/status/${advent.id}`}>
                     <button type="submit">Submit Event</button>
                 </a>
             </div>
         </form>
+        </div>
+    
+export const NewAdvanceForm = () =>
+    <div>
+    <form className="new-advance-form" onSubmit={e => this.submit(e)}>
+    <div className="advance-section-form">
+        <div>
+            <textarea ref="AdvanceName" type="text" placeholder="Advance Name - not required"></textarea>
+            <textarea ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"></textarea>
+        </div>
+        </div>  
+        </form>
+            <hr/>
+            <div>
+                <button type="submit">Create</button>
+            </div>
+        </div>
+
+export const NewEmployeeForm = () =>
+    <div>
+    <form className="new-employee-form" onSubmit={e => this.submit(e)}>
+        <div>
+            <textarea ref="FName" type="text" placeholder="First Name" required></textarea>
+            <textarea ref="LName" type="text" placeholder="Last Name" required></textarea>
+            <textarea ref="Department" type="text" placeholder="Department Name" required></textarea>
+            <textarea ref="Phone" type="Phone" placeholder="Phone including area code" required></textarea>
+            <textarea ref="Email" type="Email" placeholder="Email Address" required></textarea>
+        </div>
+            <div>
+                <a href={`#/status/${employee.id}`}>
+                    <button type="submit">Add Employee</button>
+                </a>
+            </div>
+        </form>
+    </div>
+
+export const NewSectionForm = () =>
+    <div>
+    <form className="new-section-form" onSubmit={e => this.submit(e)}>
+        <div>
+            <textarea ref="SectionName" type="text" placeholder="Name your section" required></textarea>
+            <textarea ref="SectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
+            <textarea ref="Cost" type="int" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."></textarea>
+        </div>
+            <div>
+                <button type="submit">Add Section</button>
+            </div>
+        </form>
+    </div>
+
+export const NewCategoryForm = () =>
+    <div>
+    <form className="new-category-form" onSubmit={e => this.submit(e)}>
+        <div>
+            <textarea ref="CategoryName" type="text" placeholder="Name your category" required></textarea>
+        </div>
+            <div>
+                <button type="submit">Add Category</button>
+            </div>
+        </form>
+    </div>
+          
+
+export const NewOptionForm = () =>
+    <div>
+    <form className="new-option-form" onSubmit={e => this.submit(e)}>
+        <div>
+            <textarea ref="OptionName" type="text" placeholder="Name your first option" required></textarea>
+            <textarea ref="OptionName" type="text" placeholder="Include any additional options" ></textarea>
+            <textarea ref="OptionName" type="text" placeholder="Include any additional options" required></textarea>
+        </div>
+            <div>
+                <button type="submit">Add Option</button>
+            </div>
+        </form>
+    </div>
+          
+export const NewRootObjectForm = () =>
+    <div>
+    <form className="new-root-object-form" onSubmit={e => this.submit(e)}>
+        <div>
+            <textarea ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required></textarea>
+        </div>
+            <div>
+                <button type="submit">Add Location</button>
+            </div>
+        </form>
+    </div>
 
 
+// var DatePicker = require("react-bootstrap-date-picker");
+ 
+// var App = React.createClass({
+//   getInitialState: function(){
+//     var value = new Date().toISOString();
+//     return {
+//       value: value
+
+// class Datepicker extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = { 
+//             value: new Date().toISOString() }
+//     }
+//     componenetDidMount(){
+//         get('/api/advent'+this.state.id).then(x => {
+//             this.setState({ item: x })
+//         })
+//     }
+//   handleChange(value, formattedValue) {
+//     this.setState({
+//       value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z" 
+//       formattedValue: formattedValue // Formatted String, ex: "11/19/2016" 
+//     });
+//   }
+//   componentDidUpdate(){
+//     // Access ISO String and formatted values from the DOM. 
+//     var hiddenInputElement = document.getElementById("example-datepicker");
+//     console.log(hiddenInputElement.value); // ISO String, ex: "2016-11-19T12:00:00.000Z" 
+//     console.log(hiddenInputElement.getAttribute('data-formattedvalue')) // Formatted String, ex: "11/19/2016" 
+//   }
+//   render(){
+//     return <FormGroup>
+//       <ControlLabel>Label</ControlLabel>
+//       <DatePicker id="example-datepicker" value={this.state.value} onChange={this.handleChange} />
+//       <HelpBlock>Help</HelpBlock>
+//     </FormGroup>;
+//   }
+// } 
        

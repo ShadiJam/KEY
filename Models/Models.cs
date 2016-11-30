@@ -58,6 +58,7 @@ public class Section : HasId {
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
     public double Cost { get; set; }
+    public IEnumerable<RootObject> ROs { get; set; } = new List<RootObject>();
     public IEnumerable<Category> Categories { get; set; }
     // create function that allows admin user to create section and include in a particular advance
 }

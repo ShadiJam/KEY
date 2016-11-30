@@ -25,7 +25,7 @@ public static class Seed
         var a1 = new Advance { AdvanceName = "ShadiTest1-Advance"};
         var a2 = new Advance { AdvanceName = "ShadiTest2-Advance"};
         var emp1 = new Employee { FName = "Shadi", LName = "Jam", Department = "Administration", Phone = "713-517-5522", Email = "shadijam00@gmail.com"};
-        var emp2 = new Employee { FName = "Joshua", LName = "Long", Department = "Production", Phone = "713-777-7777", Email = "madeupemail@madeupemail.com"};
+        var emp2 = new Employee { FName = "Khalid", LName = "Mohammed", Department = "Production", Phone = "713-777-7777", Email = "madeupemail@madeupemail.com"};
         var emp3 = new Employee { FName = "Brian", LName = "Sorry", Department = "Transportation", Phone = "713-111-1111", Email = "briansorry@briansorry.com"};
         
         db.Advents.Add(e1);
