@@ -247,8 +247,8 @@ public partial class Handler {
 
         Seed.Initialize(
             db, 
-            _db == DatabaseOptions.InMemory,
-            _db == DatabaseOptions.Postgres || _db == DatabaseOptions.Sqlite);
+            _db == DatabaseOptions.InMemory || _db == DatabaseOptions.Sqlite,
+            _db == DatabaseOptions.Postgres);
 
         app.UseApplicationInsightsRequestTelemetry();
         app.UseApplicationInsightsExceptionTelemetry();

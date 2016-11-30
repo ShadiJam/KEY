@@ -12,18 +12,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[Route("/rootobject")]
-public class RootObjectController: CRUDController<LocationSearch.RootObject> 
+[Route("api/rootobject")]
+public class RootObjectController: CRUDController<RootObject> 
 {
     private GoogleLocationService gs;
-    public RootObjectController(IRepository<LocationSearch.RootObject> r, GoogleLocationService gs) : base(r) {
+    public RootObjectController(IRepository<RootObject> r, GoogleLocationService gs) : base(r) {
         this.gs = gs;
         this.r = r;
     }
 
-    [HttpGet("/{address}")]
+    [HttpGet("{address}")]
     public async Task<IActionResult> Search(string address)
     {
+        address.Log();
         var data = await gs.Get(address);
         // var lat1 = data.results.ElementAt(0).geometry.location.lat;
         // var lng1 = data.results.ElementAt(0).geometry.location.lng;
@@ -39,7 +40,7 @@ public class AdventController : CRUDController<Advent> {
     public AdventController(IRepository<Advent> r) : base(r){}
 }
 
-[Route("/api/advance")]
+[Route("api/advance")]
 public class AdvanceController : CRUDController<Advance> {
     public AdvanceController(IRepository<Advance> r) : base(r){}
 }
@@ -49,17 +50,17 @@ public class EmployeeController : CRUDController<Employee> {
     public EmployeeController(IRepository<Employee> r) : base(r){}
 }
 
-[Route("/api/section")]
+[Route("api/section")]
 public class SectionController : CRUDController<Section> {
     public SectionController(IRepository<Section> r) : base(r){}
 }
 
-[Route("/api/category")]
+[Route("api/category")]
 public class CategoryController : CRUDController<Category> {
     public CategoryController(IRepository<Category> r) : base(r){}
 }
 
-[Route("/api/option")]
+[Route("api/option")]
 public class OptionController : CRUDController<Option> {
     public OptionController(IRepository<Option> r) : base(r){}
 }

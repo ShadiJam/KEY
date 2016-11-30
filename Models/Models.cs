@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using LocationSearch;
 public class Employee : HasId {
     [Required]
     public int Id { get; set; }
@@ -20,8 +19,6 @@ public class Employee : HasId {
     public string Department { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; } //create actual email property here
-    public int AdvanceId { get; set; }
-    public Advance advance { get; set; }
     
     //create function that allows admin user to add employee
 }
@@ -32,7 +29,8 @@ public class Advent : HasId {
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
     public IEnumerable<Advance> Advances { get; set; } = new List<Advance>();
-    public IEnumerable<RootObject> ROs { get; set; }
+    public IEnumerable<RootObject> ROs { get; set; } = new List<RootObject>();
+    public IEnumerable<Employee> Employees { get; set; } = new List<Employee>();
   
     // create function that allows admin user to create new event
 }
@@ -40,9 +38,10 @@ public class Advent : HasId {
 public class Advance : HasId {
     [Required]
     public int Id { get; set; }
-    public Advent advent { get; set; }
     public string AdvanceName { get; set; }
-    public int AdventId { get; set; }
+    public bool Assigned { get; set; } = false;
+    public Employee Employee { get; set; }
+    public int EmployeeId { get; set; }
     public IEnumerable<Section> Sections { get; set; }
     public DateTime dueDate { get; set; }
   
@@ -56,8 +55,6 @@ public class Advance : HasId {
 public class Section : HasId { 
     [Required]
     public int Id { get; set; }
-    public int AdvanceId { get; set; }
-    public Advance advance { get; set; }
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
     public double Cost { get; set; }
@@ -69,22 +66,45 @@ public class Category : HasId {
     [Required]
     public int Id { get; set; }
     public string CategoryName { get; set; }
-    public Section section { get; set; }
-    public int SectionId { get; set; }
     public IEnumerable<Option> Options { get; set; }
 }
 public class Option : HasId {
     [Required]
     public int Id { get; set; }
     public string OptionName { get; set; }
-    public int CategoryId { get; set; }
-    public Category category { get; set; }
-    public Option(string OptionName){
-        this.OptionName = OptionName;
     }
     //create function that allows admin user to set options in a category and assign it to a specific category
     // create function that allows employee user to choose from options and post that to advance
-}
+
+
+public class Location : HasId {
+        [Required]
+        public int Id { get; set; }
+        public double lat { get; set; }
+        public double lng { get; set; }
+        }
+
+    public class Geometry : HasId {
+        [Required]
+        public int Id { get; set; }
+        public Location location { get; set; }
+    }
+
+    public class Result : HasId {
+        [Required]
+        public int Id { get; set; }
+        public string formatted_address { get; set; }
+        public Geometry geometry { get; set; }
+    }
+
+    public class RootObject : HasId {
+        [Required]
+        public int Id { get; set; }
+        public List<Result> Results { get; set; }
+        public Advent Advent { get; set; }
+        public int AdventId { get; set; }
+        
+    }
 
 public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Location> Locations { get; set; }
@@ -104,9 +124,14 @@ public partial class Handler {
         Repo<Result>.Register(services, "Results");
         Repo<Geometry>.Register(services, "Geometries");
         Repo<Location>.Register(services, "Locations");
-        Repo<LocationSearch.RootObject>.Register(services, "ROs",
-            d => d.Include(r => r.Results).ThenInclude(g => g.geometry)
-                .ThenInclude(l => l.location)); 
+
+        Repo<RootObject>.Register(services, "ROs",
+            d => d
+                .Include(r => r.Results)
+                .ThenInclude(g => g.geometry)
+                .ThenInclude(l => l.location)
+            );
+        
         Repo<Advent>.Register(services, "Advents");
         Repo<Advance>.Register(services, "Advances");
         Repo<Employee>.Register(services, "Employees");
