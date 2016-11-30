@@ -44,7 +44,7 @@
     border: 1px solid green;
     margin: 2rem;
 
-    h1, ul {
+    h1, li {
         color: green;
         font-size: medium;
         text-align: center;
@@ -79,4 +79,8 @@
     display: inline;
     margin: 40px;
 
+}
+
+.login-stuff > * {
+    margin: 30px;
 }

@@ -64,7 +64,9 @@ class RegisterBox extends Component {
         }
         return (
             <div>
-                <NewRegisterForm />
+                <form id="register-form" onSubmit={this._handleSubmit}>
+                    <NewRegisterForm />
+                </form>
             </div>
         )
     }
@@ -101,7 +103,9 @@ class LoginBox extends Component {
         }
         return (
             <div>
-                <LoginForm />
+                <form id="login-form" onSubmit={this._handleSubmit}>
+                    <LoginForm />
+                </form>
             </div>
         )
     }
@@ -136,17 +140,21 @@ class NewEmployee extends Component {
     _handleSubmit(eventObject) {
         eventObject.preventDefault()
         //forms by default will refresh the page
-        post('/api/employee', {
-        FName: this.refs.FName.value,
-        LName: this.refs.LName.value,
-        Department: this.refs.Department.value,
-        Phone: this.refs.Phone.value,
-        Email: this.refs.Email.value
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+        var formE3 = eventObject.target
+        window.form = formE3
+        var inputFName = formE3.theFName.value,
+            inputLName = formE3.theLName.value,
+            inputDepartment = formE3.theDepartment.value,
+            inputPhone = formE3.thePhone.value
+        var promise = post('api/employee',{
+            FName: inputFName, 
+            LName: inputLName, 
+            Department: inputDepartment,
+            Phone: inputPhone
+        })
+        promise.then((resp) => log(resp),
+            (err) => log(err)
+        )
     }
     render(){
         var err
@@ -161,7 +169,9 @@ class NewEmployee extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewEmployeeForm />
+                    <form className="new-employee-form" onSubmit={this._handleSubmit}>
+                        <NewEmployeeForm />
+                    </form>
                 </div>
                 </div> 
     }
@@ -185,7 +195,7 @@ class EmployeeView extends Component {
             {this.state.items.map(Advent)}
             <div>
             <a href="#/compose">
-            <button type="newAdvent">Create New Advent</button>
+                <button type="newAdvent">Create New Advent</button>
             </a>
             </div>
         </div>
@@ -256,17 +266,21 @@ class NewAdvent extends Component {
         super(props)
         this.state = {}
     }
-    submit(e){
-        e.preventDefault()
-        post('/api/advent', {
-            name: this.refs.name.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value
-        }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-            
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+    _handleSubmit(eventObject) {
+        eventObject.preventDefault()
+        var formE4 = eventObject.target
+        window.form = formE4
+        var inputName = formE4.theName.value,
+            inputStartDate = formE4.theStartDate.value,
+            inputEndDate = formE4.theEndDate.value
+        var promise = post('api/advent',{
+            name: inputName,
+            startDate: inputStartDate,
+            endDate: inputEndDate
+        })
+        promise.then((resp) => log(resp),
+            (err) => log(err)
+        )
     }
     render(){
         var err
@@ -281,8 +295,9 @@ class NewAdvent extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewAdventForm />
-                    <NewRootObjectForm />
+                    <form className="new-advent-form" onSubmit={e => this.submit(e)}>
+                        <NewAdventForm />
+                    </form>
                 </div>
                 </div> 
     }
@@ -305,10 +320,8 @@ class AdvancePage extends Component {
         
         return <div>
                     <Advance />
-                    <hr/>
-                    <a className="build-advance" href={`#/status/${advance.id}`}>
-                        <button>Edit Event Advance</button>
-                    </a>
+                    <hr />
+                    <NewSection />
                 </div>
     }
 }
@@ -343,7 +356,13 @@ class NewAdvance extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewAdvanceForm />
+                    <form className="new-advance-form" onSubmit={e => this.submit(e)}>
+                        <NewAdvanceForm />
+                    </form>
+                    <NewSection />
+                    <NewCategory />
+                    <NewOption />
+                    <NewRootObject />
                 </div>
                 </div> 
     }
@@ -380,10 +399,9 @@ class NewSection extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewSectionForm />
-                    <NewCategoryForm />
-                    <NewOptionForm />
-                    <NewRootObjectForm />
+                    <form className="new-section-form" onSubmit={e => this.submit(e)}>
+                        <NewSectionForm />
+                    </form>
                 </div>
                 </div> 
     }
@@ -418,8 +436,9 @@ class NewCategory extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewCategoryForm />
-                    <NewRootObject />
+                    <form className="new-category-form" onSubmit={e => this.submit(e)}>
+                        <NewCategoryForm />
+                    </form>
                 </div>
                 </div> 
     }
@@ -454,8 +473,9 @@ class NewOption extends Component {
                     {err}
                 </div>
                 <div>
-                    <NewOptionForm />
-                    <NewRootObject />
+                    <form className="new-option-form" onSubmit={e => this.submit(e)}>
+                        <NewOptionForm />
+                    </form>
                 </div>
                 </div> 
     }
@@ -477,10 +497,13 @@ const reactApp = () =>
             <Route path="/Login" component={Login}/>
             <Route path="/status/:employeeId" component={EmployeeView}/>
             <Route path="/newEmployee" component={NewEmployee}/>
+
+            <Route path="/compose" component={NewAdvent}/>
             <Route path="/status/:adventId" component={AdventPage}/>
-            <Route path="/compose" component={NewAdventForm}/>
+            
             <Route path="/build" component={NewAdvance}/>
             <Route path="/status/:advanceId" component={AdvancePage}/>
+
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,

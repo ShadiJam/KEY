@@ -70,39 +70,34 @@ export const Error = () => <div>Page Not Found</div>
 
 export const LoginForm = () =>
         <div>
-        <form id="login-form" onSubmit={this._handleSubmit}>
-                <p>Please Log In</p>   
-                <div>
-                    <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
-                    <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
-                </div>
-                    <a className="login-button" href="#/">
+            <p>Please Log In</p>   
+            <div>
+                <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
+                <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
+            </div>
+                <a className="login-button" href="#/">
                     <button type="submit">Log In</button>
-                    </a>
-            </form>
+                </a>
         </div>
 
 export const NewRegisterForm = () =>
     <div>
-    <form id="register-form" onSubmit={this._handleSubmit}>
-        
-                <p> Or Create an Account </p>
-                <div>
-                    <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
-                    <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
-                </div>
-                    <a className="register-button" href={`#/status/${employee.id}`}>
-                    <button type="submit">Register</button>
-                    </a>
-            </form> 
+        <p> Or Create an Account </p>
+        <div>
+            <input name="theEmail" ref="Email" type="email" placeholder="user@email.com" required/>
+            <input name="thePassword" ref="Password" type="password" placeholder="Your Password"/>
         </div>
+            <a className="register-button" href="/newEmployee">
+                <button type="submit">Register</button>
+            </a>
+    </div>
 export const Employee = (employee) =>
     <div className="employee">
         <a href={`#/status/${employee.id}`}>
-        <h1>{this.props.employee.FName} {this.props.employee.LName}</h1>
-        <p>{this.props.employee.Department}</p>
-        <p>{this.props.employee.Phone}</p>
-        <p>{this.props.employee.Email}</p>
+        <h1>{employee.FName} {employee.LName}</h1>
+        <p>{employee.Department}</p>
+        <p>{employee.Phone}</p>
+        <p>{employee.Email}</p>
         </a>
     </div>
 
@@ -118,7 +113,7 @@ export const Advent = (advent) =>
 
 export const Advance = (advance) =>
     <div className="advance">
-        <a href={`#/status/${advance.id}`}>
+        <a href={`#/status/${Advance.id}`}>
             <h1>{this.props.advance.AdvanceName}</h1>
             <p>{this.props.advance.Assigned}</p>
             <p>{this.props.advance.dueDate}</p>
@@ -171,30 +166,24 @@ export const Geometry = (geometry) =>
 
 export const NewAdventForm = () =>
         <div>
-        <form className="new-advent-form" onSubmit={e => this.submit(e)}>
             <div>
-                <textarea ref="name" type="text" placeholder="Event Name" required></textarea>
-                <textarea ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required></textarea>
-                <textarea ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required></textarea>
+                <input name="theName" ref="name" type="text" placeholder="Event Name" required/>
+                <input name="theStartDate" ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+                <input name="theEndDate" ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
             </div>
             <div>
-                <a href={`#/status/${advent.id}`}>
                     <button type="submit">Submit Event</button>
-                </a>
             </div>
-        </form>
         </div>
     
 export const NewAdvanceForm = () =>
     <div>
-    <form className="new-advance-form" onSubmit={e => this.submit(e)}>
     <div className="advance-section-form">
         <div>
-            <textarea ref="AdvanceName" type="text" placeholder="Advance Name - not required"></textarea>
-            <textarea ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"></textarea>
+            <input name="theAdvanceName" ref="AdvanceName" type="text" placeholder="Advance Name - not required"/>
+            <input name="thedueDate" ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"/>
         </div>
         </div>  
-        </form>
             <hr/>
             <div>
                 <button type="submit">Create</button>
@@ -203,73 +192,60 @@ export const NewAdvanceForm = () =>
 
 export const NewEmployeeForm = () =>
     <div>
-    <form className="new-employee-form" onSubmit={e => this.submit(e)}>
         <div>
-            <textarea ref="FName" type="text" placeholder="First Name" required></textarea>
-            <textarea ref="LName" type="text" placeholder="Last Name" required></textarea>
-            <textarea ref="Department" type="text" placeholder="Department Name" required></textarea>
-            <textarea ref="Phone" type="Phone" placeholder="Phone including area code" required></textarea>
-            <textarea ref="Email" type="Email" placeholder="Email Address" required></textarea>
+            <input name="theFName" ref="FName" type="text" placeholder="First Name" required/>
+            <input name="theLName" ref="LName" type="text" placeholder="Last Name" required/>
+            <input name="theDepartment" ref="Department" type="text" placeholder="Department Name" required/>
+            <input name="thePhone" ref="Phone" type="Phone" placeholder="Phone including area code" required/>
         </div>
-            <div>
-                <a href={`#/status/${employee.id}`}>
-                    <button type="submit">Add Employee</button>
-                </a>
-            </div>
-        </form>
+        <div>
+           <button type="submit">Add Employee</button>
+        </div>
     </div>
 
 export const NewSectionForm = () =>
     <div>
-    <form className="new-section-form" onSubmit={e => this.submit(e)}>
         <div>
-            <textarea ref="SectionName" type="text" placeholder="Name your section" required></textarea>
-            <textarea ref="SectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
-            <textarea ref="Cost" type="int" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."></textarea>
+            <input name="theSectionName" ref="SectionName" type="text" placeholder="Name your section" required/>
+            <input name="theSectionDescription" ref="SectionDescription" type="text" placeholder="Add a short description about this section - not required"/>
+            <input name="theCost" ref="Cost" type="int" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."/>
         </div>
             <div>
                 <button type="submit">Add Section</button>
             </div>
-        </form>
     </div>
 
 export const NewCategoryForm = () =>
     <div>
-    <form className="new-category-form" onSubmit={e => this.submit(e)}>
         <div>
-            <textarea ref="CategoryName" type="text" placeholder="Name your category" required></textarea>
+            <input name="theCategoryName" ref="CategoryName" type="text" placeholder="Name your category" required/>
         </div>
             <div>
                 <button type="submit">Add Category</button>
             </div>
-        </form>
     </div>
           
 
 export const NewOptionForm = () =>
     <div>
-    <form className="new-option-form" onSubmit={e => this.submit(e)}>
         <div>
-            <textarea ref="OptionName" type="text" placeholder="Name your first option" required></textarea>
-            <textarea ref="OptionName" type="text" placeholder="Include any additional options" ></textarea>
-            <textarea ref="OptionName" type="text" placeholder="Include any additional options" required></textarea>
+            <input name="theOptionName" ref="OptionName" type="text" placeholder="Name your first option" required/>
+            <input name="theOptionName" ref="OptionName" type="text" placeholder="Include any additional options"/>
+            <input name="theOptionName" ref="OptionName" type="text" placeholder="Include any additional options"/>
         </div>
             <div>
                 <button type="submit">Add Option</button>
             </div>
-        </form>
     </div>
           
 export const NewRootObjectForm = () =>
     <div>
-    <form className="new-root-object-form" onSubmit={e => this.submit(e)}>
         <div>
-            <textarea ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required></textarea>
+            <input name="theAddress" ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
         </div>
             <div>
                 <button type="submit">Add Location</button>
             </div>
-        </form>
     </div>
 
 
