@@ -5,21 +5,21 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location, NewAdventForm, NewAdvanceForm, NewEmployeeForm, NewSectionForm, NewCategoryForm, NewOptionForm , NewRootObjectForm } from './components'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 
-console.log(Boot) // what hast thou provided?
+// console.log(Boot) // what hast thou provided?
 
 // Utility methods
 // --------------
-// const log = (...a) => console.log(...a)
+
 
 const get = (url) =>
     fetch(url, {credentials: 'same-origin'})
     .then(r => {
         return r.json()
     })
-    .catch(e => console.log(e))
+    .catch(e => log(e))
 
 const post = (url, data) => 
     fetch(url, { 
@@ -28,21 +28,29 @@ const post = (url, data) =>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
-    .catch(e => console.log(e))
-    // .then(r => r.json())
+    .catch(e => log(e))
+    .then(r => r.json())
 // ----------------
 
-class LoginForm extends React.Component {
+const log = (...a) => console.log(...a)
+
+const Error = () => <div>Page Not Found</div>
+
+class LoginForm extends Component {
     constructor(props){
         super(props)
         this.state = {}
         }
     submit(e) {
         e.preventDefault()
-        post('account/login', {
+            post('account/login', {
             email: this.refs.email.value,
-            eassword: this.refs.password.value
-       }).catch(e => console.log(e))
+            password: this.refs.password.value
+        }).then(x => {
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err 
@@ -51,11 +59,14 @@ class LoginForm extends React.Component {
                     {this.state.errors.map(x => <li>{x}</li>)}
                 </ul>
         }
-        return <form onSubmit={e => this.submit(e)}>
+        return <form className="login-form" onSubmit={e => this.submit(e)}>
+            {this.state.errors ? <p>There were errors with your Login:</p> : null}
+            {err}
+
             <p>Please Log In</p>   
             <div>
-                <input name="Email" ref="email" type="EmailAddress" placeholder="user@email.com" required/>
-                <input name="Password" ref="password" type="DataType.Password" placeholder="Your Password"/>
+                <input ref="email" type="email" placeholder="user@email.com" required/>
+                <input ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
                 <a className="login-button" href="#/">
@@ -67,17 +78,21 @@ class LoginForm extends React.Component {
 }
 
 
-class RegisterForm extends React.Component {
+class RegisterForm extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+         this.state = {}
         }
     submit(e) {
         e.preventDefault()
-        post('account/register',{
+        post('account/register', {
             email: this.refs.email.value,
             password: this.refs.password.value
-        }).catch(e => console.log(e))
+        }).then(x => {
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err 
@@ -87,10 +102,13 @@ class RegisterForm extends React.Component {
                 </ul>
         }
         return <form onSubmit={e => this.submit(e)}>
+            {this.state.errors ? <p>There were errors with your Registration:</p> : null}
+            {err}
+
             <p>Or Register</p>   
             <div>
-                <input name="email" ref="email" type="EmailAddress" placeholder="user@email.com" required/>
-                <input name="password" ref="password" type="DataType.Password" placeholder="Your Password"/>
+                <input ref="email" type="email" placeholder="user@email.com" required/>
+                <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
                 <a className="register-button" href="#/">
@@ -124,45 +142,44 @@ class Login extends Component {
 class NewEmployee extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {employees: []}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
+    submit(e) {
+        e.preventDefault()
         //forms by default will refresh the page
-        var formE3 = eventObject.target
-        window.form = formE3
-        var inputFName = formE3.theFName.value,
-            inputLName = formE3.theLName.value,
-            inputDepartment = formE3.theDepartment.value,
-            inputPhone = formE3.thePhone.value
-        var promise = post('api/employee',{
-            FName: inputFName, 
-            LName: inputLName, 
-            Department: inputDepartment,
-            Phone: inputPhone
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+        post('api/employee',{
+            fName: this.refs.text.value, 
+            lName: this.refs.text.value, 
+            department: this.refs.text.value,
+            phone: this.refs.text.value 
+        }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
                 {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
+            </ul>
         }
-        return <div>
+        return <form className="new-employee-form" onSubmit={e => this.submit(e)}>
+             {this.state.errors ? <p>There were errors with your new Employee submission</p> : null}
+             {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Event:</p> : null}
-                    {err}
-                </div>
+                    <div>
+                        <input ref="fName" type="text" placeholder="First Name" required/>
+                        <input ref="lName" type="text" placeholder="Last Name" required/>
+                        <input ref="department" type="text" placeholder="Department Name" required/>
+                        <input ef="phone" type="text" placeholder="Phone including area code" required/>
+                    </div>
                 <div>
-                    <form className="new-employee-form" onSubmit={this._handleSubmit}>
-                        <NewEmployeeForm />
-                    </form>
+                    <button type="submit">Add Employee</button>
                 </div>
-                </div> 
+                </div>
+                </form>
     }
 }
 
@@ -194,17 +211,17 @@ class EmployeeView extends Component {
 class NewRootObject extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = { id: props.params.id }
     }
     submit(e){
         e.preventDefault()
         get('/api/rootobject', {
-            address: this.refs.address.value
+            address: this.refs.text.value
         }).then(x => {
             if(!x.errors) window.location.hash = `#/status/${x.id}`
             
-            this.setState({ errors: x.errors })
-        }).catch(e => alert(e))
+            this.setState({ items: RootObject })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -213,15 +230,17 @@ class NewRootObject extends Component {
                 {this.state.errors.map(x => <li>{x}</li>)}
                 </ul>
         }
-        return <div>
+        return <form className="new-RO-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your location search:</p> : null}
+                 {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Event:</p> : null}
-                    {err}
+                    <input ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
                 </div>
                 <div>
-                    <NewRootObjectForm />
+                    <button type="submit">Add Location</button>
                 </div>
-                </div> 
+        </form>
+
     }
 }
 
@@ -255,21 +274,17 @@ class NewAdvent extends Component {
         super(props)
         this.state = {}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        var formE4 = eventObject.target
-        window.form = formE4
-        var inputName = formE4.theName.value,
-            inputStartDate = formE4.theStartDate.value,
-            inputEndDate = formE4.theEndDate.value
-        var promise = post('api/advent',{
-            name: inputName,
-            startDate: inputStartDate,
-            endDate: inputEndDate
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+    submit(e) {
+        e.preventDefault()
+        post('api/advent', {
+            name: this.refs.text.value,
+            startDate: this.refs.DateTime.value,
+            endDate: this.refs.DateTime.value
+       }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -278,17 +293,18 @@ class NewAdvent extends Component {
                 {this.state.errors.map(x => <li>{x}</li>)}
                 </ul>
         }
-        return <div>
+        return  <form className="advent-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your event submission:</p> : null}
+                 {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Event:</p> : null}
-                    {err}
+                    <input ref="name" type="text" placeholder="Event Name" required/>
+                    <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+                    <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
                 </div>
                 <div>
-                    <form className="new-advent-form" onSubmit={e => this.submit(e)}>
-                        <NewAdventForm />
-                    </form>
+                    <button type="submit">Submit Event</button>
                 </div>
-                </div> 
+        </form>
     }
 }
 
@@ -320,19 +336,16 @@ class NewAdvance extends Component {
         super(props)
         this.state = {}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        var formE5 = eventObject.target
-        window.form = formE5
-        var inputAdvanceName = formE5.theAdvanceName.value,
-            inputDueDate = formE5.theDueDate.value
-        var promise = post('api/advance',{
-            advanceName: inputAdvanceName,
-            dueDate: inputDueDate,
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+    submit(e) {
+        e.preventDefault()
+        post('api/advance',{
+            advanceName: this.refs.text.value,
+            dueDate: this.refs.DateTime.value,
+       }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -342,24 +355,19 @@ class NewAdvance extends Component {
                 </ul>
         }
 
-        return <div className="new-advance-form">
+        return <form className="new-advance-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your Advance submission:</p> : null}
+                 {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Advance:</p> : null}
-                    {err}
+                    <input ref="AdvanceName" type="text" placeholder="Advance Name - not required"/>
+                    <input ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"/>
                 </div>
                 <div>
-                    <form onSubmit={e => this.submit(e)}>
-                        <NewAdvanceForm />
-                    </form>
-                    <NewSection />
-                    <NewCategory />
-                    <NewOption />
-                    <NewRootObject />
-                    <div>
-                        <button type="submit">Create</button>
-                    </div>
-                </div>
-                </div> 
+                      <button type="submit">Create Advance</button>
+                </div>  
+        </form>
+            
+        
     }
 }
 
@@ -368,19 +376,17 @@ class NewSection extends Component {
         super(props)
         this.state = {}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        var formE6 = eventObject.target
-        window.form = formE6
-        var inputSectionName = formE6.theSectionName.value,
-            inputSectionDescription = formE6.theSectionDescription.value
-        var promise = post('api/section',{
-            SectionName: inputSectionName,
-            SectionDescription: inputSectionDescription
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+    submit(e) {
+        e.preventDefault()
+        post('api/section',{
+            sectionName: this.refs.text.value,
+            sectionDescription: this.refs.text.value,
+            cost: this.refs.double.value
+        }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -390,17 +396,18 @@ class NewSection extends Component {
                 </ul>
         }
 
-        return <div>
+        return <form className="new-section-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your section:</p> : null}
+                 {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Advance:</p> : null}
-                    {err}
+                    <input ref="sectionName" type="text" placeholder="Name your section" required/>
+                    <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
+                    <input ref="cost" type="double" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."/>
                 </div>
                 <div>
-                    <form className="new-section-form" onSubmit={e => this.submit(e)}>
-                        <NewSectionForm />
-                    </form>
+                    <button type="submit">Add Section</button>
                 </div>
-                </div> 
+        </form>
     }
 }
 
@@ -409,17 +416,15 @@ class NewCategory extends Component {
         super(props)
         this.state = {}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        var formE7 = eventObject.target
-        window.form = formE7
-        var inputCategoryName = formE7.theCategoryName.value
-        var promise = post('api/category',{
-            CategoryName: inputCategoryName
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+    submit(e) {
+        e.preventDefault()
+        post('api/category',{
+            categoryName: this.refs.text.value
+        }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -429,17 +434,16 @@ class NewCategory extends Component {
                 </ul>
         }
 
-        return <div>
-                <div>
-                    {this.state.errors ? <p>There were errors with your Advance:</p> : null}
-                    {err}
-                </div>
-                <div>
-                    <form className="new-category-form" onSubmit={e => this.submit(e)}>
-                        <NewCategoryForm />
-                    </form>
-                </div>
-                </div> 
+        return <form className="new-category-form" onSubmit={e => this.submit(e)}>
+                     {this.state.errors ? <p>There were errors with your category:</p> : null}
+                     {err}
+                    <div>
+                        <input ref="categoryName" type="text" placeholder="Name your category" required/>
+                    </div>
+                    <div>
+                        <button type="submit">Add Category</button>
+                    </div>
+            </form>
     }
 }
 
@@ -448,17 +452,15 @@ class NewOption extends Component {
         super(props)
         this.state = {}
     }
-    _handleSubmit(eventObject) {
-        eventObject.preventDefault()
-        var formE8 = eventObject.target
-        window.form = formE8
-        var inputOptionName = formE8.theOptionName.value
-        var promise = post('api/option', {
-            OptionName: inputOptionName
-        })
-        promise.then((resp) => console.log(resp),
-            (err) => console.log(err)
-        )
+    submit(es) {
+        e.preventDefault()
+        post('api/option', {
+            optionName: this.refs.text.value
+        }).then(x => {
+            if(!errors) window.location.hash = `#/status/${x.id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => log(e))
     }
     render(){
         var err
@@ -468,17 +470,18 @@ class NewOption extends Component {
                 </ul>
         }
 
-        return <div>
+        return <form className="new-option-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your options:</p> : null}
+                 {err}
                 <div>
-                    {this.state.errors ? <p>There were errors with your Advance:</p> : null}
-                    {err}
+                    <input ref="OptionName" type="text" placeholder="Name your first option" required/>
+                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
+                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
                 </div>
                 <div>
-                    <form className="new-option-form" onSubmit={e => this.submit(e)}>
-                        <NewOptionForm />
-                    </form>
+                    <button type="submit">Add Option</button>
                 </div>
-                </div> 
+        </form>
     }
 }
 

@@ -20,67 +20,36 @@ public class AccountController : Controller
         this.auth = auth;
     }
 
-    [HttpGet]
-    public IActionResult Root()
-    {
-        // HttpContext.User
-        return Ok();
-    }
-
-    [HttpGet("register")]
-    [AllowAnonymous]
-    public IActionResult Register()
-    {
-        ViewData["Action"] = "Register";
-        return View("RegisterOrLogin");
-    }
-
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register([FromForm] UserView user)
+    public async Task<IActionResult> Register([FromBody] UserView user)
     {
-        ViewData["Action"] = "Register";
-        if(!ModelState.IsValid) return View("RegisterOrLogin", user);
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState.ToErrorObject());
 
         var errors = await auth.Register(user.Email, user.Password);
         if((errors ?? new List<string>()).Count() == 0)
             return Redirect("/account");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
-        return View("RegisterOrLogin", user);
-    }
-
-    [HttpGet("login")]
-    [AllowAnonymous]
-    public IActionResult Login()
-    {
-        ViewData["Action"] = "Login";
-        return View("RegisterOrLogin");
+        return Ok(new {});
     }
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromForm] UserView user)
+    public async Task<IActionResult> Login([FromBody] UserView user)
     {
-        ViewData["Action"] = "Login";
-
-        if (!ModelState.IsValid) return View("RegisterOrLogin", user);
+        if(!ModelState.IsValid)
+            return BadRequest(ModelState.ToErrorObject());
 
         string result = await auth.Login(user.Email, user.Password);
         if(result == null){
-            return Redirect("/account");
+            return Unauthorized();
         }
 
-        ModelState.AddModelError("", result);
-        return View("RegisterOrLogin", user);
+        return Ok(new {});
     }
 
-    [HttpGet("logout")]
-    public async Task<IActionResult> Logout()
-    {
-        await auth.Logout();
-        return Redirect("/");
-    }
 }
 
 public class UserView {

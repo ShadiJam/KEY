@@ -60,10 +60,10 @@ export const Error = () => <div>Page Not Found</div>
 export const Employee = (employee) =>
     <div className="employee">
         <a href={`#/status/${employee.id}`}>
-        <h1>{employee.FName} {employee.LName}</h1>
-        <p>{employee.Department}</p>
-        <p>{employee.Phone}</p>
-        <p>{employee.Email}</p>
+        <h1>{this.props.employee.FName} {employee.LName}</h1>
+        <p>{this.props.employee.Department}</p>
+        <p>{this.props.employee.Phone}</p>
+        <p>{this.props.employee.Email}</p>
         </a>
     </div>
 
@@ -107,6 +107,8 @@ export const Option = (option) =>
         <h1>{this.props.option.OptionName}</h1>
     </div>
 
+
+
 export const RootObject = (rootObject) =>
         <div className="rootObject">
             <p>{this.props.rootObject.Results}</p>
@@ -130,87 +132,22 @@ export const Geometry = (geometry) =>
         <p>{this.props.geometry.Location}</p>
     </div>
 
-export const NewAdventForm = () =>
-        <div>
-            <div>
-                <input name="theName" ref="name" type="text" placeholder="Event Name" required/>
-                <input name="theStartDate" ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-                <input name="theEndDate" ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-            </div>
-            <div>
-                    <button type="submit">Submit Event</button>
-            </div>
-        </div>
+
+       
     
-export const NewAdvanceForm = () =>
-    <div>
-    <div className="advance-section-form">
-        <div>
-            <input name="theAdvanceName" ref="AdvanceName" type="text" placeholder="Advance Name - not required"/>
-            <input name="thedueDate" ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"/>
-        </div>
-        </div>  
-            <hr/>
-        </div>
 
-export const NewEmployeeForm = () =>
-    <div>
-        <div>
-            <input name="theFName" ref="FName" type="text" placeholder="First Name" required/>
-            <input name="theLName" ref="LName" type="text" placeholder="Last Name" required/>
-            <input name="theDepartment" ref="Department" type="text" placeholder="Department Name" required/>
-            <input name="thePhone" ref="Phone" type="Phone" placeholder="Phone including area code" required/>
-        </div>
-        <div>
-           <button type="submit">Add Employee</button>
-        </div>
-    </div>
 
-export const NewSectionForm = () =>
-    <div>
-        <div className="new-section-form">
-            <input name="theSectionName" ref="SectionName" type="text" placeholder="Name your section" required/>
-            <input name="theSectionDescription" ref="SectionDescription" type="text" placeholder="Add a short description about this section - not required"/>
-            <input name="theCost" ref="Cost" type="int" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."/>
-        </div>
-            <div>
-                <button type="submit">Add Section</button>
-            </div>
-    </div>
+    
 
-export const NewCategoryForm = () =>
-    <div>
-        <div className="new-category-form">
-            <input name="theCategoryName" ref="CategoryName" type="text" placeholder="Name your category" required/>
-        </div>
-            <div>
-                <button type="submit">Add Category</button>
-            </div>
-    </div>
+
+    
           
 
-export const NewOptionForm = () =>
-    <div className="new-option-form">
-        <div>
-            <input name="theOptionName" ref="OptionName" type="text" placeholder="Name your first option" required/>
-            <input name="theOptionName" ref="OptionName" type="text" placeholder="Include any additional options"/>
-            <input name="theOptionName" ref="OptionName" type="text" placeholder="Include any additional options"/>
-        </div>
-            <div>
-                <button type="submit">Add Option</button>
-            </div>
-    </div>
-          
-export const NewRootObjectForm = () =>
-    <div className="new-RO-form">
-        <div>
-            <input name="theAddress" ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
-        </div>
-            <div>
-                <button type="submit">Add Location</button>
-            </div>
-    </div>
 
+    
+          
+
+    
 
 
 
