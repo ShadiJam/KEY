@@ -121,7 +121,7 @@ class RegisterForm extends Component {
 class Login extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = { CheckIsLoggedIn: false }
     }
     render(){
         var err 
@@ -139,30 +139,36 @@ class Login extends Component {
     }
 }
 
-class NewEmployee extends Component {
+const CheckIsLoggedIn = () => 
+    auth.isLoggedIn()
+        .then(x => <EmployeeView />)
+        .catch(x => <NewEmployee />)
+
+
+class NewEmployee extends React.Component {
     constructor(props){
         super(props)
-        this.state = {employees: []}
+        this.state = {}
     }
     submit(e) {
         e.preventDefault()
         //forms by default will refresh the page
         post('api/employee',{
-            fName: this.refs.text.value, 
-            lName: this.refs.text.value, 
-            department: this.refs.text.value,
-            phone: this.refs.text.value 
+            fName: this.refs.FName.value, 
+            lName: this.refs.LName.value, 
+            department: this.refs.Department.value,
+            phone: this.refs.Phone.value 
         }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                {this.state.errors.map(e => <li>{e}</li>)}
             </ul>
         }
         return <form className="new-employee-form" onSubmit={e => this.submit(e)}>
@@ -170,13 +176,15 @@ class NewEmployee extends Component {
              {err}
                 <div>
                     <div>
-                        <input ref="fName" type="text" placeholder="First Name" required/>
-                        <input ref="lName" type="text" placeholder="Last Name" required/>
-                        <input ref="department" type="text" placeholder="Department Name" required/>
-                        <input ef="phone" type="text" placeholder="Phone including area code" required/>
+                        <input ref="FName" type="string" placeholder="First Name" required/>
+                        <input ref="LName" type="string" placeholder="Last Name" required/>
+                        <input ref="Department" type="string" placeholder="Department Name" required/>
+                        <input ref="Phone" type="PhoneAttribute" placeholder="Phone including area code" required/>
                     </div>
                 <div>
-                    <button type="submit">Add Employee</button>
+                    <a className="new-employee-button" onSubmit={e => this.submit(e)}>
+                        <button type="submit">Add Employee</button>
+                    </a>
                 </div>
                 </div>
                 </form>
@@ -186,7 +194,7 @@ class NewEmployee extends Component {
 class EmployeeView extends Component {
     constructor(props){
         super(props)
-        this.state = {
+        this.state = { 
             items: []
         }
     }
@@ -194,7 +202,7 @@ class EmployeeView extends Component {
         get('/api/advent').then(advents => {
                 advents = advents.reverse()
                 this.setState({items: advents})
-            }).catch(e => console.log(e))
+            }).catch(e => log(e))
     }
     render(){
         return <div className="grid grid-3-600">
@@ -207,6 +215,8 @@ class EmployeeView extends Component {
         </div>
     }
 }
+
+
 
 class NewRootObject extends Component {
     constructor(props){
@@ -277,20 +287,20 @@ class NewAdvent extends Component {
     submit(e) {
         e.preventDefault()
         post('api/advent', {
-            name: this.refs.text.value,
-            startDate: this.refs.DateTime.value,
-            endDate: this.refs.DateTime.value
+            name: this.refs.name.value,
+            startDate: this.refs.startDate.value,
+            endDate: this.refs.endDate.value
        }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
         return  <form className="advent-form" onSubmit={e => this.submit(e)}>
@@ -302,6 +312,7 @@ class NewAdvent extends Component {
                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
                 </div>
                 <div>
+                    
                     <button type="submit">Submit Event</button>
                 </div>
         </form>
@@ -311,10 +322,12 @@ class NewAdvent extends Component {
 class AdvancePage extends Component {
     constructor(props){
         super(props)
-        this.state = { id: props.params.id }
+        this.state = { 
+            items: []
+        }
     }
     componentDidMount(){
-        get("/api/advance"+this.state.id).then(x => {
+        get('/api/advance'+this.state.id).then(x => {
             this.setState({ item: x })
         })
     }
@@ -339,19 +352,19 @@ class NewAdvance extends Component {
     submit(e) {
         e.preventDefault()
         post('api/advance',{
-            advanceName: this.refs.text.value,
-            dueDate: this.refs.DateTime.value,
+            advanceName: this.refs.AdvanceName.value,
+            dueDate: this.refs.dueDate.value
        }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
 
@@ -379,20 +392,20 @@ class NewSection extends Component {
     submit(e) {
         e.preventDefault()
         post('api/section',{
-            sectionName: this.refs.text.value,
-            sectionDescription: this.refs.text.value,
-            cost: this.refs.double.value
+            sectionName: this.refs.sectionName.value,
+            sectionDescription: this.refs.sectionDescription.value,
+            cost: this.refs.cost.value
         }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
 
@@ -419,12 +432,12 @@ class NewCategory extends Component {
     submit(e) {
         e.preventDefault()
         post('api/category',{
-            categoryName: this.refs.text.value
+            categoryName: this.refs.categoryName.value
         }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
     render(){
         var err
@@ -455,18 +468,18 @@ class NewOption extends Component {
     submit(es) {
         e.preventDefault()
         post('api/option', {
-            optionName: this.refs.text.value
+            optionName: this.refs.OptionName.value
         }).then(x => {
-            if(!errors) window.location.hash = `#/status/${x.id}`
-
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
+           window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+             this.setState({ errors: e })
+            })
     }
     render(){
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
+                {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
 
@@ -494,10 +507,10 @@ const Layout = ({children}) =>
             {children}
     </div>
 
-// const checkIsLoggedIn = () => 
-//     auth.isLoggedIn()
-//         .then(x => setPathToEmployeeView())
-//         .catch(x => setPathToHomePage())
+
+
+
+
 
 const reactApp = () => 
     render(

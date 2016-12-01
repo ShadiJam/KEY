@@ -56,7 +56,7 @@ export const HomeContents = () =>
     </div>
 
 
-export const Error = () => <div>Page Not Found</div>
+
 export const Employee = (employee) =>
     <div className="employee">
         <a href={`#/status/${employee.id}`}>
