@@ -56,7 +56,7 @@ class LoginForm extends Component {
         var err 
         if(this.state.errors){
             err = <ul className="compose-errors">
-                    {this.state.errors.map(x => <li>{x}</li>)}
+                    {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
         return <form className="login-form" onSubmit={e => this.submit(e)}>
@@ -89,7 +89,7 @@ class RegisterForm extends Component {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
-            window.location.hash = `#/status/${x.id}`
+            window.location.hash = `#/newEmployee`
         }).catch(e => {
             this.setState({ errors: e })
         })
@@ -98,7 +98,7 @@ class RegisterForm extends Component {
         var err 
         if(this.state.errors){
             err = <ul className="compose-errors">
-                    {this.state.errors.map(x => <li>{x}</li>)}
+                    {this.state.errors.map(e => <li>{e}</li>)}
                 </ul>
         }
         return <form onSubmit={e => this.submit(e)}>
@@ -111,7 +111,7 @@ class RegisterForm extends Component {
                 <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
-                <a className="register-button" href="#/">
+                <a className="register-button" href="#/newEmployee">
                     <button type="submit">Register</button>
                 </a>
             </div>
