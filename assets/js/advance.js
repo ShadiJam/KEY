@@ -30,6 +30,8 @@ export class Form extends React.Component {
         e.preventDefault();
     }
 
+
+
     render() {
         return (
             <div className="form-builder">
@@ -38,7 +40,7 @@ export class Form extends React.Component {
                 <NewCategory />
                 <NewOption />
                 <NewRootObject />
-                    <button type="submit">Create</button>
+                    <button type="submit">Add Section</button>
             </div>
         )
     }

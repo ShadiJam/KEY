@@ -41,77 +41,6 @@ export const post = (url, data) =>
 
 
 
-var TaskList = React.createClass({
-    deleteElement:function(){
-        console.log("remove");
-    },
-
-    render: function(){
-    
-        var displayTask = function(task, taskIndex){
-            console.log("NEW ADDED TASK"+task);
-    
-            return <li>
-                {task}
-                <button onClick= {this.deleteElement}> Delete </button>
-            </li>;
-        };
-    
-        return <ul>
-            {this.props.items.map((task, taskIndex) => 
-                <li key={taskIndex}>
-                    {task}
-                    <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
-                </li>
-            )}
-        </ul>;
-    }
- });
-
-const TaskApp = React.createClass({
-    getInitialState: function(){
-        return {
-             items: []
-        }
-    },
-    
-    deleteTask: function(e) {
-        var taskIndex = parseInt(e.target.value, 10);
-        console.log('remove task: %d', taskIndex, this.state.items[taskIndex]);
-        this.setState(state => {
-            state.items.splice(taskIndex, 1);
-            return {items: state.items};
-        });
-    },
-
-    onChange: function(e) {
-        this.setState({ task: e.target.value });
-    },
-
-    addTask:function (e){
-        this.setState({
-            items: this.state.items.concat([this.state.task]),
-    
-            task: ''
-        })
-    
-        e.preventDefault();
-    },
-
-    render: function(){ 
-        return(
-            <div>
-                <h1>My Task </h1>    
-                <TaskList items={this.state.items} deleteTask={this.deleteTask} />
-                
-                <form onSubmit={this.addTask}>    
-                    <input onChange={this.onChange} type="text" value={this.state.task}/>
-                    <button> Add Task </button>    
-                </form>    
-            </div>
-        );
-    }
-});
 
 export const log = (...a) => console.log(...a)
 
@@ -202,7 +131,9 @@ export class NewAdvance extends Component {
 export class NewSection extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            additionalInputs: []
+        }
     }
     submit(e) {
         e.preventDefault()
@@ -215,6 +146,23 @@ export class NewSection extends Component {
             this.setState({ errors: e })
         })
     }
+
+    addInput(e) {   
+        e.preventDefault()
+        var inputNo = this.state.additionalInputs.length
+        this.setState({
+            additionalInputs: this.state.additionalInputs.concat([<input name={`sectionName${inputNo}`} placeholder="Name your section" />])
+        })
+    }
+
+    deleteInput(e){
+        e.preventDefault()
+        var inputNo = this.state.additionalInputs.length
+        this.setState({
+            additionalInputs: this.state.additionalInputs.splice(this.inputNo, 1)
+        })
+    }
+
     render(){
         var err
         if(this.state.errors){
@@ -229,6 +177,12 @@ export class NewSection extends Component {
                 <div>
                     <input ref="sectionName" type="text" placeholder="Name your section" required/>
                     <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
+                    <div>
+                    {this.state.additionalInputs.map(e => <div><li>{e}</li><button className="delete-button" onClick={e => this.deleteInput(e)}>-</button></div>)}
+                    </div>
+                    <div>
+                     <button className="add-field-button" onClick={e => this.addInput(e)}>+</button>
+                    </div>
                 </div>
         </form>
     }
@@ -350,7 +304,7 @@ const reactApp = () =>
             <Route path="/status/:employeeId" component={EmployeeView}/>
             <Route path="/newEmployee" component={NewEmployee}/>
 
-            <Route path="/compose" component={TaskApp}/>
+            <Route path="/compose" component={Form}/>
             <Route path="/status/:adventId" component={AdventPage}/>
             
             <Route path="/status/:advanceId" component={AdvancePage}/>
