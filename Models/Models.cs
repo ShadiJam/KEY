@@ -40,6 +40,7 @@ public class Advance : HasId {
     public int Id { get; set; }
     public string AdvanceName { get; set; }
     public bool Assigned { get; set; } = false;
+    public bool isComplete { get; set; } = false;
     public Employee Employee { get; set; }
     public int EmployeeId { get; set; }
     public List<Section> Sections { get; set; }
@@ -61,7 +62,6 @@ public class Section : HasId {
     public int Id { get; set; }
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
-    public double Cost { get; set; }
     public List<RootObject> ROs { get; set; } = new List<RootObject>();
     public List<Category> Categories { get; set; }
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }

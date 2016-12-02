@@ -6,6 +6,12 @@ import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
+import { LoginForm, RegisterForm, Login } from './login'
+import { NewEmployee, EmployeeView } from './employee'
+import { AdventPage, NewAdvent } from './event'
+import { Form, AdvancePage } from './advance'
+import { Button, Checkbox, FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap'
+
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 
 // console.log(Boot) // what hast thou provided?
@@ -14,14 +20,15 @@ import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.git
 // --------------
 
 
-const get = (url) =>
+
+export const get = (url) =>
     fetch(url, {credentials: 'same-origin'})
     .then(r => {
         return r.json()
     })
     .catch(e => log(e))
 
-const post = (url, data) => 
+export const post = (url, data) => 
     fetch(url, { 
         method: 'POST',
         credentials: 'same-origin',
@@ -32,204 +39,98 @@ const post = (url, data) =>
     .then(r => r.json())
 // ----------------
 
-const log = (...a) => console.log(...a)
 
-const Error = () => <div>Page Not Found</div>
 
-class LoginForm extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
+var TaskList = React.createClass({
+    deleteElement:function(){
+        console.log("remove");
+    },
+
+    render: function(){
+    
+        var displayTask = function(task, taskIndex){
+            console.log("NEW ADDED TASK"+task);
+    
+            return <li>
+                {task}
+                <button onClick= {this.deleteElement}> Delete </button>
+            </li>;
+        };
+    
+        return <ul>
+            {this.props.items.map((task, taskIndex) => 
+                <li key={taskIndex}>
+                    {task}
+                    <button onClick={this.props.deleteTask} value={taskIndex}> Delete </button>
+                </li>
+            )}
+        </ul>;
+    }
+ });
+
+const TaskApp = React.createClass({
+    getInitialState: function(){
+        return {
+             items: []
         }
-    submit(e) {
-        e.preventDefault()
-            post('account/login', {
-            email: this.refs.email.value,
-            password: this.refs.password.value
-        }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
+    },
+    
+    deleteTask: function(e) {
+        var taskIndex = parseInt(e.target.value, 10);
+        console.log('remove task: %d', taskIndex, this.state.items[taskIndex]);
+        this.setState(state => {
+            state.items.splice(taskIndex, 1);
+            return {items: state.items};
+        });
+    },
+
+    onChange: function(e) {
+        this.setState({ task: e.target.value });
+    },
+
+    addTask:function (e){
+        this.setState({
+            items: this.state.items.concat([this.state.task]),
+    
+            task: ''
         })
-    }
-    render(){
-        var err 
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                    {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-        return <form className="login-form" onSubmit={e => this.submit(e)}>
-            {this.state.errors ? <p>There were errors with your Login:</p> : null}
-            {err}
+    
+        e.preventDefault();
+    },
 
-            <p>Please Log In</p>   
+    render: function(){ 
+        return(
             <div>
-                <input ref="email" type="email" placeholder="user@email.com" required/>
-                <input ref="password" type="password" placeholder="Your Password" required/>
+                <h1>My Task </h1>    
+                <TaskList items={this.state.items} deleteTask={this.deleteTask} />
+                
+                <form onSubmit={this.addTask}>    
+                    <input onChange={this.onChange} type="text" value={this.state.task}/>
+                    <button> Add Task </button>    
+                </form>    
             </div>
-            <div>
-                <a className="login-button" href="#/">
-                    <button type="submit">Log In</button>
-                </a>
-            </div>
-        </form>
+        );
     }
-}
+});
+
+export const log = (...a) => console.log(...a)
+
+export const Error = () => <div>Page Not Found</div>
 
 
-class RegisterForm extends Component {
-    constructor(props){
-        super(props)
-         this.state = {}
-        }
-    submit(e) {
-        e.preventDefault()
-        post('account/register', {
-            email: this.refs.email.value,
-            password: this.refs.password.value
-        }).then(x => {
-            window.location.hash = `#/newEmployee`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err 
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                    {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-        return <form onSubmit={e => this.submit(e)}>
-            {this.state.errors ? <p>There were errors with your Registration:</p> : null}
-            {err}
-
-            <p>Or Register</p>   
-            <div>
-                <input ref="email" type="email" placeholder="user@email.com" required/>
-                <input  ref="password" type="password" placeholder="Your Password" required/>
-            </div>
-            <div>
-                <a className="register-button" href="#/newEmployee">
-                    <button type="submit">Register</button>
-                </a>
-            </div>
-        </form>
-    }
-}
-class Login extends Component {
-    constructor(props){
-        super(props)
-        this.state = { CheckIsLoggedIn: false }
-    }
-    render(){
-        var err 
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
-        } 
-        return (
-            <div className="login-stuff">
-                <LoginForm />
-                <RegisterForm />
-            </div>
-        )
-    }
-}
-
-const CheckIsLoggedIn = () => 
-    auth.isLoggedIn()
-        .then(x => <EmployeeView />)
-        .catch(x => <NewEmployee />)
-
-
-class NewEmployee extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(e) {
-        e.preventDefault()
-        //forms by default will refresh the page
-        post('api/employee',{
-            fName: this.refs.FName.value, 
-            lName: this.refs.LName.value, 
-            department: this.refs.Department.value,
-            phone: this.refs.Phone.value 
-        }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-            </ul>
-        }
-        return <form className="new-employee-form" onSubmit={e => this.submit(e)}>
-             {this.state.errors ? <p>There were errors with your new Employee submission</p> : null}
-             {err}
-                <div>
-                    <div>
-                        <input ref="FName" type="string" placeholder="First Name" required/>
-                        <input ref="LName" type="string" placeholder="Last Name" required/>
-                        <input ref="Department" type="string" placeholder="Department Name" required/>
-                        <input ref="Phone" type="PhoneAttribute" placeholder="Phone including area code" required/>
-                    </div>
-                <div>
-                    <a className="new-employee-button" onSubmit={e => this.submit(e)}>
-                        <button type="submit">Add Employee</button>
-                    </a>
-                </div>
-                </div>
-                </form>
-    }
-}
-
-class EmployeeView extends Component {
+export class NewRootObject extends Component {
     constructor(props){
         super(props)
         this.state = { 
             items: []
         }
     }
-    componentDidMount(){
-        get('/api/advent').then(advents => {
-                advents = advents.reverse()
-                this.setState({items: advents})
-            }).catch(e => log(e))
-    }
-    render(){
-        return <div className="grid grid-3-600">
-            {this.state.items.map(Advent)}
-            <div>
-            <a href="#/compose">
-                <button type="newAdvent">Create New Advent</button>
-            </a>
-            </div>
-        </div>
-    }
-}
-
-
-
-class NewRootObject extends Component {
-    constructor(props){
-        super(props)
-        this.state = { id: props.params.id }
-    }
     submit(e){
         e.preventDefault()
         get('/api/rootobject', {
-            address: this.refs.text.value
+            address: this.refs.address.value
         }).then(x => {
-            if(!x.errors) window.location.hash = `#/status/${x.id}`
-            
+            window.location.hash = `#/status/${x.id}`
             this.setState({ items: RootObject })
         }).catch(e => log(e))
     }
@@ -246,105 +147,22 @@ class NewRootObject extends Component {
                 <div>
                     <input ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
                 </div>
-                <div>
-                    <button type="submit">Add Location</button>
-                </div>
         </form>
 
     }
 }
 
-class AdventPage extends Component {
-    constructor(props){
-        super(props)
-        this.state = { id: props.params.id }
-    }
-    componentDidMount(){
-        get('/api/advent'+this.state.id).then(x => {
-            this.setState({ item: x })
-        })
-    }
-    render() {
-        const item = this.state.item
-        if(!item)
-            return <div/>
 
-        return <div className="advent-page">
-                   <Advent />
-                <hr />
-                <a className="build-advance" href="#/build">
-                    <button>Build Event Advance</button>
-                </a>
-            </div>
-    }
-}
 
-class NewAdvent extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(e) {
-        e.preventDefault()
-        post('api/advent', {
-            name: this.refs.name.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value
-       }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-        return  <form className="advent-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your event submission:</p> : null}
-                 {err}
-                <div>
-                    <input ref="name" type="text" placeholder="Event Name" required/>
-                    <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-                    <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-                </div>
-                <div>
-                    
-                    <button type="submit">Submit Event</button>
-                </div>
-        </form>
-    }
-}
+export const CreateAdvent = () =>
+    <div className="new-advent">
+        <NewAdvent />
+    </div>
 
-class AdvancePage extends Component {
-    constructor(props){
-        super(props)
-        this.state = { 
-            items: []
-        }
-    }
-    componentDidMount(){
-        get('/api/advance'+this.state.id).then(x => {
-            this.setState({ item: x })
-        })
-    }
-    render() {
-        const item = this.state.item
-        if(!item)
-            return <div/>
-        
-        return <div>
-                    <Advance />
-                    <hr />
-                    <NewSection />
-                </div>
-    }
-}
 
-class NewAdvance extends Component {
+
+
+export class NewAdvance extends Component {
     constructor(props){
         super(props)
         this.state = {}
@@ -375,16 +193,13 @@ class NewAdvance extends Component {
                     <input ref="AdvanceName" type="text" placeholder="Advance Name - not required"/>
                     <input ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"/>
                 </div>
-                <div>
-                      <button type="submit">Create Advance</button>
-                </div>  
         </form>
             
         
     }
 }
 
-class NewSection extends Component {
+export class NewSection extends Component {
     constructor(props){
         super(props)
         this.state = {}
@@ -393,8 +208,7 @@ class NewSection extends Component {
         e.preventDefault()
         post('api/section',{
             sectionName: this.refs.sectionName.value,
-            sectionDescription: this.refs.sectionDescription.value,
-            cost: this.refs.cost.value
+            sectionDescription: this.refs.sectionDescription.value
         }).then(x => {
             window.location.hash = `#/status/${x.id}`
         }).catch(e => {
@@ -415,16 +229,12 @@ class NewSection extends Component {
                 <div>
                     <input ref="sectionName" type="text" placeholder="Name your section" required/>
                     <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
-                    <input ref="cost" type="double" placeholder="Include the cost of the items in this section if applicable - this info will not be displayed to your staff if you don't want it to be."/>
-                </div>
-                <div>
-                    <button type="submit">Add Section</button>
                 </div>
         </form>
     }
 }
 
-class NewCategory extends Component {
+export class NewCategory extends Component {
     constructor(props){
         super(props)
         this.state = {}
@@ -453,14 +263,11 @@ class NewCategory extends Component {
                     <div>
                         <input ref="categoryName" type="text" placeholder="Name your category" required/>
                     </div>
-                    <div>
-                        <button type="submit">Add Category</button>
-                    </div>
             </form>
     }
 }
 
-class NewOption extends Component {
+export class NewOption extends Component {
     constructor(props){
         super(props)
         this.state = {}
@@ -491,9 +298,6 @@ class NewOption extends Component {
                     <input ref="OptionName" type="text" placeholder="Include any additional options"/>
                     <input ref="OptionName" type="text" placeholder="Include any additional options"/>
                 </div>
-                <div>
-                    <button type="submit">Add Option</button>
-                </div>
         </form>
     }
 }
@@ -508,12 +312,36 @@ const Layout = ({children}) =>
     </div>
 
 
+// const CheckIsLoggedIn = () => 
+//     auth.isLoggedIn()
+//         .then(x => <EmployeeView />)
+//         .catch(x => <NewEmployee />)
 
 
 
 
-const reactApp = () => 
+const reactApp = () =>
     render(
+// ({
+//     getInitialState() {
+//         return {
+//             isLoggedIn: auth.isLoggedIn()
+//         }
+//     },
+
+//     updateAuth(isLoggedIn){
+//         this.setState({
+//             isLoggedIn 
+//         })
+//     },
+
+//     componentWillMount() {
+//         auth.onChange = this.updateAuth
+//         auth.login()
+//     },
+
+//     render(){
+//         {this.state.isLoggedIn ? ( <Route path="/Login"/> ) : ( <Route path="#/"/>)}
     <Layout>
         <Router history={hashHistory}>
             <Route path="/" component={EmployeeView}/>
@@ -522,10 +350,9 @@ const reactApp = () =>
             <Route path="/status/:employeeId" component={EmployeeView}/>
             <Route path="/newEmployee" component={NewEmployee}/>
 
-            <Route path="/compose" component={NewAdvent}/>
+            <Route path="/compose" component={TaskApp}/>
             <Route path="/status/:adventId" component={AdventPage}/>
             
-            <Route path="/build" component={NewAdvance}/>
             <Route path="/status/:advanceId" component={AdvancePage}/>
 
             <Route path="*" component={Error}/>
