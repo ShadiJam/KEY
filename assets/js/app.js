@@ -151,7 +151,7 @@ export class NewSection extends Component {
         e.preventDefault()
         var inputNo = this.state.additionalInputs.length
         this.setState({
-            additionalInputs: this.state.additionalInputs.concat([<div><input name={`sectionName${inputNo}`} placeholder="Name your section" /><button className="delete-button" onClick={e => this.deleteInput(e)}>-</button></div>])
+            additionalInputs: this.state.additionalInputs.concat([<input name={`sectionName${inputNo}`} placeholder="Name your section" />])
         })
     }
 
@@ -177,9 +177,9 @@ export class NewSection extends Component {
                 <div>
                     <input ref="sectionName" type="text" placeholder="Name your section" required/>
                     <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
-                    <div>
-                    {this.state.additionalInputs}
-                    </div>
+                    <ul>
+                    {this.state.additionalInputs.map(x => <li>{x}<button className="delete-button" onClick={x => deleteInput(x)}>-</button></li>)}
+                    </ul>
                     <div>
                      <button className="add-field-button" onClick={e => this.addInput(e)}>+</button>
                     </div>
