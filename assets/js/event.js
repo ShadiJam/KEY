@@ -7,8 +7,12 @@ import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Categ
 import * as Boot from 'react-bootstrap'
 import { LoginForm, RegisterForm, Login } from './login'
 import { get, post, log, Error } from './app'
-import { BuildForm } from './advance'
+import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
 
+export const CreateAdvent = () =>
+    <div className="new-advent">
+        <NewAdvent />
+    </div>
 
 export class AdventPage extends Component {
     constructor(props){
@@ -62,7 +66,7 @@ export class NewAdvent extends Component {
         return  <form className="advent-form" onSubmit={e => this.submit(e)}>
                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
                  {err}
-                <div>
+                <div key={advent.id}>
                     <input ref="name" type="text" placeholder="Event Name" required/>
                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>

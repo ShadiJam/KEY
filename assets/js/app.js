@@ -8,9 +8,10 @@ import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
 import { LoginForm, RegisterForm, Login } from './login'
 import { NewEmployee, EmployeeView } from './employee'
-import { AdventPage, NewAdvent } from './event'
-import { Form, AdvancePage } from './advance'
-import { Button, Checkbox, FormGroup, ControlLabel, FormControl, Radio } from 'react-bootstrap'
+import { CreateAdvent, AdventPage, NewAdvent } from './event'
+import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption, SectionEditor } from './advance'
+import { Fields } from './advanceform'
+
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 
@@ -81,181 +82,6 @@ export class NewRootObject extends Component {
     }
 }
 
-
-
-export const CreateAdvent = () =>
-    <div className="new-advent">
-        <NewAdvent />
-    </div>
-
-
-
-
-export class NewAdvance extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(e) {
-        e.preventDefault()
-        post('api/advance',{
-            advanceName: this.refs.AdvanceName.value,
-            dueDate: this.refs.dueDate.value
-       }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-
-        return <form className="new-advance-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your Advance submission:</p> : null}
-                 {err}
-                <div>
-                    <input ref="AdvanceName" type="text" placeholder="Advance Name - not required"/>
-                    <input ref="dueDate" type="DateTime" placeholder="Due Date DD/MM/YR - not required"/>
-                </div>
-        </form>
-            
-        
-    }
-}
-
-export class NewSection extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            additionalInputs: []
-        }
-    }
-    submit(e) {
-        e.preventDefault()
-        post('api/section',{
-            sectionName: this.refs.sectionName.value,
-            sectionDescription: this.refs.sectionDescription.value
-        }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-
-    addInput(e) {   
-        e.preventDefault()
-        var inputNo = this.state.additionalInputs.length
-        this.setState({
-            additionalInputs: this.state.additionalInputs.concat([<input name={`sectionName${inputNo}`} placeholder="Name your section" />])
-        })
-    }
-
-    deleteInput(e){
-        e.preventDefault()
-        var inputNo = this.state.additionalInputs.length
-        this.setState({
-            additionalInputs: this.state.additionalInputs.splice(inputNo, 1)
-        })
-    }
-
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-
-        return <form className="new-section-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your section:</p> : null}
-                 {err}
-                <div>
-                    <input ref="sectionName" type="text" placeholder="Name your section" required/>
-                    <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
-                    <ul>
-                    {this.state.additionalInputs.map(x => <li>{x}<button className="delete-button" onClick={x => deleteInput(x)}>-</button></li>)}
-                    </ul>
-                    <div>
-                     <button className="add-field-button" onClick={e => this.addInput(e)}>+</button>
-                    </div>
-                </div>
-        </form>
-    }
-}
-
-export class NewCategory extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(e) {
-        e.preventDefault()
-        post('api/category',{
-            categoryName: this.refs.categoryName.value
-        }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
-        }
-
-        return <form className="new-category-form" onSubmit={e => this.submit(e)}>
-                     {this.state.errors ? <p>There were errors with your category:</p> : null}
-                     {err}
-                    <div>
-                        <input ref="categoryName" type="text" placeholder="Name your category" required/>
-                    </div>
-            </form>
-    }
-}
-
-export class NewOption extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(es) {
-        e.preventDefault()
-        post('api/option', {
-            optionName: this.refs.OptionName.value
-        }).then(x => {
-           window.location.hash = `#/status/${x.id}`
-        }).catch(e => {
-             this.setState({ errors: e })
-            })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-
-        return <form className="new-option-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your options:</p> : null}
-                 {err}
-                <div>
-                    <input ref="OptionName" type="text" placeholder="Name your first option" required/>
-                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
-                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
-                </div>
-        </form>
-    }
-}
-
 const Layout = ({children}) => 
     <div>
         <div>
@@ -266,38 +92,17 @@ const Layout = ({children}) =>
     </div>
 
 
-// const CheckIsLoggedIn = () => 
-//     auth.isLoggedIn()
-//         .then(x => <EmployeeView />)
-//         .catch(x => <NewEmployee />)
+
 
 
 
 
 const reactApp = () =>
     render(
-// ({
-//     getInitialState() {
-//         return {
-//             isLoggedIn: auth.isLoggedIn()
-//         }
-//     },
 
-//     updateAuth(isLoggedIn){
-//         this.setState({
-//             isLoggedIn 
-//         })
-//     },
-
-//     componentWillMount() {
-//         auth.onChange = this.updateAuth
-//         auth.login()
-//     },
-
-//     render(){
-//         {this.state.isLoggedIn ? ( <Route path="/Login"/> ) : ( <Route path="#/"/>)}
     <Layout>
         <Router history={hashHistory}>
+            <Route path="/advanceform" component={Fields}/>
             <Route path="/" component={EmployeeView}/>
 
             <Route path="/Login" component={Login}/>

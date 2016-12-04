@@ -38,7 +38,7 @@ export class LoginForm extends Component {
             {err}
 
             <p>Please Log In</p>   
-            <div>
+            <div key={login.id}>
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input ref="password" type="password" placeholder="Your Password" required/>
             </div>
@@ -80,7 +80,7 @@ export class RegisterForm extends Component {
             {err}
 
             <p>Or Register</p>   
-            <div>
+            <div key={register.id}>
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>
@@ -115,3 +115,37 @@ export class Login extends Component {
         )
     }
 }
+
+// ({
+//     getInitialState() {
+//         return {
+//             isLoggedIn: auth.isLoggedIn()
+//         }
+//     },
+
+//     updateAuth(isLoggedIn){
+//         this.setState({
+//             isLoggedIn 
+//         })
+//     },
+
+//     componentWillMount() {
+//         auth.onChange = this.updateAuth
+//         auth.login()
+//     },
+
+//     render(){
+//         {this.state.isLoggedIn ? ( <Route path="/Login"/> ) : ( <Route path="#/"/>)}
+
+
+
+
+// function IsLoggedIn(props) {
+//     if(user.id != null) {
+//         return <EmployeeView />
+//     }
+//     return <Login />
+// }
+
+// how do i call the user id?
+// where do I use this check once I've created it? in react app?

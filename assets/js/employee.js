@@ -41,7 +41,7 @@ export class NewEmployee extends React.Component {
              {this.state.errors ? <p>There were errors with your new Employee submission</p> : null}
              {err}
                 <div>
-                    <div>
+                    <div key={employee.id}>
                         <input ref="FName" type="string" placeholder="First Name" required/>
                         <input ref="LName" type="string" placeholder="Last Name" required/>
                         <input ref="Department" type="string" placeholder="Department Name" required/>
