@@ -10,7 +10,7 @@ import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Categ
 import { NewEmployee, EmployeeView } from './employee'
 import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject } from './rootobject'
+import { NewRootObject, LocationSearchResult } from './rootobject'
 
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html

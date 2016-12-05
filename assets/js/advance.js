@@ -10,7 +10,7 @@ import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Categ
 import { NewEmployee, EmployeeView } from './employee'
 import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject } from './rootobject'
+import { NewRootObject, LocationSearchResult } from './rootobject'
 
 
 // export class AdvanceForm extends React.Component {

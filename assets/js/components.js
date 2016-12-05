@@ -9,7 +9,7 @@ import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } fro
 import { get, post, log, Error, Layout, reactapp } from './app'
 import { NewEmployee, EmployeeView } from './employee'
 import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject } from './rootobject'
+import { NewRootObject, LocationSearchResult } from './rootobject'
 
 
 
@@ -124,24 +124,24 @@ export const Option = (option) =>
 
 export const RootObject = (rootObject) =>
         <div className="rootObject">
-            <p>{RootObject.results}</p>
+            <p>{rootObject.Results}</p>
         </div>
 
 export const Result = (results) =>
         <div>
-            <p>{RootObject.results.formatted_address}</p>
-            <p>{RootObject.results.Geometry}</p>
+            <p>{rootObject.Results.formatted_address}</p>
+            <p>{rootObject.Results.Geometry}</p>
         </div>
 
 export const Location = (location) =>
     <div>
-        <p>{RootObject.results.geometry.location.lat}</p>
-        <p>{RootObject.results.geometry.location.lng}</p>
+        <p>{rootObject.Results.geometry.location.lat}</p>
+        <p>{rootObject.Results.geometry.location.lng}</p>
     </div>
 
 export const Geometry = (geometry) =>
     <div>
-        <p>{RootObject.results.geometry.location}</p>
+        <p>{rootObject.Results.geometry.location}</p>
     </div>
 
 

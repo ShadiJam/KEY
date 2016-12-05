@@ -10,7 +10,7 @@ import { get, post, log, Error, Layout, reactapp } from './app'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { NewEmployee, EmployeeView } from './employee'
 import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject } from './rootobject'
+import { NewRootObject, LocationSearchResult } from './rootobject'
 
 
 
@@ -34,9 +34,11 @@ export class AdventPage extends Component {
                         <h1>{item.name}</h1>
                         <p>{item.startDate}</p>
                         <p>{item.endDate}</p>
-                        <RootObject />
-                    </div>
-                      <div>
+                        <div>
+                        <LocationSearchResult />
+                        </div>
+                        </div>
+                        <div>
                         <NewRootObject />
                     </div>
                     <hr />
