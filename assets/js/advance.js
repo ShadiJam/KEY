@@ -1,14 +1,35 @@
+// 'using' statements
 import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+// import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
-import * as Boot from 'react-bootstrap'
+import { get, post, log, Error, Layout, reactapp } from './app'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
+import { NewEmployee, EmployeeView } from './employee'
+import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
-import { get, post, log, Error, NewRootObject } from './app'
-import { CreateAdvent, AdventPage, NewAdvent } from './event'
+import { NewRootObject } from './rootobject'
 
+
+// export class AdvanceForm extends React.Component {
+//     var ExampleForm = React.createClass({
+//   _onChange(event, name, data, change) {
+//     // ... 
+//   },
+ 
+//   _onSubmit(event, data) {
+//     // ... 
+//   },
+ 
+//   render() {
+//     return <AutoForm onChange={this._onChange} onSubmit={this._onSubmit} trimOnSubmit>
+//       {/* ...form inputs... */}
+//     </AutoForm>
+//   }
+// })
+// }
 
 export class Form extends React.Component {
     constructor(props){
@@ -34,7 +55,6 @@ export class Form extends React.Component {
     render() {
         return (
             <div className="form-builder">
-                <NewAdvance />
                 <NewSection />
                 <NewCategory />
                 <NewOption />
@@ -77,7 +97,7 @@ export class NewAdvance extends Component {
     }
     submit(e) {
         e.preventDefault()
-        post('api/advance',{
+        post('/api/advance',{
             advanceName: this.refs.AdvanceName.value,
             dueDate: this.refs.dueDate.value
        }).then(x => {

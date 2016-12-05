@@ -19,7 +19,7 @@ public class Employee : HasId {
     public string Department { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; } //create actual email property here
-    
+    public int AdventId { get; set; }
     //create function that allows admin user to add employee
 }
 public class Advent : HasId {
@@ -41,7 +41,6 @@ public class Advance : HasId {
     public string AdvanceName { get; set; }
     public bool Assigned { get; set; } = false;
     public bool isComplete { get; set; } = false;
-    public Employee Employee { get; set; }
     public int EmployeeId { get; set; }
     public List<Section> Sections { get; set; }
     public DateTime dueDate { get; set; }

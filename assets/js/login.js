@@ -1,13 +1,17 @@
+// 'using' statements
 import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+// import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
+import { get, post, log, Error, Layout, reactapp } from './app'
+import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { NewEmployee, EmployeeView } from './employee'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
-import * as Boot from 'react-bootstrap'
-import { get, post, log, Error } from './app'
-import { BuildForm } from './advance'
+import { CreateAdvent, AdventPage, NewAdvent } from './event'
+import { NewRootObject } from './rootobject'
+
 
 
 export class LoginForm extends Component {

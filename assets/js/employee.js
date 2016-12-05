@@ -1,13 +1,15 @@
+// 'using' statements
 import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+// import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
-import * as Boot from 'react-bootstrap'
+import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
+import { get, post, log, Error, Layout, reactapp } from './app'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
+import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
-import { get, post, log, Error } from './app'
-import { BuildForm } from './advance'
 
 
 
@@ -25,7 +27,7 @@ export class NewEmployee extends React.Component {
             department: this.refs.Department.value,
             phone: this.refs.Phone.value 
         }).then(x => {
-            window.location.hash = `#/status/${x.id}`
+            window.location.hash = `api/employee/${x.id}`
         }).catch(e => {
             this.setState({ errors: e })
         })
@@ -41,7 +43,7 @@ export class NewEmployee extends React.Component {
              {this.state.errors ? <p>There were errors with your new Employee submission</p> : null}
              {err}
                 <div>
-                    <div key={employee.id}>
+                    <div>
                         <input ref="FName" type="string" placeholder="First Name" required/>
                         <input ref="LName" type="string" placeholder="Last Name" required/>
                         <input ref="Department" type="string" placeholder="Department Name" required/>

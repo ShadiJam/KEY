@@ -5,12 +5,12 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Geometry, Location } from './components'
-import { LoginForm, RegisterForm, Login } from './login'
+import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { NewEmployee, EmployeeView } from './employee'
-import { CreateAdvent, AdventPage, NewAdvent } from './event'
-import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption, SectionEditor } from './advance'
-import { Fields } from './advanceform'
+import { AdventPage, NewAdvent } from './event'
+import { LoginForm, RegisterForm, Login } from './login'
+import { NewRootObject } from './rootobject'
 
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
@@ -48,39 +48,6 @@ export const log = (...a) => console.log(...a)
 export const Error = () => <div>Page Not Found</div>
 
 
-export class NewRootObject extends Component {
-    constructor(props){
-        super(props)
-        this.state = { 
-            items: []
-        }
-    }
-    submit(e){
-        e.preventDefault()
-        get('/api/rootobject', {
-            address: this.refs.address.value
-        }).then(x => {
-            window.location.hash = `#/status/${x.id}`
-            this.setState({ items: RootObject })
-        }).catch(e => log(e))
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(x => <li>{x}</li>)}
-                </ul>
-        }
-        return <form className="new-RO-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your location search:</p> : null}
-                 {err}
-                <div>
-                    <input ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
-                </div>
-        </form>
-
-    }
-}
 
 const Layout = ({children}) => 
     <div>
@@ -102,17 +69,17 @@ const reactApp = () =>
 
     <Layout>
         <Router history={hashHistory}>
-            <Route path="/advanceform" component={Fields}/>
-            <Route path="/" component={EmployeeView}/>
+            
 
             <Route path="/Login" component={Login}/>
-            <Route path="/status/:employeeId" component={EmployeeView}/>
             <Route path="/newEmployee" component={NewEmployee}/>
+            <Route path="/api/employee/:id" component={EmployeeView}/>
 
-            <Route path="/compose" component={Form}/>
-            <Route path="/status/:adventId" component={AdventPage}/>
+            <Route path="/build" component={Form}/>
+            <Route path="/compose" component={NewAdvent}/>
+            <Route path="/api/advent/:id" component={AdventPage}/>
             
-            <Route path="/status/:advanceId" component={AdvancePage}/>
+            <Route path="/api/advance/:id" component={AdvancePage}/>
 
             <Route path="*" component={Error}/>
         </Router>
