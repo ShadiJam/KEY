@@ -31,8 +31,6 @@ export class Form extends React.Component {
         e.preventDefault();
     }
 
-
-
     render() {
         return (
             <div className="form-builder">
@@ -41,7 +39,7 @@ export class Form extends React.Component {
                 <NewCategory />
                 <NewOption />
                 <NewRootObject />
-                    <button type="submit">Include this section in Advance</button>
+                    <button type="submit">Include this section in your Advance</button>
             </div>
         )
     }
@@ -112,9 +110,7 @@ export class NewAdvance extends Component {
 export class NewSection extends Component {
     constructor(props){
         super(props)
-        this.state = {
-            fields: []
-        }
+        this.state = {}
     }
     submit(e) {
         e.preventDefault()
@@ -128,77 +124,33 @@ export class NewSection extends Component {
         })
     }
 
-    add() {
-        this.setState({
-            fields: this.state.fields.concat("")
-        })
-    }
-
-    remove(i){
-        const {fields} = this.state
-
-        this.setState({
-            fields: fields.slice(0,i).concat(fields.slice(i+1))
-        })
-    }
-    update(e, i){
-        const {fields} = this.state
-        fields[i] = e.target.innerText
-        this.setState({fields})
-    }
-
     render(){
-        const {fields} = this.state
-        return <form onSubmit={e => e.preventDefault()}>
-            {
-                fields.map((v,i) => <div>
-                    <span   
-                        contentEditable
-                        className="form-field"
-                        onInput={e => this.update(e, i)}
-                        >{v}</span>
-                    <button onClick={e => this.remove(i)}>-</button>
-                </div>)
-            }
-            <button onClick={e => this.add()}>+</button>
+        
+        var err
+        if(this.state.errors){
+            err = <ul className="compose-errors">
+                {this.state.errors.map(e => <li>{e}</li>)}
+                </ul>
+        }
+
+        return <form className="new-section-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your section:</p> : null}
+                 {err}
+                <div>
+                    <input ref="sectionName" type="text" placeholder="Name your section" required/>
+                    <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
+                </div>
         </form>
     }
 }
-//         var err
-//         if(this.state.errors){
-//             err = <ul className="compose-errors">
-//                 {this.state.errors.map(e => <li>{e}</li>)}
-//                 </ul>
-//         }
 
-//         return <form className="new-section-form" onSubmit={e => this.submit(e)}>
-//                  {this.state.errors ? <p>There were errors with your section:</p> : null}
-//                  {err}
-//                 <div>
-//                     <input ref="sectionName" type="text" placeholder="Name your section" required/>
-//                     <textarea ref="sectionDescription" type="text" placeholder="Add a short description about this section - not required"></textarea>
-//                     <ul>
-//                         {
-//                             a.map((value, index) => 
-//                                 <li>{value}<button className="delete-button" onClick={e => this.deleteInput(e, i)}>-</button></li>
-//                             )
-//                         }
-//                     </ul>
-//                     <div>
-//                      <button className="add-field-button" onClick={e => this.addInput(e)}>+</button>
-//                     </div>
-//                 </div>
-//         </form>
-//     }
-// }
-
-// how do i get it to only delete the item it is specifically associated with?
-// how do I give it an id for the database upon submission?
 
 export class NewCategory extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            fields: []
+        }
     }
     submit(e) {
         e.preventDefault()
@@ -210,6 +162,7 @@ export class NewCategory extends Component {
             this.setState({ errors: e })
         })
     }
+
     render(){
         var err
         if(this.state.errors){
@@ -221,19 +174,22 @@ export class NewCategory extends Component {
         return <form className="new-category-form" onSubmit={e => this.submit(e)}>
                      {this.state.errors ? <p>There were errors with your category:</p> : null}
                      {err}
-                    <div>
-                        <input ref="categoryName" type="text" placeholder="Name your category" required/>
-                    </div>
-            </form>
+                <div>
+                    <input ref="categoryName" type="text" placeholder="Name your category" required/>
+            </div>
+        </form>
+           
     }
 }
 
 export class NewOption extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            fields: []
+        }
     }
-    submit(es) {
+    submit(e) {
         e.preventDefault()
         post('api/option', {
             optionName: this.refs.OptionName.value
@@ -243,7 +199,28 @@ export class NewOption extends Component {
              this.setState({ errors: e })
             })
     }
+
+    add(){
+        this.setState({
+            fields: this.state.fields.concat("")
+        })
+    }
+
+    remove(i){
+        const {fields} = this.state
+        this.setState({
+            fields: fields.slice(0,i).concat(fields.slice(i+1))
+        })
+    }
+
+    update(e, i){
+        const {fields} = this.state
+        fields[i] = e.target.innerText
+        this.setState({fields})
+    }
+
     render(){
+        const {fields} = this.state
         var err
         if(this.state.errors){
             err = <ul className="compose-errors">
@@ -251,13 +228,24 @@ export class NewOption extends Component {
                 </ul>
         }
 
-        return <form className="new-option-form" onSubmit={e => this.submit(e)}>
+        return <form className="new-option-form" onSubmit={e => e.preventDefault()}>
                  {this.state.errors ? <p>There were errors with your options:</p> : null}
                  {err}
                 <div>
                     <input ref="OptionName" type="text" placeholder="Name your first option" required/>
-                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
-                    <input ref="OptionName" type="text" placeholder="Include any additional options"/>
+                    {
+                    fields.map((v,i) => <div>
+                    <span  
+                        ref="OptionName" 
+                        placeholder="Add an additional option"
+                        contentEditable
+                        className="form-field"
+                        onInput={e => this.update(e, i)}
+                        >{v}</span>
+                    <button onClick={e => this.remove(i)}>-</button>
+                </div>)
+            }
+            <button onClick={e => this.add()}>+</button>
                 </div>
         </form>
     }
