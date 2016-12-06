@@ -149,9 +149,23 @@ public partial class Handler {
                 .ThenInclude(l => l.location)
             );
         
-        Repo<Advent>.Register(services, "Advents");
-        Repo<Advance>.Register(services, "Advances");
-        Repo<Section>.Register(services, "Sections");
+        Repo<Advent>.Register(services, "Advents",
+            d => d
+                .Include(e => e.Employees)
+                .Include(a => a.Advances)
+                .Include(r => r.ROs)
+                );
+
+        Repo<Advance>.Register(services, "Advances",
+            d => d
+                .Include(s => s.Sections)
+                .ThenInclude(c => c.Categories)
+                .ThenInclude(o => o.Options));
+
+        Repo<Section>.Register(services, "Sections",
+            d => d
+                .Include(r => r.ROs));
+                
         Repo<AdvanceSectionJoin>.Register(services, "AdvanceSectionJoins");
         Repo<Category>.Register(services, "Categories");
         Repo<Option>.Register(services, "Options");

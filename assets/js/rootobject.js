@@ -17,14 +17,14 @@ export class NewRootObject extends Component {
     constructor(props){
         super(props)
         this.state = { 
-            results: {}
+            results: []
         }
     }
     submit(e){
         e.preventDefault()
         var promise = get(`/api/rootobject/${this.refs.address.value}`)
         promise.then(resp => 
-            this.setState({results: resp}))
+            this.setState({results: resp.results}))
         .catch(err => log(err)) //something to do with either returning the json of the rootObject or finding the id of each search
     }
     
@@ -32,13 +32,14 @@ export class NewRootObject extends Component {
         console.log(this.state)
         var err
         const results = this.state.results
-        if(this.state.results){
+
+        if(results.length){
             return <div className="location">
-                  <ul>
-                        <li>{this.state.results.formatted_address}</li>
-                        <li>{this.state.results.geometry.location.lat}</li>
-                        <li>{this.state.results.geometry.location.lng}</li>
-                    </ul>
+                <ul>
+                    <li>{results[0].formatted_address}</li>
+                    <li>{results[0].geometry.location.lat}</li>
+                    <li>{results[0].geometry.location.lng}</li>
+                </ul>
            </div>
         }
         if(this.state.errors){
@@ -56,33 +57,3 @@ export class NewRootObject extends Component {
         </form>          
     }
 }
-
-// export class LocationSearchResult extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = { 
-//              results: []
-//         }
-//     }
-//     componentDidMount(){
-//     get('/api/rootobject')
-//     .then(resp => 
-//             this.setState({results: resp}))
-//         .catch(err => 
-//             console.log(err))
-//     }
-// render(){
-//     const results = this.state.results
-//         if(!results)
-//             return <div/>
-
-//     return (
-//         <div className="location">
-//                   <ul>
-//                         <li>{this.resp.results.formatted_address}</li>
-//                         <li>{this.resp.results.geometry.location.lat}</li>
-//                         <li>{this.resp.results.geometry.location.lng}</li>
-//                     </ul>
-//            </div>
-//         )}
-// }

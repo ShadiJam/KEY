@@ -11,7 +11,7 @@ import { NewEmployee, EmployeeView } from './employee'
 import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
 import { NewRootObject, LocationSearchResult } from './rootobject'
-
+import Forms from './forms'
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 
@@ -19,8 +19,6 @@ import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.git
 
 // Utility methods
 // --------------
-
-
 
 export const get = (url) =>
     fetch(url, {credentials: 'same-origin'})
@@ -40,14 +38,9 @@ export const post = (url, data) =>
     .then(r => r.json())
 // ----------------
 
-
-
-
 export const log = (...a) => console.log(...a)
 
 export const Error = () => <div>Page Not Found</div>
-
-
 
 const Layout = ({children}) => 
     <div>
@@ -72,16 +65,12 @@ const reactApp = () =>
             
 
             <Route path="/Login" component={Login}/>
-            <Route path="/newEmployee" component={NewEmployee}/>
-            <Route path="/api/employee/:id" component={EmployeeView}/>
-            <Route path="/location" component={NewRootObject}/>
-       
-
-            <Route path="/build" component={Form}/>
-            <Route path="/compose" component={NewAdvent}/>
-            <Route path="/api/advent/:id" component={AdventPage}/>
             
-            <Route path="/api/advance/:id" component={AdvancePage}/>
+            <Route path="/location" component={NewRootObject}/>
+
+            {/*<Route path="/build" component={Form}/>*/}
+            <Route path="/build" component={Forms}/>
+            
 
             <Route path="*" component={Error}/>
         </Router>
@@ -90,47 +79,9 @@ const reactApp = () =>
 
 reactApp()
 
-// Flow types supported (for pseudo type-checking at runtime)
-// function sum(a: number, b: number): number {
-//     return a+b;
-// }
-//
-// and runtime error checking is built-in
-// sum(1, '2');
-
-// class ManagerView extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {
-//             items: []
-//         }
-//     }
-//     componentDidMount(){
-//         var getEmployees = (employees)
-//         get('/api/employee').then(employees => {
-//                 employees = employees()
-//                 this.setState({items: employees})
-//             }).catch(e => log(e))
-
-//         var promise = get('/api/advent')
-//             .then(advents => {
-//                 advents = advents.reverse()
-//                 this.setState({items: advents})
-//             }).catch(e => log(e))
-//     }
-//     render(){
-//         return <div>
-//             <div className="grid grid-3-600">
-//                 {this.state.items.map(Employee)}
-//             </div>
-//              <div className="grid grid-3-600">
-//                 {this.state.items.map(Advent)}
-//             </div>
-//             <div>
-//                 <a className="compose-advent" href="#/compose">
-//                     <button>Create New Event</button>
-//                 </a>
-//             </div>
-//         </div>
-//     }
-// }
+// <Route path="/newEmployee" component={NewEmployee}/>
+// <Route path="/api/employee/:id" component={EmployeeView}/>
+// <Route path="/compose" component={NewAdvent}/>
+// <Route path="/api/advent/:id" component={AdventPage}/>
+            
+// <Route path="/api/advance/:id" component={AdvancePage}/>

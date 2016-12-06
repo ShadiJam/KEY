@@ -11,32 +11,11 @@ import { NewEmployee, EmployeeView } from './employee'
 import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
 import { NewRootObject, LocationSearchResult } from './rootobject'
-
-
-// export class AdvanceForm extends React.Component {
-//     var ExampleForm = React.createClass({
-//   _onChange(event, name, data, change) {
-//     // ... 
-//   },
- 
-//   _onSubmit(event, data) {
-//     // ... 
-//   },
- 
-//   render() {
-//     return <AutoForm onChange={this._onChange} onSubmit={this._onSubmit} trimOnSubmit>
-//       {/* ...form inputs... */}
-//     </AutoForm>
-//   }
-// })
-// }
+import * as models from './models'
 
 export class Form extends React.Component {
     constructor(props){
         super(props)
-        this.state = { 
-            items: [] 
-        }
     }
 
     submit(e) {

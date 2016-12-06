@@ -12,8 +12,6 @@ import { NewEmployee, EmployeeView } from './employee'
 import { LoginForm, RegisterForm, Login } from './login'
 import { NewRootObject, LocationSearchResult } from './rootobject'
 
-
-
 export class AdventPage extends Component {
     constructor(props){
         super(props)
@@ -34,15 +32,15 @@ export class AdventPage extends Component {
                         <h1>{item.name}</h1>
                         <p>{item.startDate}</p>
                         <p>{item.endDate}</p>
-                        <div>
+                    <div>
                         <LocationSearchResult />
-                        </div>
-                        </div>
-                        <div>
+                    </div>
+                    </div>
+                    <div>
                         <NewRootObject />
                     </div>
                     <hr />
-                <a className="build-advance" href="#/build">
+                        <a className="build-advance" href="#/build">
                     <button>Build Event Advance</button>
                 </a>
             </div>

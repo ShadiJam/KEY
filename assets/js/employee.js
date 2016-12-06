@@ -11,8 +11,6 @@ import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Categ
 import { AdventPage, NewAdvent } from './event'
 import { LoginForm, RegisterForm, Login } from './login'
 
-
-
 export class NewEmployee extends React.Component {
     constructor(props){
         super(props)
