@@ -17,19 +17,30 @@ export class NewRootObject extends Component {
     constructor(props){
         super(props)
         this.state = { 
-            items: []
+            results: {}
         }
     }
     submit(e){
         e.preventDefault()
-        get(`/api/rootobject/${this.refs.address.value}`
-        ).then(x => {
-            window.location.hash = `api/advent/${x.id}`
-        }).catch(e => log(e))
+        var promise = get(`/api/rootobject/${this.refs.address.value}`)
+        promise.then(resp => 
+            this.setState({results: resp}))
+        .catch(err => log(err)) //something to do with either returning the json of the rootObject or finding the id of each search
     }
-
+    
     render(){
+        console.log(this.state)
         var err
+        const results = this.state.results
+        if(this.state.results){
+            return <div className="location">
+                  <ul>
+                        <li>{this.state.results.formatted_address}</li>
+                        <li>{this.state.results.geometry.location.lat}</li>
+                        <li>{this.state.results.geometry.location.lng}</li>
+                    </ul>
+           </div>
+        }
         if(this.state.errors){
             err = <ul className="compose-errors">
                 {this.state.errors.map(e => <li>{e}</li>)}
@@ -42,34 +53,36 @@ export class NewRootObject extends Component {
                     <input ref="address" type="text" placeholder="Add a location - enter a zipcode, location name, or address" required/>
                         <button onSubmit={e => this.submit(e)} type="submit">Add Location</button>
                 </div>
-        </form>
-
-            
-            
-
+        </form>          
     }
 }
 
-export class LocationSearchResult extends Component {
-    constructor(props){
-        super(props)
-        this.state = { 
-            id: props.params.id 
-        }}
-    componentDidMount(){
-    get('/api/rootobject'+this.state.id).then((response) => {
-         this.setState({ item: x })
-        })
-    }
-render(){
-    const item = this.state.item
-        if(!item)
-            return <div/>
+// export class LocationSearchResult extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = { 
+//              results: []
+//         }
+//     }
+//     componentDidMount(){
+//     get('/api/rootobject')
+//     .then(resp => 
+//             this.setState({results: resp}))
+//         .catch(err => 
+//             console.log(err))
+//     }
+// render(){
+//     const results = this.state.results
+//         if(!results)
+//             return <div/>
 
-    return <div className="location">
-            { this.state.config && <FormattedAddress address_data={this.state.config.rootObject.results.formatted_address} /> }
-            { this.state.config && <Latitude latitude_data={this.state.config.rootObject.results.geometry.location.lat} /> }
-            { this.state.config && <Longitutde longitude_data={rootObject.results.geometry.location.lat} /> }
-           </div>
-    }
-}
+//     return (
+//         <div className="location">
+//                   <ul>
+//                         <li>{this.resp.results.formatted_address}</li>
+//                         <li>{this.resp.results.geometry.location.lat}</li>
+//                         <li>{this.resp.results.geometry.location.lng}</li>
+//                     </ul>
+//            </div>
+//         )}
+// }

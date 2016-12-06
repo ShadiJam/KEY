@@ -74,6 +74,8 @@ const reactApp = () =>
             <Route path="/Login" component={Login}/>
             <Route path="/newEmployee" component={NewEmployee}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
+            <Route path="/location" component={NewRootObject}/>
+       
 
             <Route path="/build" component={Form}/>
             <Route path="/compose" component={NewAdvent}/>

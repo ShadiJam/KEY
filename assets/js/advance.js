@@ -34,25 +34,28 @@ import { NewRootObject, LocationSearchResult } from './rootobject'
 export class Form extends React.Component {
     constructor(props){
         super(props)
-        this.state = { value: ''};
-
-        this.handleChange = 
-    this.handleChange.bind(this);
-        this.handleSubmit = 
-    this.handleSubmit.bind(this);
+        this.state = { 
+            items: [] 
+        }
     }
 
-    handleChange(event) {
-        this.setState({value:
-            event.target.value});
-    }
-
-    handleSubmit(e) {
-        alert(this.state.value + 'was added');
-        e.preventDefault();
+    submit(e) {
+        e.preventDefault()
+        post('api/advance'+this.state.id).then(x => {
+            window.location.hash = `#/status/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
     }
 
     render() {
+        var err
+        if(this.state.errors){
+            err = <ul className="compose-errors">
+                {this.state.errors.map(e => <li>{e}</li>)}
+                </ul>
+        }
+
         return (
             <div className="form-builder">
                 <NewSection />

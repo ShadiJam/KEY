@@ -42,7 +42,7 @@ public class Advance : HasId {
     public bool Assigned { get; set; } = false;
     public bool isComplete { get; set; } = false;
     public int EmployeeId { get; set; }
-    public List<Section> Sections { get; set; }
+    public List<Section> Sections { get; set; } = new List<Section>();
     public DateTime dueDate { get; set; }
     public int AdventId { get; set; }
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }
@@ -62,8 +62,8 @@ public class Section : HasId {
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
     public List<RootObject> ROs { get; set; } = new List<RootObject>();
-    public List<Category> Categories { get; set; }
-    public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }
+    public List<Category> Categories { get; set; } = new List<Category>();
+    public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
     // create function that allows admin user to create section and include in a particular advance
 }
 
@@ -80,7 +80,7 @@ public class Category : HasId {
     [Required]
     public int Id { get; set; }
     public string CategoryName { get; set; }
-    public List<Option> Options { get; set; }
+    public List<Option> Options { get; set; } = new List<Option>();
     public int SectionId { get; set; }
 }
 public class Option : HasId {
@@ -89,7 +89,7 @@ public class Option : HasId {
     public string OptionName { get; set; }
     public int CategoryId { get; set; }
     }
-    //create function that allows admin user to set options in a category and assign it to a specific category
+    
     // create function that allows employee user to choose from options and post that to advance
 
 
