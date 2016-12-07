@@ -39,7 +39,7 @@ public class Advance : HasId {
     [Required]
     public int Id { get; set; }
     public string AdvanceName { get; set; }
-    public bool Assigned { get; set; } = false;
+    public bool isAssigned { get; set; } = false;
     public bool isComplete { get; set; } = false;
     public int EmployeeId { get; set; }
     public List<Section> Sections { get; set; } = new List<Section>();
@@ -48,8 +48,7 @@ public class Advance : HasId {
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }
 
   
-    // create function that allows admin user to create new advance
-    // create function that allows admin user to issue new advance to employee (and therefore a specific department)
+
     // create function that allows admin user to approve/deny advance
     // create function that allows employee user to respond to an advance request
     // create function that allows admin user to create multiple versions of an advance and send certain versions to certain employees (departments)

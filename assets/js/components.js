@@ -5,11 +5,9 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
 import { get, post, log, Error, Layout, reactapp } from './app'
-import { NewEmployee, EmployeeView } from './employee'
-import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject, LocationSearchResult } from './rootobject'
+import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
+import Forms from './forms'
 
 export const Nav = ({includeLogin}) => 
     <nav className="navbar navbar-inverse navbar-fixed-top">
@@ -69,13 +67,13 @@ export const HomeContents = () =>
 
 
 
-// export const Employee = (employee) =>
-//     <div className="employee">
-//         <h1>{employee.FName} {employee.LName}</h1>
-//         <p>{employee.Department}</p>
-//         <p>{employee.Phone}</p>
-//         <p>{employee.Email}</p>
-//     </div>
+export const Employee = (employee) =>
+    <div className="employee">
+        <h1>{employee.FName} {employee.LName}</h1>
+        <p>{employee.Department}</p>
+        <p>{employee.Phone}</p>
+        <p>{employee.Email}</p>
+    </div>
 
 export const Advent = (advent) =>
     <div className="advent">
@@ -86,59 +84,59 @@ export const Advent = (advent) =>
         </a>
     </div>
 
-// export const Advance = (advance) =>
-//     <div className="advance">
-//         <a href={`#/status/${advance.id}`}>
-//             <h1>{advance.AdvanceName}</h1>
-//             <p>{advance.Assigned}</p>
-//             <p>{advance.dueDate}</p>
-//             <p>{advance.Section}</p>
-//         </a>
-//     </div>
+export const Advance = (advance) =>
+    <div className="advance">
+        <a href={`#/status/${advance.id}`}>
+            <h1>{advance.AdvanceName}</h1>
+            <p>{advance.Assigned}</p>
+            <p>{advance.dueDate}</p>
+            <p>{advance.Section}</p>
+        </a>
+    </div>
 
-// export const Section = (section) =>
-//     <div className="section">
-//         <h1>{section.SectionName}</h1>
-//         <p>{section.SectionDescription}</p>
-//         <p>{section.RootObject}</p>
-//         <p>{section.Cost}</p>
-//         <p>{section.Category}</p>
-//     </div>
+export const Section = (section) =>
+    <div className="section">
+        <h1>{section.SectionName}</h1>
+        <p>{section.SectionDescription}</p>
+        <p>{section.RootObject}</p>
+        <p>{section.Cost}</p>
+        <p>{section.Category}</p>
+    </div>
 
-// export const Category = (category) =>
-//     <div className="category">
-//             <h1>{category.CategoryName}</h1>
-//             <p>{category.Options}</p>
-//     </div>
+export const Category = (category) =>
+    <div className="category">
+            <h1>{category.CategoryName}</h1>
+            <p>{category.Options}</p>
+    </div>
 
-// export const Option = (option) =>
-//     <div className="option">
-//         <h1>{option.OptionName}</h1>
-//     </div>
+export const Option = (option) =>
+    <div className="option">
+        <h1>{option.OptionName}</h1>
+    </div>
 
 
 
-// export const RootObject = (rootObject) =>
-//         <div className="rootObject">
-//             <p>{rootObject.Results}</p>
-//         </div>
+export const RootObject = (rootObject) =>
+        <div className="rootObject">
+            <p>{rootObject.Results}</p>
+        </div>
 
-// export const Result = (results) =>
-//         <div>
-//             <p>{rootObject.Results.formatted_address}</p>
-//             <p>{rootObject.Results.Geometry}</p>
-//         </div>
+export const Result = (results) =>
+        <div>
+            <p>{rootObject.Results.formatted_address}</p>
+            <p>{rootObject.Results.Geometry}</p>
+        </div>
 
-// export const Location = (location) =>
-//     <div>
-//         <p>{rootObject.Results.geometry.location.lat}</p>
-//         <p>{rootObject.Results.geometry.location.lng}</p>
-//     </div>
+export const Location = (location) =>
+    <div>
+        <p>{rootObject.Results.geometry.location.lat}</p>
+        <p>{rootObject.Results.geometry.location.lng}</p>
+    </div>
 
-// export const Geometry = (geometry) =>
-    // <div>
-    //     <p>{rootObject.Results.geometry.location}</p>
-    // </div>
+export const Geometry = (geometry) =>
+    <div>
+        <p>{rootObject.Results.geometry.location}</p>
+    </div>
 
 
        

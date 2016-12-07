@@ -284,6 +284,45 @@ class LocationForm extends Component {
     }
 }
 
+export class NewAdvent extends Component {
+    constructor(props){
+        super(props)
+        this.state = {}
+    }
+    submit(e) {
+        e.preventDefault()
+        post('api/advent',{
+            name: this.refs.name.value,
+            startDate: this.refs.startDate.value,
+            endDate: this.refs.endDate.value
+       }).then(x => {
+            window.location.hash = `api/advent/${x.id}`
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
+    }
+    render(){
+        var err
+        if(this.state.errors){
+            err = <ul className="compose-errors">
+                {this.state.errors.map(e => <li>{e}</li>)}
+                </ul>
+        }
+        return  <form className="new-advent-form" onSubmit={e => this.submit(e)}>
+                 {this.state.errors ? <p>There were errors with your event submission:</p> : null}
+                 {err}
+                <div>
+                    <input ref="name" type="text" placeholder="Event Name" required/>
+                    <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+                    <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+                </div>
+                <div>
+                    <button type="submit">Submit Event</button>
+                </div>
+        </form>
+                
+    }
+}
 
 // not sure if I've added the above correctly, but what I'd like is that they do a location search, and then have the option to add the results to that advance and/or section  
 
