@@ -6,10 +6,9 @@ import {render} from 'react-dom'
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
-import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
-import { CreateAdvent, AdventPage, NewAdvent } from './event'
-import { NewRootObject } from './rootobject'
+import Forms from './forms'
+
 import * as models from './models'
 
 

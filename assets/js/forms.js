@@ -88,14 +88,13 @@ export class AdvanceForm extends Component {
     constructor(props){
         super(props)
         // this.props.advance is an object passed in that holds default or existing advance data
-        // this.state = {
-        //     sections: []
-        // }
     }
     pushNewSection(e){
         e.preventDefault()
-        let {sections} = this.state
-        this.setState({ sections: [...sections, models.sectionModel()] })
+        let {advance} = this.props
+            , {sections} = advance
+        advance.sections = sections ? [...sections, models.sectionModel()] : [models.sectionModel()]
+        update()
     }
     change(e, name){
         e.preventDefault()
@@ -106,7 +105,7 @@ export class AdvanceForm extends Component {
             <ul>
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" defaultValue={this.props.advance.advanceName} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" defaultValue={this.props.advance.dueDate} /> </li>
-                <li> <FormGroup onChange={e => this.change(e, "assigned")} ref="assigned" controlId="formControlsSelect">
+                <li> <FormGroup onChange={e => this.change(e, "isAssigned")} ref="assigned" controlId="formControlsSelect">
                         <ControlLabel>Assign Advance</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="select">choose Employee</option>
@@ -135,28 +134,32 @@ export class AdvanceForm extends Component {
 
 
 export class SectionForm extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         // this.props.section is an object passed in that holds default or existing section data
-        this.state = {
-            rOs: [],
-            categories: []
-        }
+        // this.state = {
+        //     rOs: [],
+        //     categories: []
+        // }
     }
     pushNewrO(e){
         e.preventDefault()
-        let {rOs} = this.state
-        this.setState({ rOs: [...rOs, models.rOModel()] })
+        let {section} = this.props
+        if(!section.rOs) section.rOs = []
+        section.rOs.push(models.rOModel())
+        update()
     }
     pushNewCategory(e){
         e.preventDefault()
-        let {categories} = this.state
-        this.setState({ categories: [...categories, models.categoryModel()] })
+        let {section} = this.props
+        if(!section.categories) section.categories = []
+        section.categories.push(models.categoryModel())
+        update()
     }
-    change(e, name){
-        e.preventDefault()
-        this.props.section[name] = this.refs[name].value
-    }
+    // change(e, name){
+    //     e.preventDefault()
+    //     this.props.section[name] = this.refs[name].value
+    // }
     render(){
         return <div className="section-form">
             <ul>
@@ -164,11 +167,11 @@ export class SectionForm extends Component {
                 <li> <input onChange={e => this.change(e, "sectionDescription")} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
             </ul>
             <ul>
-                {this.props.rOs.map(location => <LocationForm location={location}/>)}
+                {(this.props.section.rOs || []).map(location => <LocationForm location={location} label="Section"/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</button>
             </ul>
             <ul>
-                {this.props.categories.map(e => <CategoryForm category={e}/>)}
+                {(this.props.section.categories || []).map(e => <CategoryForm category={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add another category?</button>
             </ul>
             
@@ -180,14 +183,13 @@ export class CategoryForm extends Component {
     constructor(props){
         super(props)
         // this.props.category is an object passed in that holds default or existing advance data
-        this.state = {
-            options: []
-        }
     }
     pushNewOption(e){
         e.preventDefault()
-        let {options} = this.state
-        this.setState({ options: [...options, models.optionModel()] })
+        let {category} = this.props
+        if(!category.options) category.options = []
+        category.options.push(models.optionModel())
+        update()
     }
     change(e, name){
         e.preventDefault()
@@ -200,7 +202,7 @@ export class CategoryForm extends Component {
                 <li> <input onChange={e => this.change(e, "categoryName")} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
             </ul>
             <ul>
-                {this.props.options.map(e => <OptionForm option={e}/>)}
+                {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add another option?</button>
             </ul>
         </div>
@@ -211,7 +213,7 @@ export class OptionForm extends Component {
     constructor(props){
         super(props)
         // this.props.option is an object passed in that holds default or existing advance data
-        this.state = {}
+        
     }
     change(e, name){
         e.preventDefault()
@@ -233,6 +235,7 @@ class LocationForm extends Component {
         this.state = {
             results: []
         }
+        if(!this.props.label) this.props.label = "Advance"
     }
     click(e){
         e.preventDefault()
@@ -265,7 +268,7 @@ class LocationForm extends Component {
                     <li>{results[0].geometry.location.lat}</li>
                     <li>{results[0].geometry.location.lng}</li>
                 </ul>
-                <button className="form-buttons" onClick={e => this.click(e)} type="click">Add this Location to Advance</button> 
+                <button className="form-buttons" onClick={e => this.click(e)} type="click">Add this Location to {this.props.label}</button> 
            </div>
         }
         

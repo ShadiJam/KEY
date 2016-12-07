@@ -15,12 +15,13 @@ public class Employee : HasId {
     public int Id { get; set; }
     public string FName { get; set;}
     public string LName { get; set; }
-    public string FullName { get; set; }
+    public string FullName { get; set; } 
     public string Department { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; } //create actual email property here
     public int AdventId { get; set; }
     //create function that allows admin user to add employee
+    // write logic for downloading file here
 }
 public class Advent : HasId {
     [Required]
@@ -33,6 +34,7 @@ public class Advent : HasId {
     public List<Employee> Employees { get; set; } = new List<Employee>();
   
     // create function that allows admin user to create new event
+    // write logic for downloading file here
 }
 
 public class Advance : HasId {

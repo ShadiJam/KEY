@@ -6,6 +6,7 @@ import {render} from 'react-dom'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
+import { NewAdvent } from './forms'
 import Forms from './forms'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 // import { Datepicker } from 'react-bootstrap-date-picker'
@@ -61,7 +62,6 @@ const reactApp = () =>
             <Route path="/Login" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
             <Route path="/compose" component={NewAdvent}/>
-            <Route path="/location" component={NewRootObject}/>
             <Route path="/api/advent/:id" component={Forms}/>
             <Route path="*" component={Error}/>
         </Router>
@@ -76,3 +76,5 @@ reactApp()
 // <Route path="/api/advent/:id" component={AdventPage}/>
             
 // <Route path="/api/advance/:id" component={AdvancePage}/>
+
+// 
