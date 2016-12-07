@@ -8,7 +8,6 @@ import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
 import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
-import { NewEmployee, EmployeeView } from './employee'
 import { CreateAdvent, AdventPage, NewAdvent } from './event'
 import { NewRootObject } from './rootobject'
 import * as models from './models'
@@ -108,6 +107,31 @@ export class Login extends Component {
                 <RegisterForm />
             </div>
         )
+    }
+}
+
+export class EmployeeView extends Component {
+    constructor(props){
+        super(props)
+        this.state = { 
+            items: []
+        }
+    }
+    componentDidMount(){
+        get('/api/advent').then(advents => {
+                advents = advents.reverse()
+                this.setState({items: advents})
+            }).catch(e => log(e))
+    }
+    render(){
+        return <div className="grid grid-3-600">
+            {this.state.items.map(Advent)}
+            <div>
+            <a href="#/compose">
+                <button type="newAdvent">Create New Event</button>
+            </a>
+            </div>
+        </div>
     }
 }
 

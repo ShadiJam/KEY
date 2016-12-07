@@ -3,18 +3,12 @@ import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-// import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Form, AdvancePage, NewAdvance, NewSection, NewCategory, NewOption } from './advance'
 import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
-import { NewEmployee, EmployeeView } from './employee'
-import { AdventPage, NewAdvent } from './event'
-import { LoginForm, RegisterForm, Login } from './login'
-import { NewRootObject, LocationSearchResult } from './rootobject'
+import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
 import Forms from './forms'
-
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
-
+// import { Datepicker } from 'react-bootstrap-date-picker'
 // console.log(Boot) // what hast thou provided?
 
 // Utility methods

@@ -29,7 +29,7 @@
                 .grid-$(col)-$(width) {
                     & > * {
                        width: calc(100 / $col)%;
-                }
+                    }
             }
     }
 }
