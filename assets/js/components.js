@@ -21,7 +21,7 @@ export const Nav = ({includeLogin}) =>
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Project name</a>
+            <a className="navbar-brand" href="#">Key</a>
         </div>
         <div id="navbar" className="navbar-collapse collapse">
             {includeLogin ? <LoginForm /> : null}
@@ -77,15 +77,14 @@ export const HomeContents = () =>
 //         <p>{employee.Email}</p>
 //     </div>
 
-// export const Advent = (advent) =>
-//     <div className="advent">
-//         <a href={`#/status/${advent.id}`}>
-//             <h1>{advent.name}</h1>
-//             <p>{advent.startDate}</p>
-//             <p>{advent.endDate}</p>
-//             <RootObject />
-//         </a>
-//     </div>
+export const Advent = (advent) =>
+    <div className="advent">
+        <a href={`#/status/${advent.id}`}>
+            <h1>{advent.name}</h1>
+            <p>{advent.startDate}</p>
+            <p>{advent.endDate}</p>
+        </a>
+    </div>
 
 // export const Advance = (advance) =>
 //     <div className="advance">

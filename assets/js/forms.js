@@ -42,21 +42,21 @@ export default class AdventForm extends Component {
         })
     }
     render(){
-        return <div>
+        return <div className="advent-form">
             <ul>
                 {this.state.employees.map(e => <EmployeeForm employee={e}/>)}
-                <button onClick={e => this.pushNewEmployee(e)}>Add another employee?</button>
+                <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add another employee?</button>
             </ul>
             <ul>
                 {this.state.advances.map(e => <AdvanceForm advance={e} employees={this.state.employees}/>)}
-                <button onClick={e => this.pushNewAdvance(e)}>Add another advance?</button>
+                <button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Add another advance?</button>
             </ul>
             <ul>
                 {this.state.rOs.map(location => <LocationForm location={location}/>)}
-                <button onClick={e => this.pushNewrO(e)}>Add another location?</button>
+                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</button>
             </ul>
             
-            <button onClick={e => this.save(e)}> BIG SAVE BUTTON </button>
+            <button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </button>
         </div>
     }
 }
@@ -72,7 +72,7 @@ export class EmployeeForm extends Component {
         this.props.employee[name] = this.refs[name].value
     }
     render(){
-        return <div>
+        return <div className="employee-form">
             <ul>
                 <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" defaultValue={this.props.employee.fName} /> </li>
                 <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" defaultValue={this.props.employee.lName} /> </li>
@@ -88,21 +88,21 @@ export class AdvanceForm extends Component {
     constructor(props){
         super(props)
         // this.props.advance is an object passed in that holds default or existing advance data
+        // this.state = {
+        //     sections: []
+        // }
     }
     pushNewSection(e){
         e.preventDefault()
         let {sections} = this.state
         this.setState({ sections: [...sections, models.sectionModel()] })
     }
-    change(e, advanceName, dueDate, assigned, isComplete){
+    change(e, name){
         e.preventDefault()
-        this.props.advance[advanceName] = this.refs.advanceName.value,
-        this.props.advance[dueDate] = this.refs.dueDate.value,
-        this.props.advance[assigned] = this.refs.assigned.value, // selection = true + needs to connect to employeeId upon save
-        this.props.advance[isComplete] = this.refs.isComplete.value // yes = true, no = false
+        this.props.advance[name] = this.refs[name].value
     }
     render(){
-        return <div>
+        return <div className="advance-form">
             <ul>
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" defaultValue={this.props.advance.advanceName} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" defaultValue={this.props.advance.dueDate} /> </li>
@@ -110,7 +110,7 @@ export class AdvanceForm extends Component {
                         <ControlLabel>Assign Advance</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="select">choose Employee</option>
-                            {this.props.employees.map(e => <option value={e.id}>{e.fName}</option>)}
+                            {this.props.employees.map(e => <option value={e.id}>{e.fName}{e.lName}</option>)}
                         </FormControl>
                     </FormGroup>
                 </li> 
@@ -119,15 +119,15 @@ export class AdvanceForm extends Component {
                         <ControlLabel>Advance Complete?</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="select">Select</option>
-                            <ul><option value="other">Yes</option></ul>
-                            <ul><option value="other">No</option></ul>
+                            <option value="other">Yes</option>
+                            <option value="other">No</option>
                         </FormControl>
                     </FormGroup>
                 </li>
             </ul>
             <ul>
                 {(this.props.advance.sections || []).map(e => <SectionForm section={e}/>)}
-                <button onClick={e => this.pushNewSection(e)}>Add another section?</button>
+                <button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add another section?</button>
             </ul>
         </div>
     }
@@ -153,24 +153,23 @@ export class SectionForm extends Component {
         let {categories} = this.state
         this.setState({ categories: [...categories, models.categoryModel()] })
     }
-    change(e, sectionName, sectionDescription){
+    change(e, name){
         e.preventDefault()
-        this.props.section[sectionName] = this.refs.sectionName.value,
-        this.props.section[sectionDescription] = this.refs.sectionDescription.value
+        this.props.section[name] = this.refs[name].value
     }
     render(){
-        return <div>
+        return <div className="section-form">
             <ul>
                 <li> <input onChange={e => this.change(e, "sectionName")} ref="sectionName" placeholder="Section Name" defaultValue={this.props.section.sectionName} /> </li>
                 <li> <input onChange={e => this.change(e, "sectionDescription")} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
             </ul>
             <ul>
-                {this.props.rOs.map(e => <LocationForm rO={e}/>)}
-                <button onClick={e => this.pushNewrO(e)}>Add another location?</button>
+                {this.props.rOs.map(location => <LocationForm location={location}/>)}
+                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</button>
             </ul>
             <ul>
                 {this.props.categories.map(e => <CategoryForm category={e}/>)}
-                <button onClick={e => this.pushNewCategory(e)}>Add another category?</button>
+                <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add another category?</button>
             </ul>
             
         </div>
@@ -181,26 +180,28 @@ export class CategoryForm extends Component {
     constructor(props){
         super(props)
         // this.props.category is an object passed in that holds default or existing advance data
-        this.state = {}
+        this.state = {
+            options: []
+        }
     }
     pushNewOption(e){
         e.preventDefault()
         let {options} = this.state
         this.setState({ options: [...options, models.optionModel()] })
     }
-    change(e, categoryName){
+    change(e, name){
         e.preventDefault()
-        this.props.category[categoryName] = this.refs.categoryName.value
+        this.props.category[name] = this.refs[name].value
     }
     
     render(){
-        return <div>
+        return <div className="category-form">
             <ul>
                 <li> <input onChange={e => this.change(e, "categoryName")} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
             </ul>
             <ul>
                 {this.props.options.map(e => <OptionForm option={e}/>)}
-                <button onClick={e => this.pushNewOption(e)}>Add another option?</button>
+                <button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add another option?</button>
             </ul>
         </div>
     }
@@ -212,12 +213,12 @@ export class OptionForm extends Component {
         // this.props.option is an object passed in that holds default or existing advance data
         this.state = {}
     }
-    change(e, optionName){
+    change(e, name){
         e.preventDefault()
-        this.props.option[optionName] = this.refs.optionName.value
+        this.props.option[name] = this.refs[name].value
     }
     render(){
-        return <div>
+        return <div className="option-form">
             <ul>
                 <li> <input onChange={e => this.change(e, "optionName")} ref="optionName" placeholder="Option Name" defaultValue={this.props.option.optionName} /> </li>
             </ul>
@@ -264,7 +265,7 @@ class LocationForm extends Component {
                     <li>{results[0].geometry.location.lat}</li>
                     <li>{results[0].geometry.location.lng}</li>
                 </ul>
-                <button onClick={e => this.click(e)} type="click">Add this Location to Advance</button> 
+                <button className="form-buttons" onClick={e => this.click(e)} type="click">Add this Location to Advance</button> 
            </div>
         }
         
@@ -277,7 +278,7 @@ class LocationForm extends Component {
                  {err}
                 <div>
                     <input ref="address" placeholder="search locations by entering an address or zip code" /> 
-                    <button onClick={e => this.getLocation(e)} type="submit">Search</button>
+                    <button className="google-button" onClick={e => this.getLocation(e)} type="submit">Search</button>
                 </div>
         </div>          
     }

@@ -11,6 +11,7 @@ import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Categ
 import { NewEmployee, EmployeeView } from './employee'
 import { CreateAdvent, AdventPage, NewAdvent } from './event'
 import { NewRootObject } from './rootobject'
+import * as models from './models'
 
 
 
@@ -25,24 +26,19 @@ export class LoginForm extends Component {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
-            window.location.hash = `#/status/${x.id}`
+            window.location.hash = `api/employee/${x.id}`
         }).catch(e => {
             this.setState({ errors: e })
         })
     }
     render(){
         var err 
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                    {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
         return <form className="login-form" onSubmit={e => this.submit(e)}>
             {this.state.errors ? <p>There were errors with your Login:</p> : null}
             {err}
 
             <p>Please Log In</p>   
-            <div key={login.id}>
+            <div>
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input ref="password" type="password" placeholder="Your Password" required/>
             </div>
@@ -67,24 +63,19 @@ export class RegisterForm extends Component {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
-            window.location.hash = `#/newEmployee`
+            window.location.hash = `api/employee/${x.id}`
         }).catch(e => {
             this.setState({ errors: e })
         })
     }
     render(){
-        var err 
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                    {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
+        var err
         return <form onSubmit={e => this.submit(e)}>
             {this.state.errors ? <p>There were errors with your Registration:</p> : null}
             {err}
 
             <p>Or Register</p>   
-            <div key={register.id}>
+            <div>
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>

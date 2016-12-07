@@ -65,13 +65,10 @@ const reactApp = () =>
             
 
             <Route path="/Login" component={Login}/>
-            
+            <Route path="/api/employee/:id" component={EmployeeView}/>
+            <Route path="/compose" component={NewAdvent}/>
             <Route path="/location" component={NewRootObject}/>
-
-            {/*<Route path="/build" component={Form}/>*/}
-            <Route path="/build" component={Forms}/>
-            
-
+            <Route path="/api/advent/:id" component={Forms}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,
@@ -80,8 +77,8 @@ const reactApp = () =>
 reactApp()
 
 // <Route path="/newEmployee" component={NewEmployee}/>
-// <Route path="/api/employee/:id" component={EmployeeView}/>
-// <Route path="/compose" component={NewAdvent}/>
+// 
+// 
 // <Route path="/api/advent/:id" component={AdventPage}/>
             
 // <Route path="/api/advance/:id" component={AdvancePage}/>

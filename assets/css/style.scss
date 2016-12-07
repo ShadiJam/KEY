@@ -85,7 +85,7 @@
     margin: 30px;
 }
 
-.advance-section-form {
+.employee-form {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -96,7 +96,7 @@
     }
 }
 
-.advance-section-form {
+.advance-form {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -107,7 +107,7 @@
     }
 }
 
-.new-advance-form {
+.section-form {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -118,7 +118,7 @@
     }
 }
 
-.new-section-form {
+.category-form {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -129,7 +129,7 @@
     }
 }
 
-.new-category-form {
+.option-form {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -140,7 +140,7 @@
     }
 }
 
-.new-option-form {
+.location {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -162,26 +162,9 @@
     }
 }
 
-.form-builder {
-     max-width: 600px;
+.form-buttons {
      margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
 }
 
 
-
-.form-field {
-	 max-width: 600px;
-     margin: 1.5rem auto;
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-        border: 1px solid lightgray;
-}
 
