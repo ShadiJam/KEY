@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import * as models from './models'
 import {get, post} from './app'
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
 
 let update // DANGER WILL ROBINSON, DOUNT TOUCH ME
 
@@ -45,18 +45,18 @@ export default class AdventForm extends Component {
         return <div className="advent-form">
             <ul>
                 {this.state.employees.map(e => <EmployeeForm employee={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add another employee?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add another employee?</Button>
             </ul>
             <ul>
                 {this.state.advances.map(e => <AdvanceForm advance={e} employees={this.state.employees}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Add another advance?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Add another advance?</Button>
             </ul>
             <ul>
                 {this.state.rOs.map(location => <LocationForm location={location}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</Button>
             </ul>
             
-            <button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </button>
+            <Button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </Button>
         </div>
     }
 }
@@ -126,7 +126,7 @@ export class AdvanceForm extends Component {
             </ul>
             <ul>
                 {(this.props.advance.sections || []).map(e => <SectionForm section={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add another section?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add another section?</Button>
             </ul>
         </div>
     }
@@ -168,11 +168,11 @@ export class SectionForm extends Component {
             </ul>
             <ul>
                 {(this.props.section.rOs || []).map(location => <LocationForm location={location} label="Section"/>)}
-                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add another location?</Button>
             </ul>
             <ul>
                 {(this.props.section.categories || []).map(e => <CategoryForm category={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add another category?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add another category?</Button>
             </ul>
             
         </div>
@@ -203,7 +203,7 @@ export class CategoryForm extends Component {
             </ul>
             <ul>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add another option?</button>
+                <Button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add another option?</Button>
             </ul>
         </div>
     }
@@ -235,7 +235,6 @@ class LocationForm extends Component {
         this.state = {
             results: []
         }
-        if(!this.props.label) this.props.label = "Advance"
     }
     click(e){
         e.preventDefault()
@@ -268,7 +267,7 @@ class LocationForm extends Component {
                     <li>{results[0].geometry.location.lat}</li>
                     <li>{results[0].geometry.location.lng}</li>
                 </ul>
-                <button className="form-buttons" onClick={e => this.click(e)} type="click">Add this Location to {this.props.label}</button> 
+                <Button className="form-buttons" onClick={e => this.click(e)} type="click">Add this Location</Button> 
            </div>
         }
         
@@ -281,7 +280,7 @@ class LocationForm extends Component {
                  {err}
                 <div>
                     <input ref="address" placeholder="search locations by entering an address or zip code" /> 
-                    <button className="google-button" onClick={e => this.getLocation(e)} type="submit">Search</button>
+                    <Button className="google-button" onClick={e => this.getLocation(e)} type="submit">Search</Button>
                 </div>
         </div>          
     }
@@ -320,7 +319,7 @@ export class NewAdvent extends Component {
                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
                 </div>
                 <div>
-                    <button type="submit">Submit Event</button>
+                    <Button type="submit">Submit Event</Button>
                 </div>
         </form>
                 

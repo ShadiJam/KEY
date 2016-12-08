@@ -3,6 +3,7 @@ import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
@@ -42,7 +43,7 @@ export class LoginForm extends Component {
             </div>
             <div>
                 <a className="login-button" href="#/">
-                    <button type="submit">Log In</button>
+                    <Button type="submit">Log In</Button>
                 </a>
             </div>
         </form>
@@ -79,7 +80,7 @@ export class RegisterForm extends Component {
             </div>
             <div>
                 <a className="register-button" href="#/newEmployee">
-                    <button type="submit">Register</button>
+                    <Button type="submit">Register</Button>
                 </a>
             </div>
         </form>
@@ -127,7 +128,7 @@ export class EmployeeView extends Component {
             {this.state.items.map(Advent)}
             <div>
             <a href="#/compose">
-                <button type="newAdvent">Create New Event</button>
+                <Button type="newAdvent">Create New Event</Button>
             </a>
             </div>
         </div>

@@ -3,8 +3,9 @@ import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
+import { Header, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
 import { NewAdvent } from './forms'
 import Forms from './forms'
@@ -38,13 +39,13 @@ export const log = (...a) => console.log(...a)
 export const Error = () => <div>Page Not Found</div>
 
 const Layout = ({children}) => 
-    <div>
         <div>
-            <Nav />
-            <Jumbotron />
+            <div>
+                <Header />
+            </div>
+                {children}
         </div>
-            {children}
-    </div>
+ 
 
 
 
@@ -70,11 +71,3 @@ const reactApp = () =>
 
 reactApp()
 
-// <Route path="/newEmployee" component={NewEmployee}/>
-// 
-// 
-// <Route path="/api/advent/:id" component={AdventPage}/>
-            
-// <Route path="/api/advance/:id" component={AdvancePage}/>
-
-// 

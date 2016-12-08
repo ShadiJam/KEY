@@ -39,6 +39,26 @@
 @mixin grid_r 4, 800;
 @mixin grid_r 6, 1000;
 
+
+
+body {
+    background-image: url('https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/B058618EEE.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    max-height: 100%;
+    
+}
+
+
+.menu-button {
+    height: 50px;
+    width: 50px;
+    position: fixed;
+}
+
+
 .advent {
     padding: 1.5rem;
     border: 1px solid green;
@@ -53,22 +73,21 @@
     }
 }
 
-.compose-advent {
-    border: 1px solid green;
-    float: left;
-    color: green;
-    position: center;
-}
-
 .new-advent-form {
+     margin-top: 40px;
      max-width: 600px;
      margin: 1.5rem auto;
+     float: left;
+     padding-left: 20px;
+     margin-top: 30%;
+     padding-bottom: 125px;
      input {
-        display: block;
+        display: inline-block;
         padding: .5rem;
         margin-bottom: 1.5rem;
         width: 100%;
-    }
+        background-color: none;
+     }
 }
 
 .advent-form {
@@ -78,80 +97,13 @@
 .advance-category-button {
     display: inline;
     margin: 40px;
-
 }
 
 .login-stuff > * {
     margin: 30px;
 }
 
-.employee-form {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.advance-form {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.section-form {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.category-form {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.option-form {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.location {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-
-.new-RO-form {
+.location, .new-RO-form, .option-form, .category-form, .section-form, .advance-form, .employee-form  {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -164,6 +116,55 @@
 
 .form-buttons {
      margin: 1.5rem auto;
+}
+
+* header#header nav ul li {
+  border-top: 1px solid #C98D00;
+  list-style-type: none;
+  display: block;
+  margin-top: 15px; 
+  width: 100px;
+ 
+}
+nav a {
+    color: #C98D00;
+    float: right;
+}
+
+/* below controls navigation sub-menues */
+header#header nav #primary li ul {
+  display: none;
+  width: 100px;
+}
+/* below controls nav menu lines */
+header#header nav #primary li:hover,
+header#header nav #primary li.active {
+  border-color: #DCB65C;
+  color: #DCB65C;
+}
+
+/* below gives sub-menues display */
+header#header nav #primary li:hover ul,
+header#header nav #primary li.active ul {
+  display: block;
+  padding: 0;
+}
+
+/* below gives menu color when hovering */
+header#header nav #primary li:hover > a,
+header#header nav #primary li.active > a {
+  color: #DCB65C;
+}
+
+/* controls menu bar sizing and layout */
+*.row > [class*="span"] {
+  display: inline;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+.span2 {
+  width: 30px;
 }
 
 

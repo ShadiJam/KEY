@@ -3,67 +3,34 @@ import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import { Button, FormGroup, FormControl, ControlLabel, Navbar } from 'react-bootstrap';
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
 import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
 import Forms from './forms'
 
-export const Nav = ({includeLogin}) => 
-    <nav className="navbar navbar-inverse navbar-fixed-top">
-        <div className="container">
-        <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span className="sr-only">Toggle navigation</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            </button>
-            <a className="navbar-brand" href="#">Key</a>
+export const Header = () =>
+    <div id="container" class="container">
+        <header id="header">
+            <nav id="=menu">
+                <ul id="primary" class="row">
+                    <li class="portfolio span2">
+                        <a href="#portfolio">KEY</a>
+                            <ul id="secondary">
+                                <li class="project"><a href="">EVENT</a></li>
+                                <li class="project"><a href="">ADVANCE</a></li>
+                                <li class="project"><a href="">TEAM</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
         </div>
-        <div id="navbar" className="navbar-collapse collapse">
-            {includeLogin ? <LoginForm /> : null}
-        </div>
-        </div>
-    </nav>
+       
+ 
 
-export const Jumbotron = () => 
-    <div className="jumbotron">
-        <div className="container">
-            <h1>Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a className="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-        </div>
-    </div>
 
-export const HomeContents = () =>
-    <div className="container">
-        <div className="row">
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-            
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-
-            <div className="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a className="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-        </div>
-
-        <hr />
-
-        <footer>
-        <p>&copy; 2016 Company, Inc.</p>
-        </footer>
-    </div>
 
 
 
