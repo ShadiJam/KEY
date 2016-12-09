@@ -11,16 +11,16 @@ import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
 import Forms from './forms'
 
 export const Header = () =>
-    <div id="container" class="container">
+    <div id="container" className="container">
         <header id="header">
             <nav id="=menu">
-                <ul id="primary" class="row">
-                    <li class="portfolio span2">
-                        <a href="#portfolio">KEY</a>
+                <ul id="primary" className="row">
+                    <li className="portfolio span2">
+                        <a href="#portfolio">KEYS</a>
                             <ul id="secondary">
-                                <li class="project"><a href="">EVENT</a></li>
-                                <li class="project"><a href="">ADVANCE</a></li>
-                                <li class="project"><a href="">TEAM</a></li>
+                                <li className="project"><a href="">EVENT</a></li>
+                                <li className="project"><a href="">ADVANCE</a></li>
+                                <li className="project"><a href="">TEAM</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -44,7 +44,7 @@ export const Employee = (employee) =>
 
 export const Advent = (advent) =>
     <div className="advent">
-        <a href={`#/status/${advent.id}`}>
+        <a href={`api/advent/${advent.id}`}>
             <h1>{advent.name}</h1>
             <p>{advent.startDate}</p>
             <p>{advent.endDate}</p>

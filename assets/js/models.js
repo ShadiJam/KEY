@@ -25,13 +25,13 @@ export const categoryModel = (
 
 export const adventModel = (
     id
-    , name
+    , eventName
     , startDate
     , endDate
     , advances
     , rOs
     , employees
-) => ({id, name, startDate, endDate, advances, rOs, employees})
+) => ({id, eventName, startDate, endDate, advances, rOs, employees})
 
 export const advanceModel = (
     id

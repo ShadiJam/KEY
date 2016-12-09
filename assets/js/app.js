@@ -6,8 +6,9 @@ import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
-import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
-import { NewAdvent } from './forms'
+import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
+import { AdventForm, AdventOverview, NewAdvent } from './forms'
+
 import Forms from './forms'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 // import { Datepicker } from 'react-bootstrap-date-picker'
@@ -32,6 +33,16 @@ export const post = (url, data) =>
     })
     .catch(e => log(e))
     .then(r => r.json())
+
+export const put = (url, data) => 
+    fetch(url, { 
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .catch(e => log(e))
+    .then(r => r.json())
 // ----------------
 
 export const log = (...a) => console.log(...a)
@@ -45,13 +56,6 @@ const Layout = ({children}) =>
             </div>
                 {children}
         </div>
- 
-
-
-
-
-
-
 
 const reactApp = () =>
     render(
@@ -59,11 +63,11 @@ const reactApp = () =>
     <Layout>
         <Router history={hashHistory}>
             
-
-            <Route path="/Login" component={Login}/>
+            <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
-            <Route path="/compose" component={NewAdvent}/>
+            <Route path="/build" component={NewAdvent}/>
             <Route path="/api/advent/:id" component={Forms}/>
+          
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,
@@ -71,3 +75,4 @@ const reactApp = () =>
 
 reactApp()
 
+//   <Route path="/api/advent/:id" component={AdventOverview}/>

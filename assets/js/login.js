@@ -17,8 +17,10 @@ import * as models from './models'
 export class LoginForm extends Component {
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            IdentityUser: null
         }
+    }
     submit(e) {
         e.preventDefault()
             post('account/login', {
@@ -26,10 +28,8 @@ export class LoginForm extends Component {
             password: this.refs.password.value
         }).then(x => {
             window.location.hash = `api/employee/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
+        }).catch(e => window.location.hash = '#/')
+        }
     render(){
         var err 
         return <form className="login-form" onSubmit={e => this.submit(e)}>
@@ -54,7 +54,9 @@ export class LoginForm extends Component {
 export class RegisterForm extends Component {
     constructor(props){
         super(props)
-         this.state = {}
+         this.state = {
+             IdentityUser: null
+         }
         }
     submit(e) {
         e.preventDefault()
@@ -63,10 +65,8 @@ export class RegisterForm extends Component {
             password: this.refs.password.value
         }).then(x => {
             window.location.hash = `api/employee/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
+        }).catch(e => window.location.hash = '#/')
+        }
     render(){
         var err
         return <form onSubmit={e => this.submit(e)}>
@@ -87,7 +87,6 @@ export class RegisterForm extends Component {
     }
 }
 
-// { CheckIsLoggedIn: false }
 
 export class Login extends Component {
     constructor(props){
@@ -135,36 +134,30 @@ export class EmployeeView extends Component {
     }
 }
 
-// ({
-//     getInitialState() {
-//         return {
-//             isLoggedIn: auth.isLoggedIn()
-//         }
-//     },
-
-//     updateAuth(isLoggedIn){
-//         this.setState({
-//             isLoggedIn 
-//         })
-//     },
-
-//     componentWillMount() {
-//         auth.onChange = this.updateAuth
-//         auth.login()
-//     },
 
 //     render(){
 //         {this.state.isLoggedIn ? ( <Route path="/Login"/> ) : ( <Route path="#/"/>)}
 
 
-
-
-// function IsLoggedIn(props) {
-//     if(user.id != null) {
+// export class EmployeeLoggedIn extends Component {
+//     constructor(props) {
+//         super(props)
+//         this.state = {
+//             IdentityUser: null
+//         }
+//     }
+//     componentWillMount() {
+//         post('api/account'+this.state.id).then(IdentityUser => {
+//             this.setState({IdentityUser})
+//         }).catch(e => window.location.hash = '#/')
+//     }
+//     render(){
+//         if(!this.state.IdentityUser) return <Login />
 //         return <EmployeeView />
 //     }
-//     return <Login />
 // }
 
-// how do i call the user id?
-// where do I use this check once I've created it? in react app?
+
+
+// could do...
+        // auth.login().catch(e => window.location.hash = '#/login')

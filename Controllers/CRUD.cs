@@ -48,7 +48,7 @@ public abstract class CRUDController<T> : Controller where T: class, HasId
     [HttpPut("{id}")]
     public IActionResult U(int id, [FromBody] T item){
         if(item.Id != id || !ModelState.IsValid || !r.Update(item))
-            return BadRequest();
+            return BadRequest(ModelState.ToErrorObject());
 
         return Ok();
     }
