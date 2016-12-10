@@ -355,7 +355,7 @@ export class NewAdvent extends Component {
     submit(e) {
         e.preventDefault()
         post('api/advent',{
-            name: this.refs.name.value,
+            eventName: this.refs.eventName.value,
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value
        }).then(x => {
@@ -375,7 +375,7 @@ export class NewAdvent extends Component {
                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
                  {err}
                 <div>
-                    <input ref="name" type="text" placeholder="Event Name" required/>
+                    <input ref="EventName" type="text" placeholder="Event Name" required/>
                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
                 </div>

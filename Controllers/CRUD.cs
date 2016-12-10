@@ -44,14 +44,21 @@ public abstract class CRUDController<T> : Controller where T: class, HasId
 
         return Ok(item);
     }
-
     [HttpPut("{id}")]
     public IActionResult U(int id, [FromBody] T item){
-        if(item.Id != id || !ModelState.IsValid || !r.Update(item))
+        if(!ModelState.IsValid)
             return BadRequest(ModelState.ToErrorObject());
-
-        return Ok();
+        
+        return Ok(item);
+        
     }
+    // [HttpPut("{id}")]
+    // public IActionResult U(int id, [FromBody] T item){
+    //     if(item.Id != id || !ModelState.IsValid || !r.Update(item))
+    //         return BadRequest(ModelState.ToErrorObject());
+
+    //     return Ok();
+    // }
 
     [HttpDelete("{id}")]
     public IActionResult D(int id){

@@ -126,8 +126,8 @@ export class EmployeeView extends Component {
         return <div className="grid grid-3-600">
             {this.state.items.map(Advent)}
             <div>
-            <a href="#/compose">
-                <Button type="newAdvent">Create New Event</Button>
+            <a href="#/build">
+                <button type="newAdvent">Create New Event</button>
             </a>
             </div>
         </div>
