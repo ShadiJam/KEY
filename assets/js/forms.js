@@ -46,12 +46,15 @@ export class AdventOverview extends Component {
 
 export default class AdventForm extends Component {
     
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
             advent: [],
             employees: [],
-            advances: []
+            advances: [],
+            sections: [],
+            categories: [],
+            options: []
         }
         update = () => this.forceUpdate()
     }
@@ -59,20 +62,22 @@ export default class AdventForm extends Component {
         e.preventDefault()
         let {employees} = this.state
         this.setState({ employees: [...employees, models.employeeModel()]})
+        update()
         
     }
     pushNewAdvance(e){
         e.preventDefault()
         let {advances} = this.state
         this.setState({ advances: [...advances, models.advanceModel()]})
-       
+        update()
     }
-    pushNewrO(e){
-        e.preventDefault()
-        let {rOs} = this.state
+    
+    // pushNewrO(e){
+    //     e.preventDefault()
+    //     let {rOs} = this.state
 
-        this.setState({ rOs: [...rOs, models.rOModel()] })
-    }
+    //     this.setState({ rOs: [...rOs, models.rOModel()] })
+    // }
     save(e){
         e.preventDefault()
         post('api/advent/', {
@@ -80,8 +85,10 @@ export default class AdventForm extends Component {
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value, 
             employees: this.state.employees,
-            advances: this.state.advances
-            
+            advances: this.state.advances,   
+            sections: this.state.sections,
+            categories: this.state.categories,
+            options: this.state.options         
         }).then(x => {
             window.location.hash = `api/advent/${x.id}`
         }).catch(e => {
@@ -103,6 +110,7 @@ export default class AdventForm extends Component {
                 {(this.state.advances || []).map(e => <AdvanceForm advance={e} employees={this.state.employees} />)}
                 <Button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Create an advance?</Button>
             </ul>
+           
             <Button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </Button>
         </div>
     }
@@ -115,16 +123,7 @@ export default class AdventForm extends Component {
 export class EmployeeForm extends Component {
     constructor(props){
         super(props)
-        // this.props.employee should be the object passed in as a prop
-        // this.state = {}
     }
-    // popNewEmployee(e){
-    //     console.log(this.props)
-    //     e.preventDefault()
-    //     let {employees} = models.employeeModel()
-    //     this.setState({ employees: [] })
-        
-    // }
     change(e, name){
         e.preventDefault()
         this.props.employee[name] = this.refs[name].value
@@ -146,15 +145,14 @@ export class EmployeeForm extends Component {
 export class AdvanceForm extends Component {
     constructor(props){
         super(props)
-        // this.props.advance is an object passed in that holds default or existing advance data
+    }
+    change(e, name){
+        this.props.advance[name] = this.refs[name].value
     }
     pushNewSection(e){
         if(!this.props.advance.sections) this.props.advance.sections = []
         this.props.advance.sections.push(models.sectionModel())
         update()
-    }
-    change(e, name){
-        this.props.advance[name] = this.refs[name].value
     }
     render(){
         console.log(this.props)
@@ -162,7 +160,7 @@ export class AdvanceForm extends Component {
             <ul>
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" defaultValue={this.props.advance.advanceName} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" defaultValue={this.props.advance.dueDate} /> </li>
-                <li> <FormGroup onChange={e => this.change(e, "isAssigned")} ref="isAssigned" controlId="formControlsSelect">
+                <li> <FormGroup onChange={e => this.change(e, "EmployeeId")} ref="EmployeeId" controlId="formControlsSelect">
                         <ControlLabel>Assign Advance</ControlLabel>
                         <FormControl componentClass="select" placeholder="select">
                             <option value="select">choose Employee</option>
@@ -181,11 +179,11 @@ export class AdvanceForm extends Component {
                     </FormGroup>
                 </li>
             </ul>
-               
-            <ul>
-                {(this.props.advance.sections || []).map(e => <SectionForm section={e}/>)}
+              <ul>
+                {(this.props.advance.sections || []).map(e => <SectionForm section={e} />)}
                 <button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add a section?</button>
             </ul>
+            
         </div>
     }
 }
@@ -201,10 +199,8 @@ export class SectionForm extends Component {
         // }
     }
     pushNewCategory(e){
-        e.preventDefault()
-        let {section} = this.props
-        if(!section.categories) section.categories = []
-        section.categories.push(models.categoryModel())
+        if(!this.props.section.categories) this.props.section.categories = []
+        this.props.section.categories.push(models.categoryModel())
         update()
     }
     change(e, name){
@@ -217,9 +213,8 @@ export class SectionForm extends Component {
                 <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" defaultValue={this.props.section.sectionName} /> </li>
                 <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
             </ul>
-                
             <ul>
-                {(this.props.section.categories || []).map(e => <CategoryForm category={e}/>)}
+                {(this.props.section.categories || []).map(e => <CategoryForm category={e} />)}
                 <Button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add a category?</Button>
             </ul>
             
@@ -233,10 +228,8 @@ export class CategoryForm extends Component {
         // this.props.category is an object passed in that holds default or existing advance data
     }
     pushNewOption(e){
-        e.preventDefault()
-        let {category} = this.props
-        if(!category.options) category.options = []
-        category.options.push(models.optionModel())
+        if(!this.props.category.options) this.props.category.options = []
+        this.props.category.options.push(models.optionModel())
         update()
     }
     change(e, name){
@@ -249,12 +242,10 @@ export class CategoryForm extends Component {
             <ul>
                 <li> <input onChange={e => this.change(e, "categoryName")} onBlur={update} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
             </ul>
-                
             <ul>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
                 <Button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add an option?</Button>
-            </ul>
-            
+            </ul>  
         </div>
     }
 }
@@ -265,13 +256,13 @@ export class OptionForm extends Component {
         // this.props.option is an object passed in that holds default or existing advance data
         
     }
-    pushNewrO(e){
-        e.preventDefault()
-        let {option} = this.props
-        if(!option.rOs) option.rOs = []
-        option.rOs.push(models.rOModel())
-        update()
-    }
+    // pushNewrO(e){
+    //     e.preventDefault()
+    //     let {option} = this.props
+    //     if(!option.rOs) option.rOs = []
+    //     option.rOs.push(models.rOModel())
+    //     update()
+    // }
     change(e, name){
         e.preventDefault()
         this.props.option[name] = this.refs[name].value

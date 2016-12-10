@@ -58,6 +58,7 @@ public class Section : HasId {
     public int Id { get; set; }
     public string SectionName { get; set; }
     public string SectionDescription { get; set; }
+    public int AdvanceId { get; set; }
     public List<Category> Categories { get; set; } = new List<Category>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
 }
@@ -117,11 +118,26 @@ public partial class Handler {
             d => d
                 .Include(e => e.Employees)
                 .Include(a => a.Advances)
+                .ThenInclude(s => s.Sections)
+                .ThenInclude(c => c.Categories)
+                .ThenInclude(o => o.Options)
         );
-        Repo<Advance>.Register(services, "Advances");
+        Repo<Advance>.Register(services, "Advances",
+            d => d
+                .Include(s => s.Sections)
+                .ThenInclude(c => c.Categories)
+                .ThenInclude(o => o.Options));
+
         Repo<AdvanceSectionJoin>.Register(services, "AdvanceSectionJoins");
-        Repo<Section>.Register(services, "Sections");
-        Repo<Category>.Register(services, "Categories");
+
+        Repo<Section>.Register(services, "Sections",
+            d => d  
+                .Include(c => c.Categories));
+
+        Repo<Category>.Register(services, "Categories",
+            d => d
+                .Include(o => o.Options));
+
         Repo<Option>.Register(services, "Options");
         }
     }
