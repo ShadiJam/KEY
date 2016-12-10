@@ -20,8 +20,8 @@ public static class Seed
         // db.Table.Add(...) / SaveChanges()
 
         if(db.Advents.Any() || db.Advances.Any() || db.Employees.Any()) return;
-        var e1 = new Advent { EventName = "ShadiTestEvent1"};
-        var e2 = new Advent { EventName = "ShadiTestEvent2"};
+        var e1 = new Advent { EventName = "ShadiTestEvent1", startDate = new DateTime(2016, 12, 12, 13, 45, 00), endDate = new DateTime(2016, 12, 14, 13, 45, 00)};
+        var e2 = new Advent { EventName = "ShadiTestEvent2", startDate = new DateTime(2016, 12, 16, 13, 45, 00), endDate = new DateTime(2016, 12, 18, 13, 45, 00)};
         var a1 = new Advance { AdvanceName = "ShadiTest1-Advance"};
         var a2 = new Advance { AdvanceName = "ShadiTest2-Advance"};
         var emp1 = new Employee { FName = "Shadi", LName = "Jam", Department = "Administration", Phone = "713-517-5522", Email = "shadijam00@gmail.com"};

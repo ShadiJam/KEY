@@ -65,8 +65,8 @@ const reactApp = () =>
             
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
-            <Route path="/build" component={NewAdvent}/>
-            <Route path="/api/advent/:id" component={Forms}/>
+          
+            <Route path="/build" component={Forms}/>
           
             <Route path="*" component={Error}/>
         </Router>
@@ -76,3 +76,4 @@ const reactApp = () =>
 reactApp()
 
 //   <Route path="/api/advent/:id" component={AdventOverview}/>
+//   <Route path="/build" component={NewAdvent}/>

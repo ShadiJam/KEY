@@ -46,26 +46,26 @@ export class AdventOverview extends Component {
 
 export default class AdventForm extends Component {
     
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
-            advent: { id: this.props.params.id },
-            advances: [],
+            advent: [],
             employees: [],
-            rOs: []
+            advances: []
         }
         update = () => this.forceUpdate()
     }
     pushNewEmployee(e){
         e.preventDefault()
         let {employees} = this.state
-        this.setState({ employees: [...employees, models.employeeModel()] })
+        this.setState({ employees: [...employees, models.employeeModel()]})
+        
     }
-    
     pushNewAdvance(e){
         e.preventDefault()
         let {advances} = this.state
-        this.setState({ advances: [...advances, models.advanceModel()] })
+        this.setState({ advances: [...advances, models.advanceModel()]})
+       
     }
     pushNewrO(e){
         e.preventDefault()
@@ -75,8 +75,14 @@ export default class AdventForm extends Component {
     }
     save(e){
         e.preventDefault()
-        put(`api/advent/${this.props.params.id}`, this.state
-        ).then(x => {
+        post('api/advent/', {
+            eventName: this.refs.eventName.value,
+            startDate: this.refs.startDate.value,
+            endDate: this.refs.endDate.value, 
+            employees: this.state.employees,
+            advances: this.state.advances
+            
+        }).then(x => {
             window.location.hash = `api/advent/${x.id}`
         }).catch(e => {
             this.setState({ errors: e })
@@ -84,23 +90,27 @@ export default class AdventForm extends Component {
     }
     render(){
         return <div className="advent-form">
-            
-            <ul>
-                {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
-                <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</Button>
-            </ul>
+            <div>
+                <input ref="eventName" type="text" placeholder="Event Name" required/>
+                <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+                <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+            </div>
             <ul>
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
                 <Button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</Button>
             </ul>
             <ul>
-                {(this.state.advances || []).map(e => <AdvanceForm advance={e} employees={this.state.employees}/>)}
+                {(this.state.advances || []).map(e => <AdvanceForm advance={e} employees={this.state.employees} />)}
                 <Button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Create an advance?</Button>
             </ul>
             <Button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </Button>
         </div>
     }
 }
+// <ul>
+//                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
+//                 <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</Button>
+//             </ul>
 
 export class EmployeeForm extends Component {
     constructor(props){
@@ -204,8 +214,8 @@ export class SectionForm extends Component {
     render(){
         return <div className="section-form">
             <ul>
-                <li> <input onChange={e => this.change(e, "sectionName")} ref="sectionName" placeholder="Section Name" defaultValue={this.props.section.sectionName} /> </li>
-                <li> <input onChange={e => this.change(e, "sectionDescription")} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
+                <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" defaultValue={this.props.section.sectionName} /> </li>
+                <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
             </ul>
                 
             <ul>
@@ -237,7 +247,7 @@ export class CategoryForm extends Component {
     render(){
         return <div className="category-form">
             <ul>
-                <li> <input onChange={e => this.change(e, "categoryName")} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
+                <li> <input onChange={e => this.change(e, "categoryName")} onBlur={update} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
             </ul>
                 
             <ul>
@@ -269,7 +279,7 @@ export class OptionForm extends Component {
     render(){
         return <div className="option-form">
             <ul>
-                <li> <input onChange={e => this.change(e, "optionName")} ref="optionName" placeholder="Option Name" defaultValue={this.props.option.optionName} /> </li>
+                <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" defaultValue={this.props.option.optionName} /> </li>
             </ul>
                
             <ul>
@@ -346,46 +356,46 @@ export class LocationForm extends Component {
     }
 }
 
-export class NewAdvent extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
+// export class NewAdvent extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = {}
+//     }
     
-    submit(e) {
-        e.preventDefault()
-        post('api/advent',{
-            eventName: this.refs.eventName.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value
-       }).then(x => {
-            if(!x.errors) window.location.hash = `/api/advent/${x.id}`
+//     submit(e) {
+//         e.preventDefault()
+//         post('api/advent',{
+//             EventName: this.refs.EventName.value,
+//             startDate: this.refs.startDate.value,
+//             endDate: this.refs.endDate.value
+//        }).then(x => {
+//             if(!x.errors) window.location.hash = `/api/advent/${x.id}`
 
-            this.setState({ errors: x.errors })
-        }).catch(e => log(e))
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-        return  <form className="new-advent-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your event submission:</p> : null}
-                 {err}
-                <div>
-                    <input ref="EventName" type="text" placeholder="Event Name" required/>
-                    <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-                    <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-                </div>
-                <div>
-                    <Button type="submit">Save Event and Create Advance</Button>
-                </div>
-        </form>
+//             this.setState({ errors: x.errors })
+//         }).catch(e => log(e))
+//     }
+//     render(){
+//         var err
+//         if(this.state.errors){
+//             err = <ul className="compose-errors">
+//                 {this.state.errors.map(e => <li>{e}</li>)}
+//                 </ul>
+//         }
+//         return  <form className="new-advent-form" onSubmit={e => this.submit(e)}>
+//                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
+//                  {err}
+//                 <div>
+//                     <input ref="EventName" type="text" placeholder="Event Name" required/>
+//                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+//                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+//                 </div>
+//                 <div>
+//                     <Button type="submit">Save Event and Create Advance</Button>
+//                 </div>
+//         </form>
                 
-    }
-}
+//     }
+// }
 
 // not sure if I've added the above correctly, but what I'd like is that they do a location search, and then have the option to add the results to that advance and/or section  
 
