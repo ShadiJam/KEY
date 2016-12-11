@@ -33,7 +33,7 @@ public class Advent : HasId {
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
     public List<Advance> Advances { get; set; } = new List<Advance>();
-    // public List<AdventLocation> Locations { get; set; } = new List<AdventLocation>();
+    public List<GoogleAPI.RootObject> ROs { get; set; } = new List<GoogleAPI.RootObject>();
     public List<Employee> Employees { get; set; }
   
     // write logic for downloading file here
@@ -91,14 +91,7 @@ public class Option : HasId {
     public int CategoryId { get; set; }
 }
     
-// public class AdventLocation : HasId {
-//     public int Id { get; set; }
-//     public string formatted_address { get; set; }
-//     // public double lat { get; set; }
-//     // public double lng { get; set; }
-//     public int AdventId {get;set;}
-//     public int OptionId {get;set;}
-// }
+
 
 public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Employee> Employees { get; set; }
@@ -108,7 +101,13 @@ public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Section> Sections { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Option> Options { get; set; }
-    // public DbSet<AdventLocation> Locations { get; set; }
+    public DbSet<GoogleAPI.RootObject> ROs { get; set; }
+    public DbSet<GoogleAPI.Location> Locations { get; set; }
+    public DbSet<GoogleAPI.Geometry> Geometries { get; set; }
+    public DbSet<GoogleAPI.Result> Results { get; set; }
+    
+    
+
 }
 
 public partial class Handler {
@@ -117,6 +116,7 @@ public partial class Handler {
         Repo<Advent>.Register(services, "Advents",
             d => d
                 .Include(e => e.Employees)
+                .Include(l => l.ROs)
                 .Include(a => a.Advances)
                 .ThenInclude(s => s.Sections)
                 .ThenInclude(c => c.Categories)
@@ -139,14 +139,27 @@ public partial class Handler {
                 .Include(o => o.Options));
 
         Repo<Option>.Register(services, "Options");
+
+        Repo<GoogleAPI.RootObject>.Register(services, "ROs",
+            d => d
+                .Include(r => r.Results));
+
+        Repo<GoogleAPI.Result>.Register(services, "Results",
+            d => d
+                .Include(g => g.geometry));
+
+        Repo<GoogleAPI.Geometry>.Register(services, "Geometries",
+            d => d
+                .Include(l => l.location));
+
+        Repo<GoogleAPI.Location>.Register(services, "Locations",
+            d => d
+                .Include(l => l.lat)
+                .Include(l => l.lng));
+                    
         }
     }
-        // Repo<AdventLocation>.Register(services, "Locations",
-        //     d => d
-        //             .Include(f => f.formatted_address)
-                    // .ThenInclude(l => l.lat)
-                    // .ThenInclude(l => l.lng)
-                
+      
    
         
         

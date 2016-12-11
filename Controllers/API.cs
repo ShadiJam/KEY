@@ -85,25 +85,27 @@ public class OptionController : CRUDController<Option> {
     }
 }
 
-// [Route("api/location")]
-// public class AdventLocationController: CRUDController<AdventLocation> 
-// {
-//     private GoogleLocationService gs;
-//     public AdventLocationController(IRepository<GoogleAPI.RootObject> r, GoogleLocationService gs) : base(r) {
-//         this.gs = gs;
-//         this.r = r;
-//     }
 
-//     [HttpGet("{address}")]
-//     public async Task<IActionResult> Search(string address)
-//     {
-//         address.Log();
-//         var data = await gs.Get(address);
-//         // var lat1 = data.results.ElementAt(0).geometry.location.lat;
-//         // var lng1 = data.results.ElementAt(0).geometry.location.lng;
-//         // var formatted_address = data.results.ElementAt(0).formatted_address;
+[Route("api/location")]
+
+public class LocationController: CRUDController<GoogleAPI.RootObject> 
+{
+    private GoogleLocationService gs;
+    public LocationController(IRepository<GoogleAPI.RootObject> r, GoogleLocationService gs) : base(r) {
+        this.gs = gs;
+        this.r = r;
+    }
+
+    [HttpGet("{address}")]
+    public async Task<IActionResult> Search(string address)
+    {
+        address.Log();
+        var data = await gs.Get(address);
+        // var lat1 = data.results.ElementAt(0).geometry.location.lat;
+        // var lng1 = data.results.ElementAt(0).geometry.location.lng;
+        // var formatted_address = data.results.ElementAt(0).formatted_address;
        
-//         data.Log();
-//         return Ok(r.Create(data));
-//     }
-// }
+        data.Log();
+        return Ok(r.Create(data));
+    }
+}

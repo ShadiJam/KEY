@@ -51,6 +51,7 @@ export default class AdventForm extends Component {
         this.state = {
             advent: [],
             employees: [],
+            rOs: [],
             advances: [],
             sections: [],
             categories: [],
@@ -70,14 +71,13 @@ export default class AdventForm extends Component {
         let {advances} = this.state
         this.setState({ advances: [...advances, models.advanceModel()]})
         update()
+    }    
+    pushNewrO(e){
+        e.preventDefault()
+        let {rOs} = this.state
+        this.setState({ rOs: [...rOs, models.rOModel()] })
+        update()
     }
-    
-    // pushNewrO(e){
-    //     e.preventDefault()
-    //     let {rOs} = this.state
-
-    //     this.setState({ rOs: [...rOs, models.rOModel()] })
-    // }
     save(e){
         e.preventDefault()
         post('api/advent/', {
@@ -85,7 +85,8 @@ export default class AdventForm extends Component {
             startDate: this.refs.startDate.value,
             endDate: this.refs.endDate.value, 
             employees: this.state.employees,
-            advances: this.state.advances,   
+            advances: this.state.advances, 
+            rOs: this.state.rOs,
             sections: this.state.sections,
             categories: this.state.categories,
             options: this.state.options         
@@ -103,6 +104,10 @@ export default class AdventForm extends Component {
                 <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
             </div>
             <ul>
+                {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
+                <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</Button>
+            </ul>
+            <ul>
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
                 <Button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</Button>
             </ul>
@@ -115,10 +120,7 @@ export default class AdventForm extends Component {
         </div>
     }
 }
-// <ul>
-//                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
-//                 <Button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</Button>
-//             </ul>
+
 
 export class EmployeeForm extends Component {
     constructor(props){
@@ -306,7 +308,7 @@ export class LocationForm extends Component {
    
     getLocation(e, address){
         e.preventDefault()
-        var promise = get(`/api/rootobject/${this.refs.address.value}`)
+        var promise = get(`/api/location/${this.refs.address.value}`)
         promise.then(resp => {
             if(!resp.results.length) return
 
@@ -346,49 +348,6 @@ export class LocationForm extends Component {
         </div>          
     }
 }
-
-// export class NewAdvent extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {}
-//     }
-    
-//     submit(e) {
-//         e.preventDefault()
-//         post('api/advent',{
-//             EventName: this.refs.EventName.value,
-//             startDate: this.refs.startDate.value,
-//             endDate: this.refs.endDate.value
-//        }).then(x => {
-//             if(!x.errors) window.location.hash = `/api/advent/${x.id}`
-
-//             this.setState({ errors: x.errors })
-//         }).catch(e => log(e))
-//     }
-//     render(){
-//         var err
-//         if(this.state.errors){
-//             err = <ul className="compose-errors">
-//                 {this.state.errors.map(e => <li>{e}</li>)}
-//                 </ul>
-//         }
-//         return  <form className="new-advent-form" onSubmit={e => this.submit(e)}>
-//                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
-//                  {err}
-//                 <div>
-//                     <input ref="EventName" type="text" placeholder="Event Name" required/>
-//                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-//                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-//                 </div>
-//                 <div>
-//                     <Button type="submit">Save Event and Create Advance</Button>
-//                 </div>
-//         </form>
-                
-//     }
-// }
-
-// not sure if I've added the above correctly, but what I'd like is that they do a location search, and then have the option to add the results to that advance and/or section  
 
 
 // <Button className="delete-buttons" onClick={e => this.popNewEmployee(e)}>Remove this employee</Button>

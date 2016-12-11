@@ -13,20 +13,24 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GoogleAPI {
 
-public class Location {
+public class Location : HasId {
+    public int Id { get; set; }
     public double lat { get; set; }
     public double lng { get; set; }
     }
-public class Geometry {
+public class Geometry : HasId {
+    public int Id { get; set; }
     public Location location { get; set; }
     }
 
-public class Result {
+public class Result : HasId {
+    public int Id { get; set; }
     public string formatted_address { get; set; }
     public Geometry geometry { get; set; }
     }
 
-public class RootObject {
+public class RootObject : HasId {
+    public int Id { get; set; }
     public List<Result> Results { get; set; }
     }
 }

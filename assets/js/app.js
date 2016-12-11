@@ -43,6 +43,16 @@ export const put = (url, data) =>
     })
     .catch(e => log(e))
     .then(r => r.json())
+
+export const remove = (url, data) => 
+    fetch(url, { 
+        method: 'DELETE',
+        credentials: 'same-origin',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .catch(e => log(e))
+    .then(r => r.json())  
 // ----------------
 
 export const log = (...a) => console.log(...a)
@@ -65,8 +75,8 @@ const reactApp = () =>
             
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
-          
             <Route path="/build" component={Forms}/>
+            <Route path="/api/advent/:id" component={AdventOverview}/>
           
             <Route path="*" component={Error}/>
         </Router>
@@ -75,5 +85,4 @@ const reactApp = () =>
 
 reactApp()
 
-//   <Route path="/api/advent/:id" component={AdventOverview}/>
-//   <Route path="/build" component={NewAdvent}/>
+
