@@ -32,5 +32,6 @@ public class Result : HasId {
 public class RootObject : HasId {
     public int Id { get; set; }
     public List<Result> Results { get; set; }
+  
     }
 }

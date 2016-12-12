@@ -3,11 +3,13 @@ import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
-import { AdventForm, AdventOverview, NewAdvent } from './forms'
+import { AdventForm, NewEvent, ParentComponent, EmployeeList } from './forms'
+
+
 
 import Forms from './forms'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
@@ -75,9 +77,9 @@ const reactApp = () =>
             
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
-            <Route path="/build" component={Forms}/>
-            <Route path="/api/advent/:id" component={AdventOverview}/>
-          
+            <Route path="/api/employee" component={EmployeeList}/>
+            <Route path="/api/advent/:id" component={AdventForm}/>
+            <Route path="/new" component={NewEvent}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,
@@ -86,3 +88,5 @@ const reactApp = () =>
 reactApp()
 
 
+
+    //        <Route path="/api/advent/:id" component={EmployeeView}/>

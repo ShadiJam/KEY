@@ -15,7 +15,6 @@ public class Employee : HasId {
     public int Id { get; set; }
     public string FName { get; set;}
     public string LName { get; set; }
-    public string FullName { get; set; } 
     public string Department { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; } //create actual email property here
@@ -86,7 +85,7 @@ public class AdvanceSectionJoin : HasId {
 public class Option : HasId {
     [Required]
     public int Id { get; set; }
-    // public List<AdventLocation> Locations { get; set; }
+    public List<GoogleAPI.RootObject> ROs { get; set; }
     public string OptionName { get; set; }
     public int CategoryId { get; set; }
 }
@@ -113,6 +112,7 @@ public partial class DB : IdentityDbContext<IdentityUser> {
 public partial class Handler {
     public void RegisterRepos(IServiceCollection services){
         Repo<Employee>.Register(services, "Employees");
+        
         Repo<Advent>.Register(services, "Advents",
             d => d
                 .Include(e => e.Employees)
@@ -138,19 +138,19 @@ public partial class Handler {
             d => d
                 .Include(o => o.Options));
 
-        Repo<Option>.Register(services, "Options");
+        Repo<Option>.Register(services, "Options",
+            d => d
+                .Include(r => r.ROs));
 
         Repo<GoogleAPI.RootObject>.Register(services, "ROs",
             d => d
-                .Include(r => r.Results));
+                .Include(r => r.Results)
+                .ThenInclude(g => g.geometry)
+                .ThenInclude(l => l.location));
 
-        Repo<GoogleAPI.Result>.Register(services, "Results",
-            d => d
-                .Include(g => g.geometry));
+        Repo<GoogleAPI.Result>.Register(services, "Results");
 
-        Repo<GoogleAPI.Geometry>.Register(services, "Geometries",
-            d => d
-                .Include(l => l.location));
+        Repo<GoogleAPI.Geometry>.Register(services, "Geometries");
 
         Repo<GoogleAPI.Location>.Register(services, "Locations",
             d => d
@@ -163,7 +163,7 @@ public partial class Handler {
    
         
         
-        // 
+        
             
        
            

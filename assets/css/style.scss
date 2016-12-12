@@ -41,14 +41,18 @@
 
 
 
-body {
+div.app {
     background-image: url();
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    width: 100%;
+    max-width: 100%;
     max-height: 100%;
-    
+    margin: 0;
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 
@@ -59,48 +63,17 @@ body {
 }
 
 
-.advent {
-    padding: 1.5rem;
-    border: 1px solid green;
-    margin: 2rem;
 
-    h1, li {
-        color: green;
-        font-size: medium;
-        text-align: center;
-        padding: auto;
-        margin: auto;
-    }
-}
 
-.new-advent-form {
-     margin-top: 40px;
-     max-width: 600px;
-     margin: 1.5rem auto;
-     float: left;
-     padding-left: 20px;
-     margin-top: 30%;
-     padding-bottom: 125px;
-     input {
-        display: inline-block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-        background-color: none;
-     }
-}
 
-.advent-form {
-    display: block;
-}
 
 .advance-category-button {
     display: inline;
     margin: 40px;
 }
 
-.login-stuff > * {
-    margin: 30px;
+.login-stuff {
+    padding: 30px;
 }
 
 .location, .new-RO-form, .option-form, .category-form, .section-form, .advance-form, .employee-form  {
@@ -119,53 +92,200 @@ body {
 }
 
 * header#header nav ul li {
-  border-top: 1px solid black;
+  border-top: 1px solid white;
   list-style-type: none;
   display: block;
-  margin-top: 15px; 
-  width: 100px;
+
  
 }
+
+nav#menu {
+    position: fixed;
+    float: left;
+    width: 100%;
+}
 nav a {
-    color: black;
-    float: right;
+    color: white;
+  
 }
 
 /* below controls navigation sub-menues */
 header#header nav #primary li ul {
-  display: none;
-  width: 100px;
-}
-/* below controls nav menu lines */
-header#header nav #primary li:hover,
-header#header nav #primary li.active {
-  border-color: black;
-  color: black;
-}
-
-/* below gives sub-menues display */
-header#header nav #primary li:hover ul,
-header#header nav #primary li.active ul {
   display: block;
-  padding: 0;
 }
+/* below controls nav menu lines 
+// header#header nav #primary li:hover,
+// header#header nav #primary li.active {
+//   border-color: white;
+//   color: white;
+  
+// }
+
+below gives sub-menues display 
+// header#header nav #primary li:hover ul,
+// header#header nav #primary li.active ul {
+//   display: block;
+//   padding: 0; */
+ 
+
+
 
 /* below gives menu color when hovering */
 header#header nav #primary li:hover > a,
 header#header nav #primary li.active > a {
-  color: black;
+  color: white;
 }
 
 /* controls menu bar sizing and layout */
 *.row > [class*="span"] {
-  display: inline;
-  margin-left: 10px;
-  margin-right: 20px;
+  display: block;
+  float: right;
+  margin-right: 10px;
+  width: 100%;
 }
 
 .span2 {
   width: 30px;
 }
 
+div.advent {
+    display: block;
+    float: left;
+    border-bottom: 10px solid white;
+    padding: 5px;
+    margin-left: 15px;
+    align-content: center;
+    color: white;
+    a {
+        color: white;
+    }
+}
+
+div.advent a.hover {
+    h5 {
+        display: block;
+        color: white;
+    }
+}
+
+button.newAdvent {
+    margin: 20px;
+    display: block;
+    border: 1px solid white;
+    color: white;
+    padding: 15px;
+}
+
+.input-fields input {
+    display: inline;
+    border: 1px solid white;
+    color: white;
+    background-color: black;
+    margin: 3px;
+    list-style-type: none;
+}
 
 
+div.option-form div.category-form div.section-form div.advance-form div.employee-form div.new-RO-form {
+    border: 1px solid black;
+    display: block;
+}
+
+div.overview {
+    div.overview-style {
+        background-color: '#1f4662';
+        color: '#fff';
+        font-size: '12px';
+    }
+
+    div.header-style {
+        background-color: '#193549';
+        padding: '5px 10px';
+        font-family: 'monospace';
+        color: '#ffc600';
+    }
+
+    pre-style.pre-style text {
+        display: 'block';
+        padding: '10px 30px';
+        margin: '0';
+        overflow: 'scroll';
+    }
+}
+
+div.input-fields {
+    display: block;
+    float: left;
+    clear: left;
+    width: 250px;
+    background-color: black;
+    color: white;
+    text-align: left;
+        input {
+            display: inline-block;
+            float: left;
+        }
+}
+
+div.login-stuff {
+    width: 300px;
+    height: 100%;
+    max-width: 300px;
+}
+
+button.register-button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+button.login-button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+form.register-form {
+    padding-top: 20px;
+        h4 {
+            margin-bottom: 10px;
+            margin-left: 3px;
+        }
+}
+
+form.login-form h4 {
+    margin-left: 3px;
+}
+
+button.create-event {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+}
+
+form.advent-form  {
+    width: 300px;
+    height: 100%;
+    max-width: 300px;
+}
+
+div.input-fields {
+    display: block;
+    float: left;
+    clear: left;
+    width: 250px;
+    background-color: black;
+    color: white;
+    text-align: left;
+        .input-fields {
+            display: inline-block;
+            float: left;
+        }
+}

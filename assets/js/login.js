@@ -36,14 +36,14 @@ export class LoginForm extends Component {
             {this.state.errors ? <p>There were errors with your Login:</p> : null}
             {err}
 
-            <p>Please Log In</p>   
-            <div>
+            <h4>Login</h4>   
+            <div className="input-fields">
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
                 <a className="login-button" href="#/">
-                    <Button type="submit">Log In</Button>
+                    <button className="login-button" type="submit">KEY</button>
                 </a>
             </div>
         </form>
@@ -56,7 +56,7 @@ export class RegisterForm extends Component {
         super(props)
          this.state = {
              IdentityUser: null
-         }
+            }
         }
     submit(e) {
         e.preventDefault()
@@ -69,18 +69,18 @@ export class RegisterForm extends Component {
         }
     render(){
         var err
-        return <form onSubmit={e => this.submit(e)}>
+        return <form className="register-form" onSubmit={e => this.submit(e)}>
             {this.state.errors ? <p>There were errors with your Registration:</p> : null}
             {err}
 
-            <p>Or Register</p>   
-            <div>
+            <h4>Register</h4>   
+            <div className="input-fields">
                 <input ref="email" type="email" placeholder="user@email.com" required/>
                 <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
                 <a className="register-button" href="#/newEmployee">
-                    <Button type="submit">Register</Button>
+                    <button className="register-button" type="submit">KEY</button>
                 </a>
             </div>
         </form>
@@ -96,7 +96,7 @@ export class Login extends Component {
     render(){
         var err 
         if(this.state.errors){
-            err = <ul className="compose-errors">
+            err = <ul className="login-errors">
                 {this.state.errors.map(x => <li>{x}</li>)}
                 </ul>
         } 
@@ -123,41 +123,24 @@ export class EmployeeView extends Component {
             }).catch(e => log(e))
     }
     render(){
-        return <div className="grid grid-3-600">
-            {this.state.items.map(Advent)}
+        return <div className="employeeView">
             <div>
-            <a href="#/build">
-                <button type="newAdvent">Create New Event</button>
-            </a>
+                <a href="#/new">
+                    <Button bsSize="xsmall" className="newAdvent">Create New Event</Button>
+                </a>
             </div>
+            <div className="grid grid-3-600">
+            {this.state.items.map(Advent)}
+            </div>
+            
         </div>
     }
 }
 
 
-//     render(){
-//         {this.state.isLoggedIn ? ( <Route path="/Login"/> ) : ( <Route path="#/"/>)}
-
-
-// export class EmployeeLoggedIn extends Component {
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             IdentityUser: null
-//         }
-//     }
-//     componentWillMount() {
-//         post('api/account'+this.state.id).then(IdentityUser => {
-//             this.setState({IdentityUser})
-//         }).catch(e => window.location.hash = '#/')
-//     }
-//     render(){
-//         if(!this.state.IdentityUser) return <Login />
-//         return <EmployeeView />
-//     }
-// }
 
 
 
-// could do...
-        // auth.login().catch(e => window.location.hash = '#/login')
+
+
+

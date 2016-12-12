@@ -16,11 +16,11 @@ export const Header = () =>
             <nav id="=menu">
                 <ul id="primary" className="row">
                     <li className="portfolio span2">
-                        <a href="#portfolio">KEYS</a>
+                        <a className="project" href="/">KEY</a>
                             <ul id="secondary">
-                                <li className="project"><a href="">EVENT</a></li>
-                                <li className="project"><a href="">ADVANCE</a></li>
-                                <li className="project"><a href="">TEAM</a></li>
+                                <li className="project"><a href="/api/employee/:id">EVENTS</a></li>
+                                <li className="project"><a href="">ADVANCES</a></li>
+                                <li className="project"><a href="/api/employee">TEAMS</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -28,36 +28,34 @@ export const Header = () =>
             </header>
         </div>
        
- 
-
-
-
-
-
 export const Employee = (employee) =>
     <div className="employee">
-        <h1>{employee.FName} {employee.LName}</h1>
-        <p>{employee.Department}</p>
-        <p>{employee.Phone}</p>
-        <p>{employee.Email}</p>
+        <ul>
+        <li>{employee.fName}</li>
+        <li>{employee.lName}</li>
+        <li>{employee.department}</li>
+        <li>{employee.phone}</li>
+        <li>{employee.email}</li>
+        </ul>
     </div>
 
 export const Advent = (advent) =>
     <div className="advent">
-        <a href={`api/advent/${advent.id}`}>
-            <h1>{advent.name}</h1>
-            <p>{advent.startDate}</p>
-            <p>{advent.endDate}</p>
-        </a>
+        <h5>{advent.eventName}</h5>
+        <h6>{advent.startDate}</h6>
+        <h6>{advent.endDate}</h6>
+            <a href={`api/advent/${advent.id}`}>
+                <Button bsSize="xsmall" className="newAdvent">Build Advance</Button>
+            </a>
     </div>
 
 export const Advance = (advance) =>
     <div className="advance">
         <a href={`#/status/${advance.id}`}>
-            <h1>{advance.AdvanceName}</h1>
-            <p>{advance.Assigned}</p>
-            <p>{advance.dueDate}</p>
-            <p>{advance.Section}</p>
+            <h5>{advance.AdvanceName}</h5>
+            <h6>{advance.isAssigned}</h6>
+            <h6>{advance.dueDate}</h6>
+            <h6>{this.state.advance.map(x => <li>{sectionName}{sectionDescription}</li>)}</h6>
         </a>
     </div>
 
@@ -78,7 +76,13 @@ export const Category = (category) =>
 
 export const Option = (option) =>
     <div className="option">
-        <h1>{option.OptionName}</h1>
+        <FormGroup onChange={e => this.change(e, "categoryId")} ref="categoryId" controlId="formControlsSelect">
+            <ControlLabel>Options</ControlLabel>
+            <FormControl componentClass="select" placeholder="select">
+                <option value="select">Choose Option</option>
+                {this.props.options.map(e => <option value={e.id}>{e.optionName}</option>)}
+            </FormControl>
+        </FormGroup>
     </div>
 
 
@@ -125,43 +129,5 @@ export const Geometry = (geometry) =>
 
 
 
-// var DatePicker = require("react-bootstrap-date-picker");
- 
-// var App = React.createClass({
-//   getInitialState: function(){
-//     var value = new Date().toISOString();
-//     return {
-//       value: value
 
-// class Datepicker extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = { 
-//             value: new Date().toISOString() }
-//     }
-//     componenetDidMount(){
-//         get('/api/advent'+this.state.id).then(x => {
-//             this.setState({ item: x })
-//         })
-//     }
-//   handleChange(value, formattedValue) {
-//     this.setState({
-//       value: value, // ISO String, ex: "2016-11-19T12:00:00.000Z" 
-//       formattedValue: formattedValue // Formatted String, ex: "11/19/2016" 
-//     });
-//   }
-//   componentDidUpdate(){
-//     // Access ISO String and formatted values from the DOM. 
-//     var hiddenInputElement = document.getElementById("example-datepicker");
-//     console.log(hiddenInputElement.value); // ISO String, ex: "2016-11-19T12:00:00.000Z" 
-//     console.log(hiddenInputElement.getAttribute('data-formattedvalue')) // Formatted String, ex: "11/19/2016" 
-//   }
-//   render(){
-//     return <FormGroup>
-//       <ControlLabel>Label</ControlLabel>
-//       <DatePicker id="example-datepicker" value={this.state.value} onChange={this.handleChange} />
-//       <HelpBlock>Help</HelpBlock>
-//     </FormGroup>;
-//   }
-// } 
        
