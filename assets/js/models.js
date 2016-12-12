@@ -8,7 +8,7 @@ export const employeeModel = (
     , phone
     , email
     , adventId
-) => ({ id, fName,lName,fullName,department,phone,email,adventId })
+) => ({ id, fName,lName,department,phone,email,adventId })
 
 export const advanceSectionJoinModel = (
     id
@@ -43,16 +43,17 @@ export const advanceModel = (
     , dueDate
     , adventId
     , advanceSectionJoins
-) => ({id, advanceName, assigned, isComplete, employeeId, sections, dueDate, adventId, advanceSectionJoins})
+) => ({id, advanceName, assigned, isComplete, employeeId, sections, dueDate, advanceSectionJoins})
 
 export const sectionModel = (
     id
     , sectionName
     , sectionDescription
+    , advanceId
     , rOs
     , categories
     , advanceSectionJoins
-) => ({id, sectionName, sectionDescription, rOs, categories, advanceSectionJoins})
+) => ({id, sectionName, sectionDescription, advanceId, rOs, categories, advanceSectionJoins})
 
 export const optionModel = (
     id  
@@ -95,19 +96,19 @@ export var advents = [
 
 export var employees = [
     employeeModel(
-    1, "Shadi", "Jam", "Shadi Jam", "Administration", 713-517-5522, "shadijam00@gmail.com", 1
+    1, "Shadi", "Jam", "Administration", 713-517-5522, "shadijam00@gmail.com", 1
     )
 ]
 
 export var advances = [
     advanceModel(
-    1, "Advance1", false, false, 1, sections, "2016-02-10", 1, advanceSectionJoins
+    1, "Advance1", false, false, 1, sections, "2016-02-10", advanceSectionJoins
     )
 ]
 
 export var sections = [
     sectionModel(
-        1, "Staff Shirts", "Brief Description", rOs, categories, advanceSectionJoins
+        1, "Staff Shirts", "Brief Description", 1, rOs, categories, advanceSectionJoins
         )
 ]
 

@@ -20,13 +20,13 @@ public static class Seed
         // db.Table.Add(...) / SaveChanges()
 
         if(db.Advents.Any() || db.Advances.Any() || db.Employees.Any()) return;
-        var e1 = new Advent { EventName = "ShadiTestEvent1", startDate = new DateTime(2016, 12, 12, 13, 45, 00), endDate = new DateTime(2016, 12, 14, 13, 45, 00)};
-        var e2 = new Advent { EventName = "ShadiTestEvent2", startDate = new DateTime(2016, 12, 16, 13, 45, 00), endDate = new DateTime(2016, 12, 18, 13, 45, 00)};
-        var a1 = new Advance { AdvanceName = "ShadiTest1-Advance"};
-        var a2 = new Advance { AdvanceName = "ShadiTest2-Advance"};
-        var emp1 = new Employee { FName = "Shadi", LName = "Jam", Department = "Administration", Phone = "713-517-5522", Email = "shadijam00@gmail.com"};
-        var emp2 = new Employee { FName = "Khalid", LName = "Mohamed", Department = "Production", Phone = "713-777-7777", Email = "madeup@email.com"};
-        var emp3 = new Employee { FName = "Damien", LName = "Maya", Department = "Transportation", Phone = "713-111-1111", Email = "damien@maya.com"};
+        var e1 = new Advent { eventName = "ShadiTestEvent1", startDate = new DateTime(2016, 12, 12, 13, 45, 00), endDate = new DateTime(2016, 12, 14, 13, 45, 00)};
+        var e2 = new Advent { eventName = "ShadiTestEvent2", startDate = new DateTime(2016, 12, 16, 13, 45, 00), endDate = new DateTime(2016, 12, 18, 13, 45, 00)};
+        var a1 = new Advance { advanceName = "ShadiTest1-Advance"};
+        var a2 = new Advance { advanceName = "ShadiTest2-Advance"};
+        var emp1 = new Employee { fName = "Shadi", lName = "Jam", department = "Administration", phone = "713-517-5522", email = "shadijam00@gmail.com"};
+        var emp2 = new Employee { fName = "Khalid", lName = "Mohamed", department = "Production", phone = "713-777-7777", email = "madeup@email.com"};
+        var emp3 = new Employee { fName = "Damien", lName = "Maya", department = "Transportation", phone = "713-111-1111", email = "damien@maya.com"};
         
         db.Advents.Add(e1);
         db.Advents.Add(e2);

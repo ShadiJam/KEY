@@ -60,53 +60,53 @@ export class EmployeeList extends Component {
   
 
 
-export class NewEvent extends Component {
-    constructor(props){
-        super(props)
-        this.state = {}
-    }
-    submit(e) {
-        e.preventDefault()
-        post('api/advent', {
-            eventName: this.refs.eventName.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value
-       }).then(x => {
-            window.location.hash = `api/advent/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-    }
-    render(){
-        var err
-        if(this.state.errors){
-            err = <ul className="compose-errors">
-                {this.state.errors.map(e => <li>{e}</li>)}
-                </ul>
-        }
-        return  <form className="advent-form" onSubmit={e => this.submit(e)}>
-                 {this.state.errors ? <p>There were errors with your event submission:</p> : null}
-                 {err}
-                <h4>Event</h4>   
-                <div className="input-fields">
-                    <input ref="eventName" type="text" placeholder="Event Name" required/>
-                    <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-                    <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-                </div>
-                <div>
-                    <button className="create-event" type="submit">Submit Event</button>
-                </div>
-        </form>
-    }
-}
+// export class NewEvent extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = {}
+//     }
+//     submit(e) {
+//         e.preventDefault()
+//         post('api/advent', {
+//             eventName: this.refs.eventName.value,
+//             startDate: this.refs.startDate.value,
+//             endDate: this.refs.endDate.value
+//        }).then(x => {
+//             window.location.hash = `api/advent/${x.id}`
+//         }).catch(e => {
+//             this.setState({ errors: e })
+//         })
+//     }
+//     render(){
+//         var err
+//         if(this.state.errors){
+//             err = <ul className="compose-errors">
+//                 {this.state.errors.map(e => <li>{e}</li>)}
+//                 </ul>
+//         }
+//         return  <form className="advent-form" onSubmit={e => this.submit(e)}>
+//                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
+//                  {err}
+//                 <h4>Event</h4>   
+//                 <div className="input-fields">
+//                     <input ref="eventName" type="text" placeholder="Event Name" required/>
+//                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+//                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+//                 </div>
+//                 <div>
+//                     <button className="create-event" type="submit">Submit Event</button>
+//                 </div>
+//         </form>
+//     }
+// }
 
 
 export class AdventForm extends Component {
     
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state = {
-            id: props.params.id,
+            advent: [],
             employees: [],
             rOs: [],
             advances: [],
@@ -116,22 +116,17 @@ export class AdventForm extends Component {
         }
         update = () => this.forceUpdate()
     }
-    componentDidMount(){
-        get('/api/advent'+this.state.id).then(x => {
-                this.setState({x: this.state.id})
-            })
-    }
     pushNewEmployee(e){
         e.preventDefault()
         let {employees} = this.state
-        this.setState({ employees: [...employees, models.employeeModel()]})
+        this.setState({ employees: [...employees, models.employeeModel()] })
         update()
         
     }
     pushNewAdvance(e){
         e.preventDefault()
         let {advances} = this.state
-        this.setState({ advances: [...advances, models.advanceModel()]})
+        this.setState({ advances: [...advances, models.advanceModel()] })
         update()
     }    
     pushNewrO(e){
@@ -142,7 +137,10 @@ export class AdventForm extends Component {
     }
     save(e){
         e.preventDefault()
-        put('api/advent/'+this.state.id, {
+        post('api/advent/', {
+            eventName: this.refs.eventName.value,
+            startDate: this.refs.startDate.value,
+            endDate: this.refs.endDate.value,
             employees: this.state.employees,
             advances: this.state.advances, 
             rOs: this.state.rOs,
@@ -156,16 +154,12 @@ export class AdventForm extends Component {
         })
     }
     render(){
-        const x = this.state.id
-        if(!x)
-            return <div/>
-
-        return <div className="advance-form">
-            <div className="event-info">
-                <h5>{x.eventName}</h5>
-                <p>{x.startDate}</p>
-                <p>{x.endDate}</p>
-            </div>
+         return <div className="advent-form">
+             <div className="input-fields">
+                 <input ref="eventName" type="text" placeholder="Event Name" required/>
+                 <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
+                 <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+             </div>
             <ul>
                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</button>

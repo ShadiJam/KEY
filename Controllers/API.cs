@@ -20,7 +20,7 @@ public class AdventController : CRUDController<Advent> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(advent => 
-            advent.EventName.ToLower().IndexOf(term.ToLower()) != -1
+            advent.eventName.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }
@@ -32,9 +32,9 @@ public class EmployeeController : CRUDController<Employee> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(employee => 
-            employee.FName.ToLower().IndexOf(term.ToLower()) != -1
-            || employee.LName.ToLower().IndexOf(term.ToLower()) != -1
-            || employee.Department.ToLower().IndexOf(term.ToLower()) != -1
+            employee.fName.ToLower().IndexOf(term.ToLower()) != -1
+            || employee.lName.ToLower().IndexOf(term.ToLower()) != -1
+            || employee.department.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }
@@ -45,7 +45,7 @@ public class AdvanceController : CRUDController<Advance> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(advance => 
-            advance.AdvanceName.ToLower().IndexOf(term.ToLower()) != -1
+            advance.advanceName.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }
@@ -57,8 +57,8 @@ public class SectionController : CRUDController<Section> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(section => 
-            section.SectionName.ToLower().IndexOf(term.ToLower()) != -1
-            || section.SectionDescription.ToLower().IndexOf(term.ToLower()) != -1
+            section.sectionName.ToLower().IndexOf(term.ToLower()) != -1
+            || section.sectionDescription.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }
@@ -69,7 +69,7 @@ public class CategoryController : CRUDController<Category> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(category => 
-            category.CategoryName.ToLower().IndexOf(term.ToLower()) != -1
+            category.categoryName.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }
@@ -80,7 +80,7 @@ public class OptionController : CRUDController<Option> {
     [HttpGet("search")]
     public IActionResult Search([FromQuery]string term, int listId = -1){
         return Ok(r.Read(dbset => dbset.Where(option => 
-            option.OptionName.ToLower().IndexOf(term.ToLower()) != -1
+            option.optionName.ToLower().IndexOf(term.ToLower()) != -1
         )));
     }
 }

@@ -13,11 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 public class Employee : HasId {
     [Required]
     public int Id { get; set; }
-    public string FName { get; set;}
-    public string LName { get; set; }
-    public string Department { get; set; }
-    public string Phone { get; set; }
-    public string Email { get; set; } //create actual email property here
+    public string fName { get; set;}
+    public string lName { get; set; }
+    public string department { get; set; }
+    public string phone { get; set; }
+    public string email { get; set; } //create actual email property here
     // public int AdventId { get; set; } ***ADDING THIS TO EMPLOYEE BREAKS IT
 }
 
@@ -28,7 +28,7 @@ public class Employee : HasId {
 public class Advent : HasId {
     [Required]
     public int Id { get; set; }
-    public string EventName { get; set; }
+    public string eventName { get; set; }
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
     public List<Advance> Advances { get; set; } = new List<Advance>();
@@ -41,11 +41,11 @@ public class Advent : HasId {
 public class Advance : HasId {
     [Required]
     public int Id { get; set; }
-    public string AdvanceName { get; set; }
+    public string advanceName { get; set; }
     // public bool isAssigned { get; set; } = false;
     // public bool isComplete { get; set; } = false;
     public DateTime dueDate { get; set; }
-    public int EmployeeId { get; set; }
+    public int employeeId { get; set; }
     public List<Section> Sections { get; set; } = new List<Section>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
 
@@ -55,9 +55,9 @@ public class Advance : HasId {
 public class Section : HasId { 
     [Required]
     public int Id { get; set; }
-    public string SectionName { get; set; }
-    public string SectionDescription { get; set; }
-    public int AdvanceId { get; set; }
+    public string sectionName { get; set; }
+    public string sectionDescription { get; set; }
+    public int advanceId { get; set; }
     public List<Category> Categories { get; set; } = new List<Category>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
 }
@@ -65,7 +65,7 @@ public class Section : HasId {
 public class Category : HasId {
     [Required]
     public int Id { get; set; }
-    public string CategoryName { get; set; }
+    public string categoryName { get; set; }
     public List<Option> Options { get; set; } = new List<Option>();
     public int SectionId { get; set; }
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }
@@ -77,7 +77,7 @@ public class AdvanceSectionJoin : HasId {
     [Required]
     public int Id { get; set; }
     public Advance Advance { get; set; }
-    public int AdvanceId {get;set;}
+    public int advanceId {get;set;}
     public Section Section { get; set; }
     public int SectionId {get;set;}
 }
@@ -86,8 +86,8 @@ public class Option : HasId {
     [Required]
     public int Id { get; set; }
     public List<GoogleAPI.RootObject> ROs { get; set; }
-    public string OptionName { get; set; }
-    public int CategoryId { get; set; }
+    public string optionName { get; set; }
+    public int categoryId { get; set; }
 }
     
 

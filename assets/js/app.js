@@ -78,8 +78,7 @@ const reactApp = () =>
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
             <Route path="/api/employee/" component={EmployeeList}/>
-            <Route path="/api/advent/:id" component={AdventForm}/>
-            <Route path="/new" component={NewEvent}/>
+            <Route path="/build" component={AdventForm}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,

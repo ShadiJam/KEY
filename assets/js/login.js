@@ -125,7 +125,7 @@ export class EmployeeView extends Component {
     render(){
         return <div className="employeeView">
             <div>
-                <a href="#/new">
+                <a href="#/build">
                     <Button bsSize="xsmall" className="newAdvent">Create New Event</Button>
                 </a>
             </div>
