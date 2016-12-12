@@ -74,11 +74,11 @@ const reactApp = () =>
 
     <Layout>
         <Router history={hashHistory}>
-            
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
             <Route path="/api/employee/" component={EmployeeList}/>
             <Route path="/build" component={AdventForm}/>
+            <Route path="/build/:id" component={AdventForm}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,

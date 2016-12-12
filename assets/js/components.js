@@ -52,7 +52,7 @@ export const Advent = (advent) =>
 export const Advance = (advance) =>
     <div className="advance">
         <a href={`#/status/${advance.id}`}>
-            <h5>{advance.AdvanceName}</h5>
+            <h5>{advance.advanceName}</h5>
             <h6>{advance.isAssigned}</h6>
             <h6>{advance.dueDate}</h6>
             <h6>{this.state.advance.map(x => <li>{sectionName}{sectionDescription}</li>)}</h6>
@@ -61,17 +61,15 @@ export const Advance = (advance) =>
 
 export const Section = (section) =>
     <div className="section">
-        <h1>{section.SectionName}</h1>
-        <p>{section.SectionDescription}</p>
-        <p>{section.RootObject}</p>
-        <p>{section.Cost}</p>
-        <p>{section.Category}</p>
+        <h1>{section.sectionName}</h1>
+        <p>{section.sectionDescription}</p>
+        <p>{section.categoryName}</p>
     </div>
 
 export const Category = (category) =>
     <div className="category">
-            <h1>{category.CategoryName}</h1>
-            <p>{category.Options}</p>
+            <h1>{category.categoryName}</h1>
+            <p>{category.optionName}</p>
     </div>
 
 export const Option = (option) =>

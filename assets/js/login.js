@@ -21,15 +21,17 @@ export class LoginForm extends Component {
             IdentityUser: null
         }
     }
-    submit(e) {
+     submit(e) {
         e.preventDefault()
-            post('account/login', {
+        post('account/login', {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
-            window.location.hash = `api/employee/${x.id}`
-        }).catch(e => window.location.hash = '#/')
-        }
+            if(!x.errors) window.location.hash = `#/api/employee/${x.$id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => alert(e))
+    }
     render(){
         var err 
         return <form className="login-form" onSubmit={e => this.submit(e)}>
@@ -42,13 +44,12 @@ export class LoginForm extends Component {
                 <input ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
-                <a className="login-button" href="#/">
-                    <button className="login-button" type="submit">KEY</button>
-                </a>
+                <button className="login-button" type="submit">KEY</button>
             </div>
         </form>
     }
 }
+
 
 
 export class RegisterForm extends Component {
@@ -64,8 +65,10 @@ export class RegisterForm extends Component {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
-            window.location.hash = `api/employee/${x.id}`
-        }).catch(e => window.location.hash = '#/')
+            if(!x.errors) window.location.hash = `#/api/employee/${x.$id}`
+
+            this.setState({ errors: x.errors })
+        }).catch(e => alert(e))
         }
     render(){
         var err
@@ -79,9 +82,7 @@ export class RegisterForm extends Component {
                 <input  ref="password" type="password" placeholder="Your Password" required/>
             </div>
             <div>
-                <a className="register-button" href="#/newEmployee">
-                    <button className="register-button" type="submit">KEY</button>
-                </a>
+                <button className="register-button" type="submit">KEY</button>
             </div>
         </form>
     }
@@ -117,10 +118,15 @@ export class EmployeeView extends Component {
         }
     }
     componentDidMount(){
+        let {id} = this.state
+        if(id !== null){
         get('/api/advent').then(advents => {
                 advents = advents.reverse()
                 this.setState({items: advents})
             }).catch(e => log(e))
+    } else {
+        x => window.location.hash = '#/'
+        }
     }
     render(){
         return <div className="employeeView">

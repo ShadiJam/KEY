@@ -57,54 +57,10 @@ export class EmployeeList extends Component {
         }
     }
 
-  
-
-
-// export class NewEvent extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {}
-//     }
-//     submit(e) {
-//         e.preventDefault()
-//         post('api/advent', {
-//             eventName: this.refs.eventName.value,
-//             startDate: this.refs.startDate.value,
-//             endDate: this.refs.endDate.value
-//        }).then(x => {
-//             window.location.hash = `api/advent/${x.id}`
-//         }).catch(e => {
-//             this.setState({ errors: e })
-//         })
-//     }
-//     render(){
-//         var err
-//         if(this.state.errors){
-//             err = <ul className="compose-errors">
-//                 {this.state.errors.map(e => <li>{e}</li>)}
-//                 </ul>
-//         }
-//         return  <form className="advent-form" onSubmit={e => this.submit(e)}>
-//                  {this.state.errors ? <p>There were errors with your event submission:</p> : null}
-//                  {err}
-//                 <h4>Event</h4>   
-//                 <div className="input-fields">
-//                     <input ref="eventName" type="text" placeholder="Event Name" required/>
-//                     <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-//                     <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
-//                 </div>
-//                 <div>
-//                     <button className="create-event" type="submit">Submit Event</button>
-//                 </div>
-//         </form>
-//     }
-// }
-
-
 export class AdventForm extends Component {
-    
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        let {routeParams: {id}} = this.props
         this.state = {
             advent: [],
             employees: [],
@@ -112,9 +68,17 @@ export class AdventForm extends Component {
             advances: [],
             sections: [],
             categories: [],
-            options: []
+            options: [],
+            id
         }
         update = () => this.forceUpdate()
+    }
+    componentDidMount(){
+        let {id} = this.state
+        if(id !== undefined)
+        get(`/api/advent/${id}`)
+            .then(data => this.setState(Object.assign({}, this.state, data)))
+            .then(d => this.forceUpdate())
     }
     pushNewEmployee(e){
         e.preventDefault()
@@ -137,28 +101,46 @@ export class AdventForm extends Component {
     }
     save(e){
         e.preventDefault()
-        post('api/advent/', {
-            eventName: this.refs.eventName.value,
-            startDate: this.refs.startDate.value,
-            endDate: this.refs.endDate.value,
-            employees: this.state.employees,
-            advances: this.state.advances, 
-            rOs: this.state.rOs,
-            sections: this.state.sections,
-            categories: this.state.categories,
-            options: this.state.options         
-        }).then(x => {
-            window.location.hash = `api/advent/${x.id}`
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
+        if(this.state.id !== undefined){ 
+            put('api/advent/', {
+                eventName: this.refs.eventName.value,
+                startDate: this.refs.startDate.value,
+                endDate: this.refs.endDate.value,
+                employees: this.state.employees,
+                advances: this.state.advances, 
+                rOs: this.state.rOs,
+                sections: this.state.sections,
+                categories: this.state.categories,
+                options: this.state.options    
+            }).then(x => {
+                window.location.hash = `#/api/build/${x.id}`
+            }).catch(e => {
+                this.setState({ errors: e })
+            })
+        } else {
+            post('api/advent/', {
+                eventName: this.refs.eventName.value,
+                startDate: this.refs.startDate.value,
+                endDate: this.refs.endDate.value,
+                employees: this.state.employees,
+                advances: this.state.advances, 
+                rOs: this.state.rOs,
+                sections: this.state.sections,
+                categories: this.state.categories,
+                options: this.state.options         
+            }).then(x => {
+                window.location.hash = `#/api/build/${x.id}`
+            }).catch(e => {
+                this.setState({ errors: e })
+            })
+         }
     }
     render(){
          return <div className="advent-form">
              <div className="input-fields">
-                 <input ref="eventName" type="text" placeholder="Event Name" required/>
-                 <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required/>
-                 <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required/>
+                 <input ref="eventName" type="text" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""}/>
+                 <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required key={Math.random()} defaultValue={this.state.startDate || ""} />
+                 <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required key={Math.random()} defaultValue={this.state.endDate || ""}/>
              </div>
             <ul>
                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
@@ -178,7 +160,63 @@ export class AdventForm extends Component {
     }
 }
 
+export class AdventPage extends Component {
+    constructor(props){
+        super(props)
+        this.state = { 
+            id: props.params.id,
+            advent: [],
+            advances: [],
+            sections: [],
+            categories: [],
+            options: [],
+            employees: [],
+            rOs: []
+         }
+    }
+    componentDidMount(e){
+        get('api/advent/'+this.state.id).then(x => {
+            this.setState({ 
+            advent: this.props.advent,
+            employees: this.props.employees,
+            advances: this.props.advances, 
+            rOs: this.props.rOs,
+            sections: this.props.sections,
+            categories: this.props.categories,
+            options: this.props.options         
+             })
+        }).catch(e => log(e))
+    }
+    render() {
+      
 
+        return <div className="advent-view">
+            <ul>
+                <li>{advent.eventName}</li>
+                <li>{advent.startDate}</li>
+                <li>{advent.endDate}</li>
+            </ul>
+            <div className="advent-advance-view">
+            <ul>
+                <li>{advance.advanceName}</li>
+                <li>{advance.dueDate}</li>
+                <li>{section.sectionName}</li>
+                <li>{category.categoryName}</li>
+                <li>{option.map(optionName)}</li>
+            </ul>
+            </div>  
+            <div className="advent-employee-view">
+            <ul>
+                <li>{employee.fName}</li>
+                <li>{employee.lName}</li>
+                <li>{employee.department}</li>
+                <li>{employee.phone}</li>
+                <li>{employee.email}</li>
+            </ul>
+            </div>
+    </div>
+    }
+}
 
 
 export class EmployeeForm extends Component {
@@ -193,11 +231,11 @@ export class EmployeeForm extends Component {
         return <div className="employee-form">
             <span>New Employee</span>
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" defaultValue={this.props.employee.fName} /> </li>
-                <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" defaultValue={this.props.employee.lName} /> </li>
-                <li> <input onChange={e => this.change(e, "department")} onBlur={update} ref="department" placeholder="Department" defaultValue={this.props.employee.department} /> </li>
-                <li> <input onChange={e => this.change(e, "phone")} ref="phone" onBlur={update} placeholder="Mobile Number" defaultValue={this.props.employee.phone} /> </li>
-                <li> <input onChange={e => this.change(e, "email")} ref="email" onBlur={update} placeholder="email@email.com" defaultValue={this.props.employee.email} /> </li>
+                <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" required key={Math.random()} defaultValue={this.props.employee.fName || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" required key={Math.random()} defaultValue={this.props.employee.lName || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "department")} onBlur={update} ref="department" placeholder="Department" required key={Math.random()} defaultValue={this.props.employee.department || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "phone")} ref="phone" onBlur={update} placeholder="Mobile Number" required key={Math.random()} defaultValue={this.props.employee.phone || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "email")} ref="email" onBlur={update} placeholder="email@email.com" required key={Math.random()} defaultValue={this.props.employee.email || ""} /> </li>
             </ul>
                 
         </div>
@@ -221,8 +259,8 @@ export class AdvanceForm extends Component {
         return <div className="advance-form">
             <span>Advance</span>
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" defaultValue={this.props.advance.advanceName} /> </li>
-                <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" defaultValue={this.props.advance.dueDate} /> </li>
+                <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" required key={Math.random()} defaultValue={this.props.advance.advanceName || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" required key={Math.random()} defaultValue={this.props.advance.dueDate || ""} /> </li>
                
             </ul>
               <ul>
@@ -257,8 +295,8 @@ export class SectionForm extends Component {
         return <div className="section-form">
             <span>Section</span>
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" defaultValue={this.props.section.sectionName} /> </li>
-                <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" defaultValue={this.props.section.sectionDescription} /> </li>
+                <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" required key={Math.random()} defaultValue={this.props.section.sectionName || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" required key={Math.random()} defaultValue={this.props.section.sectionDescription || ""} /> </li>
             </ul>
             <ul>
                 {(this.props.section.categories || []).map(e => <CategoryForm category={e} />)}
@@ -288,7 +326,7 @@ export class CategoryForm extends Component {
         return <div className="category-form">
             <span>Category</span>
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "categoryName")} onBlur={update} ref="categoryName" placeholder="Category Name" defaultValue={this.props.category.categoryName} /> </li>
+                <li> <input onChange={e => this.change(e, "categoryName")} onBlur={update} ref="categoryName" placeholder="Category Name" required key={Math.random()} defaultValue={this.props.category.categoryName || ""} /> </li>
             </ul>
             <ul>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
@@ -319,7 +357,7 @@ export class OptionForm extends Component {
         return <div className="option-form">
             <span>Option</span>
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" defaultValue={this.props.option.optionName} /> </li>
+                <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
             </ul>
                
             <ul>
@@ -346,7 +384,7 @@ export class LocationForm extends Component {
         Object.assign(location, this.state.results[0])
 
 
-        post('/api/advent', this.state).then(x => {
+        post('/api/advent', this.props.params.id).then(x => {
             this.setState({ results: this.state.results })
             update()
         }).catch(e => {
