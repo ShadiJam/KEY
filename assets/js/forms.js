@@ -389,7 +389,7 @@ export class LocationForm extends Component {
         Object.assign(location, this.state.results[0])
 
 
-        post('/api/advent', this.props.params.id).then(x => {
+        post('/api/advent'+this.props.id).then(x => {
             this.setState({ results: this.state.results })
             update()
         }).catch(e => {
