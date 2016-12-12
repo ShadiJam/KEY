@@ -16,10 +16,10 @@ export const Header = () =>
             <nav id="=menu">
                 <ul id="primary" className="row">
                     <li className="portfolio span2">
-                        <a className="key" href="/">KEY</a>
+                        <a className="key" href="#/">KEY</a>
                             <ul id="secondary">
                                 <li className="project"><a href="#/api/employee/:id">EVENTS</a></li>
-                                <li className="project"><a href="">ADVANCES</a></li>
+                                <li className="project"><a href="#/build">CREATE</a></li>
                                 <li className="project"><a href="#/api/employee/">TEAMS</a></li>
                             </ul>
                         </li>
@@ -44,8 +44,8 @@ export const Advent = (advent) =>
         <h5>{advent.eventName}</h5>
         <h6>{advent.startDate}</h6>
         <h6>{advent.endDate}</h6>
-            <a href={`api/advent/${advent.id}`}>
-                <Button bsSize="xsmall" className="newAdvent">Build Advance</Button>
+            <a href={`#/build/${advent.id}`}>
+                <button className="build-button">Edit</button>
             </a>
     </div>
 

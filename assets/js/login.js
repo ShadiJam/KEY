@@ -113,13 +113,14 @@ export class Login extends Component {
 export class EmployeeView extends Component {
     constructor(props){
         super(props)
-        this.state = { 
+        this.state =  { 
+            $id: props.params.id,
             items: []
-        }
+         } 
     }
     componentDidMount(){
-        let {id} = this.state
-        if(id !== null){
+        let {$id} = this.state
+        if($id !== null){
         get('/api/advent').then(advents => {
                 advents = advents.reverse()
                 this.setState({items: advents})
@@ -130,13 +131,8 @@ export class EmployeeView extends Component {
     }
     render(){
         return <div className="employeeView">
-            <div>
-                <a href="#/build">
-                    <Button bsSize="xsmall" className="newAdvent">Create New Event</Button>
-                </a>
-            </div>
             <div className="grid grid-3-600">
-            {this.state.items.map(Advent)}
+                {this.state.items.map(Advent)}
             </div>
             
         </div>

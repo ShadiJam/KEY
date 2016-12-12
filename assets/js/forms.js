@@ -62,7 +62,6 @@ export class AdventForm extends Component {
         super(props)
         let {routeParams: {id}} = this.props
         this.state = {
-            advent: [],
             employees: [],
             rOs: [],
             advances: [],
@@ -92,6 +91,7 @@ export class AdventForm extends Component {
         let {advances} = this.state
         this.setState({ advances: [...advances, models.advanceModel()] })
         update()
+        console.log(this.state)
     }    
     pushNewrO(e){
         e.preventDefault()
@@ -99,13 +99,17 @@ export class AdventForm extends Component {
         this.setState({ rOs: [...rOs, models.rOModel()] })
         update()
     }
+    change(e, name){
+        e.preventDefault()
+        this.setState({[name]: this.refs[name].value})
+    }
     save(e){
         e.preventDefault()
         if(this.state.id !== undefined){ 
-            put('api/advent/', {
-                eventName: this.refs.eventName.value,
-                startDate: this.refs.startDate.value,
-                endDate: this.refs.endDate.value,
+            put('api/advent/'+this.state.id, {
+                eventName: this.state.eventName,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
                 employees: this.state.employees,
                 advances: this.state.advances, 
                 rOs: this.state.rOs,
@@ -113,15 +117,15 @@ export class AdventForm extends Component {
                 categories: this.state.categories,
                 options: this.state.options    
             }).then(x => {
-                window.location.hash = `#/api/build/${x.id}`
+                window.location.hash = `#/api/advent/${this.state.id}`
             }).catch(e => {
                 this.setState({ errors: e })
             })
         } else {
             post('api/advent/', {
-                eventName: this.refs.eventName.value,
-                startDate: this.refs.startDate.value,
-                endDate: this.refs.endDate.value,
+                eventName: this.state.eventName,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
                 employees: this.state.employees,
                 advances: this.state.advances, 
                 rOs: this.state.rOs,
@@ -129,18 +133,19 @@ export class AdventForm extends Component {
                 categories: this.state.categories,
                 options: this.state.options         
             }).then(x => {
-                window.location.hash = `#/api/build/${x.id}`
+                window.location.hash = `#/api/advent/${x.id}`
             }).catch(e => {
                 this.setState({ errors: e })
             })
          }
     }
+    
     render(){
          return <div className="advent-form">
              <div className="input-fields">
-                 <input ref="eventName" type="text" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""}/>
-                 <input ref="startDate" type="DateTime" placeholder="Start Date DD/MM/YR" required key={Math.random()} defaultValue={this.state.startDate || ""} />
-                 <input ref="endDate" type="DateTime" placeholder="End Date DD/MM/YR" required key={Math.random()} defaultValue={this.state.endDate || ""}/>
+                 <input onBlur={e => this.change(e, "eventName")} ref="eventName" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""} /> 
+                 <input onBlur={e => this.change(e, "startDate")}  ref="startDate" placeholder="Start Date" required key={Math.random()} defaultValue={this.state.startDate || ""} />
+                 <input onBlur={e => this.change(e, "endDate")} ref="endDate" placeholder="End Date" required key={Math.random()} defaultValue={this.state.endDate || ""} /> 
              </div>
             <ul>
                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}

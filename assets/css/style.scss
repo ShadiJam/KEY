@@ -151,10 +151,11 @@ header#header nav #primary li.active > a {
 div.advent {
     display: block;
     float: left;
-    border-bottom: 10px solid white;
+    border-bottom: 5px solid white;
     padding: 5px;
     margin-left: 15px;
     align-content: center;
+    text-align: center;
     color: white;
     a {
         color: white;
@@ -274,9 +275,7 @@ form.advent-form  {
     width: 300px;
     height: 100%;
     max-width: 300px;
-        h4 {
-            margin-left: 3px;
-        }
+       
 }
 
 div.input-fields {
@@ -312,6 +311,15 @@ button.create-employee {
     list-style-type: none;
 }
 
+button.build-button {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+    list-style-type: none;
+}
 
 
 div.employee-form {
