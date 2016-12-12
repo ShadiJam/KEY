@@ -16,6 +16,7 @@ export class EmployeeList extends Component {
             items: [],
             employees: []
         }
+        update = () => this.forceUpdate()
     }
     componentDidMount(){
         get('/api/employee').then(employees => {
@@ -28,19 +29,30 @@ export class EmployeeList extends Component {
         this.setState({ employees: [...employees, models.employeeModel()]})
         update()  
     }
+    submit(e) {
+        e.preventDefault()
+        post('api/employee', {
+            employees: this.state.employees,
+            }).then(x => {
+            window.location.hash = "api/employee"
+        }).catch(e => {
+            this.setState({ errors: e })
+        })
+    }
     render(){
 
         return <div className="employee">
             
-            <div className="grid grid-3-600">
+            <div className="employee-view">
                 {this.state.items.map(Employee)}
             </div>
-
-            <ul>
+            <ul className="new-employee-form">
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
             </ul>
-            
+            <div>
+                <button className="create-employee" type="submit">Save</button>
+            </div>
         </div>
         }
     }
@@ -105,8 +117,8 @@ export class AdventForm extends Component {
         update = () => this.forceUpdate()
     }
     componentDidMount(){
-        get('/api/advent').then(x => {
-                this.setState({item: x})
+        get('/api/advent'+this.state.id).then(x => {
+                this.setState({x: this.state.id})
             })
     }
     pushNewEmployee(e){
@@ -144,15 +156,15 @@ export class AdventForm extends Component {
         })
     }
     render(){
-        const item = this.state.item
-        if(!item)
+        const x = this.state.id
+        if(!x)
             return <div/>
 
         return <div className="advance-form">
             <div className="event-info">
-                <h5>{item.eventName}</h5>
-                <p>{item.startDate}</p>
-                <p>{item.endDate}</p>
+                <h5>{x.eventName}</h5>
+                <p>{x.startDate}</p>
+                <p>{x.endDate}</p>
             </div>
             <ul>
                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
@@ -185,7 +197,7 @@ export class EmployeeForm extends Component {
     }
     render(){
         return <div className="employee-form">
-            <span>Employees</span>
+            <span>New Employee</span>
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" defaultValue={this.props.employee.fName} /> </li>
                 <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" defaultValue={this.props.employee.lName} /> </li>

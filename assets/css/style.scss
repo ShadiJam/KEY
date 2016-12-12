@@ -274,6 +274,9 @@ form.advent-form  {
     width: 300px;
     height: 100%;
     max-width: 300px;
+        h4 {
+            margin-left: 3px;
+        }
 }
 
 div.input-fields {
@@ -289,3 +292,37 @@ div.input-fields {
             float: left;
         }
 }
+
+button.form-buttons {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+}
+
+button.create-employee {
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+    list-style-type: none;
+}
+
+
+
+div.employee-form {
+    display: inline;
+}
+
+ul.employee-list {
+    list-style-type: none;
+}
+
+ul.input-fields {
+    list-style-type: none;
+}
+

@@ -16,11 +16,11 @@ export const Header = () =>
             <nav id="=menu">
                 <ul id="primary" className="row">
                     <li className="portfolio span2">
-                        <a className="project" href="/">KEY</a>
+                        <a className="key" href="/">KEY</a>
                             <ul id="secondary">
-                                <li className="project"><a href="/api/employee/:id">EVENTS</a></li>
+                                <li className="project"><a href="#/api/employee/:id">EVENTS</a></li>
                                 <li className="project"><a href="">ADVANCES</a></li>
-                                <li className="project"><a href="/api/employee">TEAMS</a></li>
+                                <li className="project"><a href="#/api/employee/">TEAMS</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -30,7 +30,7 @@ export const Header = () =>
        
 export const Employee = (employee) =>
     <div className="employee">
-        <ul>
+        <ul className="employee-list">
         <li>{employee.fName}</li>
         <li>{employee.lName}</li>
         <li>{employee.department}</li>
