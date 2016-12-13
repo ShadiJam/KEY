@@ -147,20 +147,13 @@ header#header nav #primary li.active > a {
   width: 30px;
 }
 
-div.advent-element {
-    display: inline;
-    border-bottom: 5px solid #564D4A;
-    padding: 5px;
-    margin-left: 15px;
-    align-content: center;
-    text-align: center;
-    color: #564D4A;
-    a {
-        color: #564D4A;
-    }
+div.advent {
+    list-style-type: none;
 }
 
+
 div.advent a.hover {
+    
     h5 {
         display: block;
         color: #F2E9E4;
@@ -179,7 +172,7 @@ button.newAdvent {
     display: inline;
     border: 1px solid #564D4A;
     color: #F2E9E4;
-    background-color: #023C40;
+    background-color: #48483A;
     margin: 3px;
     list-style-type: none;
 }
@@ -221,7 +214,7 @@ div.login-stuff {
 }
 
 button.register-button {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #564D4A;
     margin-top: 10px;
@@ -229,7 +222,7 @@ button.register-button {
 }
 
 button.login-button {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #564D4A;
     margin-top: 10px;
@@ -249,7 +242,7 @@ form.login-form h4 {
 }
 
 button.create-event {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
@@ -262,7 +255,7 @@ button.create-event {
 input.input-fields {
     clear: left;
     width: 250px;
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     text-align: center;
     margin: 3px;
@@ -270,7 +263,7 @@ input.input-fields {
         }
 
 button.form-buttons {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
@@ -279,7 +272,7 @@ button.form-buttons {
 }
 
 button.google-button {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 5px;
@@ -288,7 +281,7 @@ button.google-button {
 }
 
 button.create-employee {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
@@ -298,7 +291,17 @@ button.create-employee {
 }
 
 button.build-button {
-    background-color: #023C40;
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+    list-style-type: none;
+}
+
+button.view-button {
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
@@ -308,7 +311,7 @@ button.build-button {
 }
 
 button.save-location {
-    background-color: #023C40;
+    background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
@@ -326,12 +329,31 @@ ul.employee-list {
     list-style-type: none;
 }
 
+ul.advent-list {
+    list-style-type: none;
+    margin-top: 20px;
+}
+
+div.advent-element {
+    display: inline;
+    border-bottom: 5px solid #564D4A;
+    list-style-type: none;
+    padding: 5px;
+    margin-left: 15px;
+    align-content: center;
+    text-align: center;
+    color: #F2E9E4;
+    a {
+        color: #564D4A;
+    }
+}
+
 ul.input-fields {
     list-style-type: none;
 }
 
 div.advent-input-fields {
-    background-color: #023C40;
+    background-color: #48483A;
     display: inline;
     color: #F2E9E4;
     text-align: left;
@@ -340,10 +362,13 @@ div.advent-input-fields {
 
 ul {
     padding: 0;
+    list-style-type: none; 
 }
 
+
+
 div.new-RO-form {
-    border: 1px solid #023C40;
+    border: 1px solid #48483A;
     display: block;
         span {
             margin-left: 3px;
@@ -367,3 +392,7 @@ span {
     border-top: none;
 }
 
+span.advent-view {
+    margin-left: 0;
+    padding-left: 0;
+}

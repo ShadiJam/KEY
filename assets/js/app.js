@@ -76,7 +76,7 @@ const reactApp = () =>
         <Router history={hashHistory}>
             <Route path="/" component={Login}/>
             <Route path="/api/employee/:id" component={EmployeeView}/>
-            <Route path="/api/employee/" component={EmployeeList}/>
+            <Route path="/api/employee" component={EmployeeList}/>
             <Route path="/build" component={AdventForm}/>
             <Route path="/build/:id" component={AdventForm}/>
             <Route path="/api/advent/:id" component={AdvancePage}/>

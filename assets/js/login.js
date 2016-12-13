@@ -23,7 +23,7 @@ export class LoginForm extends Component {
     }
      submit(e) {
         e.preventDefault()
-        post('account/login', {
+        post('/account/login', {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
@@ -61,7 +61,7 @@ export class RegisterForm extends Component {
         }
     submit(e) {
         e.preventDefault()
-        post('account/register', {
+        post('/account/register', {
             email: this.refs.email.value,
             password: this.refs.password.value
         }).then(x => {
@@ -129,6 +129,7 @@ export class EmployeeView extends Component {
         x => window.location.hash = '#/'
         }
     }
+    
     render(){
         return <div className="advent-element">
                 {this.state.items.map(Advent)}

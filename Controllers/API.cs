@@ -88,24 +88,17 @@ public class OptionController : CRUDController<Option> {
 
 [Route("api/location")]
 
-public class LocationController: CRUDController<GoogleAPI.RootObject> 
+public class LocationController: Controller
 {
     private GoogleLocationService gs;
-    public LocationController(IRepository<GoogleAPI.RootObject> r, GoogleLocationService gs) : base(r) {
+    public LocationController(GoogleLocationService gs) : base() {
         this.gs = gs;
-        this.r = r;
     }
 
     [HttpGet("{address}")]
     public async Task<IActionResult> Search(string address)
     {
-        address.Log();
-        var data = await gs.Get(address);
-        // var lat1 = data.results.ElementAt(0).geometry.location.lat;
-        // var lng1 = data.results.ElementAt(0).geometry.location.lng;
-        // var formatted_address = data.results.ElementAt(0).formatted_address;
-       
-        data.Log();
-        return Ok(r.Create(data));
+        GoogleAPI.RootObject data = await gs.Get(address);
+        return Ok(EventLocation.From(data));
     }
 }

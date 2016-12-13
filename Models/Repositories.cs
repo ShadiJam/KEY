@@ -71,6 +71,8 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
         if(actual != null) {
             dbtable.Remove(actual);
             item.Id = actual.Id;
+            db.SaveChanges();
+
             dbtable.Add(item);
             db.SaveChanges();
             return true;

@@ -32,7 +32,7 @@ public class Advent : HasId {
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
     public List<Advance> Advances { get; set; } = new List<Advance>();
-    public List<GoogleAPI.RootObject> ROs { get; set; } = new List<GoogleAPI.RootObject>();
+    public List<EventLocation> EventLocations { get; set; } = new List<EventLocation>();
     public List<Employee> Employees { get; set; }
   
     // write logic for downloading file here
@@ -42,14 +42,14 @@ public class Advance : HasId {
     [Required]
     public int Id { get; set; }
     public string advanceName { get; set; }
-    // public bool isAssigned { get; set; } = false;
-    // public bool isComplete { get; set; } = false;
+    public bool isAssigned { get; set; } = false;
+    public bool isComplete { get; set; } = false;
     public DateTime dueDate { get; set; }
     public int employeeId { get; set; }
     public List<Section> Sections { get; set; } = new List<Section>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
 
-    // public int AdventId { get; set; } ****ADDING THIS MAKES IT BREAK
+    public int AdventId { get; set; } // ****ADDING THIS MAKES IT BREAK
 }
   
 public class Section : HasId { 
@@ -82,10 +82,27 @@ public class AdvanceSectionJoin : HasId {
     public int SectionId {get;set;}
 }
 
+public class EventLocation : HasId {
+    [Required]
+    public int Id {get;set;}
+    public string FormattedAddress {get;set;}
+    public double Lat {get;set;}
+    public double Lng {get;set;}
+    public int AdventId {get;set;}
+
+    public static EventLocation From(GoogleAPI.RootObject ro){
+        return new EventLocation {
+            FormattedAddress = ro.Results?[0]?.formatted_address,
+            Lat = ro.Results?[0]?.geometry?.location?.lat ?? 0,
+            Lng = ro.Results?[0]?.geometry?.location?.lng ?? 0
+        };
+    }
+}
+
 public class Option : HasId {
     [Required]
     public int Id { get; set; }
-    public List<GoogleAPI.RootObject> ROs { get; set; }
+    // public List<GoogleAPI.RootObject> ROs { get; set; }
     public string optionName { get; set; }
     public int categoryId { get; set; }
 }
@@ -104,9 +121,6 @@ public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<GoogleAPI.Location> Locations { get; set; }
     public DbSet<GoogleAPI.Geometry> Geometries { get; set; }
     public DbSet<GoogleAPI.Result> Results { get; set; }
-    
-    
-
 }
 
 public partial class Handler {
@@ -116,12 +130,13 @@ public partial class Handler {
         Repo<Advent>.Register(services, "Advents",
             d => d
                 .Include(e => e.Employees)
-                .Include(l => l.ROs)
+                .Include(l => l.EventLocations)
                 .Include(a => a.Advances)
-                .ThenInclude(s => s.Sections)
-                .ThenInclude(c => c.Categories)
-                .ThenInclude(o => o.Options)
+                    .ThenInclude(s => s.Sections)
+                        .ThenInclude(c => c.Categories)
+                            .ThenInclude(o => o.Options)
         );
+        
         Repo<Advance>.Register(services, "Advances",
             d => d
                 .Include(s => s.Sections)
@@ -138,49 +153,7 @@ public partial class Handler {
             d => d
                 .Include(o => o.Options));
 
-        Repo<Option>.Register(services, "Options",
-            d => d
-                .Include(r => r.ROs));
+        Repo<Option>.Register(services, "Options");
 
-        Repo<GoogleAPI.RootObject>.Register(services, "ROs",
-            d => d
-                .Include(r => r.Results)
-                .ThenInclude(g => g.geometry)
-                .ThenInclude(l => l.location));
-
-        Repo<GoogleAPI.Result>.Register(services, "Results");
-
-        Repo<GoogleAPI.Geometry>.Register(services, "Geometries");
-
-        Repo<GoogleAPI.Location>.Register(services, "Locations",
-            d => d
-                .Include(l => l.lat)
-                .Include(l => l.lng));
-                    
-        }
     }
-      
-   
-        
-        
-        
-            
-       
-           
-
-       
-        //     d => d
-        //         .Include(s => s.Sections)
-        //         .ThenInclude(c => c.Categories)
-        //         .ThenInclude(o => o.Options));
-
-        
-                
-       
-        
-        //     d => d 
-        //         .Include(r => r.ROs));
-
-       
-  
-
+}

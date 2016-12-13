@@ -17,17 +17,20 @@ public class Location : HasId {
     public int Id { get; set; }
     public double lat { get; set; }
     public double lng { get; set; }
+    public int GeometryId {get;set;}
     }
 public class Geometry : HasId {
     public int Id { get; set; }
     public Location location { get; set; }
+    public int ResultId {get;set;}
     }
 
 public class Result : HasId {
     public int Id { get; set; }
     public string formatted_address { get; set; }
     public Geometry geometry { get; set; }
-    }
+    public int RootObjectId {get;set;}
+}
 
 public class RootObject : HasId {
     public int Id { get; set; }

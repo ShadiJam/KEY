@@ -19,8 +19,9 @@ export const Header = () =>
                         <a className="key" href="#/">KEY</a>
                             <ul id="secondary">
                                 <li className="project"><a href="#/api/employee/:id">EVENTS</a></li>
-                                <li className="project"><a href="#/build">CREATE</a></li>
                                 <li className="project"><a href="#/api/employee/">TEAMS</a></li>
+                                <li className="project"><a href="#/build">BUILD</a></li>
+                                
                             </ul>
                         </li>
                     </ul>
@@ -36,6 +37,7 @@ export const Employee = (employee) =>
         <li>{employee.department}</li>
         <li>{employee.phone}</li>
         <li>{employee.email}</li>
+        <span></span>
         </ul>
     </div>
 
@@ -46,9 +48,13 @@ export const Advent = (advent) =>
         <li>{advent.startDate}</li>
         <li>{advent.endDate}</li>
         </ul>
+            <a href={`#/api/advent/${advent.id}`}>
+                <button className="view-button">View</button>
+            </a>
             <a href={`#/build/${advent.id}`}>
                 <button className="build-button">Edit</button>
             </a>
+            <span></span>
     </div>
 
 export const Advance = (advance) =>

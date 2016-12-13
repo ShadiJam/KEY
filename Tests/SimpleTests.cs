@@ -1,5 +1,6 @@
 using Xunit;
 using System;
+using System.Collections.Generic;
 
 
 public class SimpleTests {
@@ -26,7 +27,7 @@ public class SimpleTests {
     //     Assert.True(result.View == "Empty");
         
     // }
-
+//Issue with testing of respository and APIs - told to only test models
     // [Fact]
     // public void Controllers_Inherit(){
     //     Assert.True(new AdvanceController(IRepository<Advance>) is CRUDController<Advance>);
@@ -43,11 +44,10 @@ public class SimpleTests {
     // public void ControllerCanSearch(string term){
     //     var controller = new AdventController();
     //     var result = controller.Search(term);
-    //     Assert.NotNull() // or should it be Assert.True()?
-
+    //     Assert.NotNull(result); // or should it be Assert.True()?
     // }
 
-    // [Fact]
+    // [Theory]
     // public void IsAssigned(){
     //     Advance a = new Advance();
     //     Advance b = new Advance();
@@ -55,11 +55,11 @@ public class SimpleTests {
     //     Assert.False(b.isAssigned());
     // }
 
-    // [Fact]
+    // [Theory]
 
     // public void ListIsNotNull(){
-    //     var result = new List<Object>();
-    //     Assert.NotNull(List<Employees>);
+    //     // var result = new List<Object>();
+    //     Assert.NotNull(Employees);
     //     Assert.NotNull(Advances);
     //     Assert.NotNull(ROs);
     //     Assert.NotNull(Sections);
@@ -68,14 +68,17 @@ public class SimpleTests {
     //     Assert.NotNull(Options);
     // }
 
-    // [Fact]
+    [Fact]
 
-    // public void DueDateIsDate(){
-    //     var dueDate = new DateTime();
-    //     var result = 
-    // }
+    public void DueDateInRange(){
+        Assert.InRange(
+            new DateTime(2016, 1, 12), 
+            new DateTime(2003, 1, 1),
+            new DateTime(2006, 1, 12));
+    }
+}
 
-
+  
     
     
 
@@ -91,14 +94,14 @@ public class SimpleTests {
     Use theories to test multiple inputs to a function
     */
 
-    [Theory]
-    [InlineData( 1,1,2 )]
-    [InlineData( 4,6,10 )]
-    [InlineData( 7,7,14 )]
-    public void TestingAdd3(int a, int b, int c) =>
-        Assert.Equal(Add(a,b), c);
+//     [Theory]
+//     [InlineData( 1,1,2 )]
+//     [InlineData( 4,6,10 )]
+//     [InlineData( 7,7,14 )]
+//     public void TestingAdd3(int a, int b, int c) =>
+//         Assert.Equal(Add(a,b), c);
 
   
    
- }
+//  }
     

@@ -8,7 +8,7 @@ import { Employee, Advance, Advent, Section, Category, Option, RootObject, Resul
 
 
 let update // DANGER WILL ROBINSON, DOUNT TOUCH ME
-
+    , getRootState 
 export class EmployeeList extends Component {
     constructor(props){
         super(props)
@@ -23,24 +23,25 @@ export class EmployeeList extends Component {
                 this.setState({items: employees})
             }).catch(e => log(e))
     }
-        pushNewEmployee(e){
+    pushNewEmployee(e){
         e.preventDefault()
         let {employees} = this.state
         this.setState({ employees: [...employees, models.employeeModel()]})
         update()  
     }
-    submit(e) {
+    save(e){
         e.preventDefault()
-        post('api/employee', {
+        post('/api/employee', {
             employees: this.state.employees,
             }).then(x => {
-            window.location.hash = "api/employee"
+            window.location.hash = "#/api/employee"
         }).catch(e => {
             this.setState({ errors: e })
         })
+        update()
     }
     render(){
-
+        console.log(this.state)
         return <div className="employee">
             
             <div className="employee-view">
@@ -51,7 +52,7 @@ export class EmployeeList extends Component {
                 <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
             </ul>
             <div>
-                <button className="create-employee" type="submit">Save</button>
+                 <button className="form-buttons" onClick={e => this.save(e)}>Save</button>
             </div>
         </div>
         }
@@ -63,21 +64,23 @@ export class AdventForm extends Component {
         let {routeParams: {id}} = this.props
         this.state = {
             employees: [],
-            rOs: [],
+            eventLocations: [],
             advances: [],
             sections: [],
             categories: [],
             options: [],
-            id
+            id: parseInt(id)
         }
         update = () => this.forceUpdate()
+        getRootState = () => this.state
     }
     componentDidMount(){
+        console.log(1,this.props)
         let {id} = this.state
-        if(id !== undefined)
-        get(`/api/advent/${id}`)
-            .then(data => this.setState(Object.assign({}, this.state, data)))
-            .then(d => this.forceUpdate())
+        if(id === undefined) return
+            get(`/api/advent/${id}`)
+                .then(data => this.setState(Object.assign({}, this.state, data)))
+                .then(d => this.forceUpdate())
     }
     pushNewEmployee(e){
         e.preventDefault()
@@ -95,8 +98,8 @@ export class AdventForm extends Component {
     }    
     pushNewrO(e){
         e.preventDefault()
-        let {rOs} = this.state
-        this.setState({ rOs: [...rOs, models.rOModel()] })
+        let {eventLocations} = this.state
+        this.setState({ eventLocations: [...eventLocations, models.eventLocationModel()] })
         update()
     }
     change(e, name){
@@ -106,33 +109,13 @@ export class AdventForm extends Component {
     save(e){
         e.preventDefault()
         if(this.state.id !== undefined){ 
-            put('api/advent/'+this.state.id, {
-                eventName: this.state.eventName,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                employees: this.state.employees,
-                advances: this.state.advances, 
-                rOs: this.state.rOs,
-                sections: this.state.sections,
-                categories: this.state.categories,
-                options: this.state.options    
-            }).then(x => {
+            put('/api/advent/'+this.state.id, this.state).then(x => {
                 window.location.hash = `#/api/advent/${this.state.id}`
             }).catch(e => {
                 this.setState({ errors: e })
             })
         } else {
-            post('api/advent/', {
-                eventName: this.state.eventName,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                employees: this.state.employees,
-                advances: this.state.advances, 
-                rOs: this.state.rOs,
-                sections: this.state.sections,
-                categories: this.state.categories,
-                options: this.state.options         
-            }).then(x => {
+            post('/api/advent/', this.state).then(x => {
                 window.location.hash = `#/api/advent/${x.id}`
             }).catch(e => {
                 this.setState({ errors: e })
@@ -155,11 +138,11 @@ export class AdventForm extends Component {
             </div>
             <ul>
                 <span className="localion">Location</span>
-                {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
+                {(this.state.eventLocations || []).map(location => <LocationForm eventlocation={location}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</button>
             </ul>
             <ul>
-                <span className="employee">New Employee</span>
+                <span className="employee">Employee</span>
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
             </ul>
@@ -180,15 +163,9 @@ export class AdvancePage extends Component {
         let {routeParams: {id}} = this.props
         this.state = { 
             id: props.params.id,
-            advances: [
-                sections = [
-                    categories = [
-                        options = []
-                    ],
-                ], 
-            ],
+            advances: [],
             employees: [],
-            rOs: []
+            eventLocations: []
          }
     }
     componentDidMount(){
@@ -198,17 +175,28 @@ export class AdvancePage extends Component {
             .then(data => this.setState(Object.assign({}, this.state, data)))
     }
     render() {
-    
         return <div className="advance-return-view">
                 <ul>
-                   {(this.state.advent || []).map(Advent)}
-                   {(this.state.rootObject || []).map(RootObject)}
-                   {(this.state.advances || []).map(Advance)}
-                   {(this.state.advance.sections || []).map(Section)}
-                   {(this.state.section.categories || []).map(Category)}
-                   {(this.state.category.options || []).map(Option)}
-                   {(this.state.employees || []).map(Employee)}
+                    <span className="advent-view">Event Name</span>
+                    <li>{this.state.eventName}</li>
+                    <span className="advent-view">Start Date</span>
+                    <li>{this.state.startDate}</li>
+                    <span className="advent-view">End Date</span>
+                    <li>{this.state.endDate}</li>
+                    <span className="advent-view">Advances</span>
+                    {(this.state.advances || []).map(Advance)}
+                    <span className="advent-view">Sections</span>
+                    {(this.state.sectionName || []).map(Section)}
+                    <span className="advent-view">Categories</span>
+                    {(this.state.categoryName || []).map(Category)}
+                    <span className="advent-view">Options</span>
+                    {(this.state.optionName || []).map(Option)}
+                    <span className="advent-view">Employees</span>
+                    {(this.state.employees || []).map(Employee)}
                 </ul>
+                <a href={`#/build/${this.state.id}`}>
+                <button className="build-button">Edit</button>
+            </a>
             </div>  
     }
 }
@@ -274,7 +262,7 @@ export class SectionForm extends Component {
         super(props)
         // this.props.section is an object passed in that holds default or existing section data
         // this.state = {
-        //     rOs: [],
+        //     eventLocations: [],
         //     categories: []
         // }
     }
@@ -342,8 +330,8 @@ export class OptionForm extends Component {
     pushNewrO(e){
         e.preventDefault()
         let {option} = this.props
-        if(!option.rOs) option.rOs = []
-        option.rOs.push(models.rOModel())
+        if(!option.eventLocations) option.eventLocations = []
+        option.eventLocations.push(models.eventLocationModel())
         update()
     }
     change(e, name){
@@ -357,7 +345,7 @@ export class OptionForm extends Component {
             </ul>
                
             <ul>
-                {(this.props.option.rOs || []).map(location => <LocationForm location={location} label="Option"/>)}
+                {(this.props.option.eventLocations || []).map(location => <LocationForm location={location} label="Option"/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add location as an option?</button>
             </ul>
         </div>
@@ -368,52 +356,36 @@ export class LocationForm extends Component {
     constructor(props){
         super(props)
         // this.props.location is an object passed in that holds default or existing advance data
-        this.state = {
-            results: []
-        }
-    }
-
-    save(e){
-        e.preventDefault()
-        if(!this.state.results.length) return
-        const {location} = this.props
-        Object.assign(location, this.state.results[0])
-
-
-        post('/api/advent'+this.props.id).then(x => {
-            this.setState({ results: this.state.results })
-            update()
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
+        this.state = {}
     }
    
     getLocation(e, address){
         e.preventDefault()
         var promise = get(`/api/location/${this.refs.address.value}`)
         promise.then(resp => {
-            if(!resp.results.length) return
-
-            this.setState({results: resp.results})
-            Object.assign(this.props.location, resp.results[0])
+            const {
+                adventId,
+                formattedAddress,
+                id,
+                lat,
+                lng
+            } = resp 
+            Object.assign(this.props.eventlocation, {formattedAddress,lat,lng}) // store location results on props
             update()
         })
         .catch(err => log(err)) 
     }
     
     render(){
-        const results = this.state.results
-
-        if(results.length){
+        const eventLocation = this.props.eventlocation || {}
+        
+        if(eventLocation.formattedAddress){
             return <div className="location">
                 <ul>
-                    <li>{results[0].formatted_address}</li>
-                    <li>{results[0].geometry.location.lat}</li>
-                    <li>{results[0].geometry.location.lng}</li>
+                    <li>{eventLocation.formattedAddress}</li>
+                    <li>{eventLocation.lat}</li>
+                    <li>{eventLocation.lng}</li>
                 </ul>
-                
-                <button className="save-location" onClick={e => this.save(e)} type="click">Save this Location</button>
-                
            </div>
         }
         
