@@ -49,8 +49,8 @@ div.app {
     max-width: 100%;
     max-height: 100%;
     margin: 0;
-    background-color: black;
-    color: white;
+    background-color: #2D3142;
+    color: #F2E9E4;
     padding: 20px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
@@ -61,11 +61,6 @@ div.app {
     width: 50px;
     position: fixed;
 }
-
-
-
-
-
 
 .advance-category-button {
     display: inline;
@@ -92,21 +87,25 @@ div.app {
 }
 
 * header#header nav ul li {
-  border-top: 1px solid white;
+  border-top: 1px solid #E3D7FF;
   list-style-type: none;
   display: block;
-
- 
 }
 
+ul#secondary {
+    padding-left: 30px;
+}
 nav#menu {
     position: fixed;
     float: left;
     width: 100%;
 }
 nav a {
-    color: white;
-  
+    color: #F2E9E4;
+}
+
+a.key {
+    font-size: 125%;
 }
 
 /* below controls navigation sub-menues */
@@ -133,7 +132,7 @@ below gives sub-menues display
 /* below gives menu color when hovering */
 header#header nav #primary li:hover > a,
 header#header nav #primary li.active > a {
-  color: white;
+  color: #317B22;
 }
 
 /* controls menu bar sizing and layout */
@@ -148,47 +147,46 @@ header#header nav #primary li.active > a {
   width: 30px;
 }
 
-div.advent {
-    display: block;
-    float: left;
-    border-bottom: 5px solid white;
+div.advent-element {
+    display: inline;
+    border-bottom: 5px solid #564D4A;
     padding: 5px;
     margin-left: 15px;
     align-content: center;
     text-align: center;
-    color: white;
+    color: #564D4A;
     a {
-        color: white;
+        color: #564D4A;
     }
 }
 
 div.advent a.hover {
     h5 {
         display: block;
-        color: white;
+        color: #F2E9E4;
     }
 }
 
 button.newAdvent {
     margin: 20px;
     display: block;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid #564D4A;
+    color: #F2E9E4;
     padding: 15px;
 }
 
 .input-fields input {
     display: inline;
-    border: 1px solid white;
-    color: white;
-    background-color: black;
+    border: 1px solid #564D4A;
+    color: #F2E9E4;
+    background-color: #023C40;
     margin: 3px;
     list-style-type: none;
 }
 
 
-div.option-form div.category-form div.section-form div.advance-form div.employee-form div.new-RO-form {
-    border: 1px solid black;
+div.option-form div.category-form div.section-form div.advance-form div.employee-form {
+    border: 1px solid #35393C;
     display: block;
 }
 
@@ -214,19 +212,7 @@ div.overview {
     }
 }
 
-div.input-fields {
-    display: block;
-    float: left;
-    clear: left;
-    width: 250px;
-    background-color: black;
-    color: white;
-    text-align: left;
-        input {
-            display: inline-block;
-            float: left;
-        }
-}
+
 
 div.login-stuff {
     width: 300px;
@@ -235,17 +221,17 @@ div.login-stuff {
 }
 
 button.register-button {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #564D4A;
     margin-top: 10px;
     margin-left: 3px;
 }
 
 button.login-button {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #564D4A;
     margin-top: 10px;
     margin-left: 3px;
 }
@@ -263,48 +249,48 @@ form.login-form h4 {
 }
 
 button.create-event {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 3px;
 }
 
-form.advent-form  {
-    width: 300px;
-    height: 100%;
-    max-width: 300px;
-       
-}
 
-div.input-fields {
-    display: block;
-    float: left;
+
+input.input-fields {
     clear: left;
     width: 250px;
-    background-color: black;
-    color: white;
-    text-align: left;
-        .input-fields {
-            display: inline-block;
-            float: left;
+    background-color: #023C40;
+    color: #F2E9E4;
+    text-align: center;
+    margin: 3px;
+    list-style-type: none;
         }
-}
 
 button.form-buttons {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
     margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+}
+
+button.google-button {
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-top: 5px;
     margin-bottom: 20px;
     margin-left: 3px;
 }
 
 button.create-employee {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 3px;
@@ -312,9 +298,19 @@ button.create-employee {
 }
 
 button.build-button {
-    background-color: black;
-    color: white;
-    border: 1px solid white;
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 3px;
+    list-style-type: none;
+}
+
+button.save-location {
+    background-color: #023C40;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 3px;
@@ -332,5 +328,42 @@ ul.employee-list {
 
 ul.input-fields {
     list-style-type: none;
+}
+
+div.advent-input-fields {
+    background-color: #023C40;
+    display: inline;
+    color: #F2E9E4;
+    text-align: left;
+    
+}
+
+ul {
+    padding: 0;
+}
+
+div.new-RO-form {
+    border: 1px solid #023C40;
+    display: block;
+        span {
+            margin-left: 3px;
+        }
+}
+
+div.location {
+    li {
+        list-style-type: none;
+    }
+}
+
+span {
+    display:block;
+    margin: 3px;
+    padding-left: 3px;
+    border-top: 1px solid #E3D7FF;
+    }
+
+.title span {
+    border-top: none;
 }
 

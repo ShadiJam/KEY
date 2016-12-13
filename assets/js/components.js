@@ -41,9 +41,11 @@ export const Employee = (employee) =>
 
 export const Advent = (advent) =>
     <div className="advent">
-        <h5>{advent.eventName}</h5>
-        <h6>{advent.startDate}</h6>
-        <h6>{advent.endDate}</h6>
+        <ul className="advent-list">
+        <li>{advent.eventName}</li>
+        <li>{advent.startDate}</li>
+        <li>{advent.endDate}</li>
+        </ul>
             <a href={`#/build/${advent.id}`}>
                 <button className="build-button">Edit</button>
             </a>
@@ -51,36 +53,25 @@ export const Advent = (advent) =>
 
 export const Advance = (advance) =>
     <div className="advance">
-        <a href={`#/status/${advance.id}`}>
-            <h5>{advance.advanceName}</h5>
-            <h6>{advance.isAssigned}</h6>
-            <h6>{advance.dueDate}</h6>
-            <h6>{this.state.advance.map(x => <li>{sectionName}{sectionDescription}</li>)}</h6>
-        </a>
+            <li>{advance.advanceName}</li>
+            <li>{advance.isAssigned}</li>
+            <li>{advance.dueDate}</li>
     </div>
 
 export const Section = (section) =>
     <div className="section">
-        <h1>{section.sectionName}</h1>
-        <p>{section.sectionDescription}</p>
-        <p>{section.categoryName}</p>
+        <li>{section.sectionName}</li>
+        <li>{section.sectionDescription}</li>
     </div>
 
 export const Category = (category) =>
     <div className="category">
-            <h1>{category.categoryName}</h1>
-            <p>{category.optionName}</p>
+            <li>{category.categoryName}</li>
     </div>
 
 export const Option = (option) =>
     <div className="option">
-        <FormGroup onChange={e => this.change(e, "categoryId")} ref="categoryId" controlId="formControlsSelect">
-            <ControlLabel>Options</ControlLabel>
-            <FormControl componentClass="select" placeholder="select">
-                <option value="select">Choose Option</option>
-                {this.props.options.map(e => <option value={e.id}>{e.optionName}</option>)}
-            </FormControl>
-        </FormGroup>
+        <li>{option.optionName}</li>
     </div>
 
 

@@ -142,20 +142,29 @@ export class AdventForm extends Component {
     
     render(){
          return <div className="advent-form">
-             <div className="input-fields">
-                 <input onBlur={e => this.change(e, "eventName")} ref="eventName" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""} /> 
-                 <input onBlur={e => this.change(e, "startDate")}  ref="startDate" placeholder="Start Date" required key={Math.random()} defaultValue={this.state.startDate || ""} />
-                 <input onBlur={e => this.change(e, "endDate")} ref="endDate" placeholder="End Date" required key={Math.random()} defaultValue={this.state.endDate || ""} /> 
-             </div>
+             <div className="advent-input-fields">
+                <div className="title"><span>Event Name</span>
+                 <input className="input-fields" onBlur={e => this.change(e, "eventName")} ref="eventName" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""} /> 
+                </div>
+                <div className="title"><span>Start Date</span>
+                 <input className="input-fields" onBlur={e => this.change(e, "startDate")}  ref="startDate" placeholder="Start Date" required key={Math.random()} defaultValue={this.state.startDate || ""} />
+                </div>
+                <div className="title"><span>End Date</span>
+                 <input className="input-fields" onBlur={e => this.change(e, "endDate")} ref="endDate" placeholder="End Date" required key={Math.random()} defaultValue={this.state.endDate || ""} /> 
+                </div>
+            </div>
             <ul>
+                <span className="localion">Location</span>
                 {(this.state.rOs || []).map(location => <LocationForm location={location}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</button>
             </ul>
             <ul>
+                <span className="employee">New Employee</span>
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
             </ul>
             <ul>
+                <span className="advance">Advance</span>
                 {(this.state.advances || []).map(e => <AdvanceForm advance={e} employees={this.state.employees} />)}
                 <button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Create an advance?</button>
             </ul>
@@ -165,61 +174,42 @@ export class AdventForm extends Component {
     }
 }
 
-export class AdventPage extends Component {
+export class AdvancePage extends Component {
     constructor(props){
         super(props)
+        let {routeParams: {id}} = this.props
         this.state = { 
             id: props.params.id,
-            advent: [],
-            advances: [],
-            sections: [],
-            categories: [],
-            options: [],
+            advances: [
+                sections = [
+                    categories = [
+                        options = []
+                    ],
+                ], 
+            ],
             employees: [],
             rOs: []
          }
     }
-    componentDidMount(e){
-        get('api/advent/'+this.state.id).then(x => {
-            this.setState({ 
-            advent: this.props.advent,
-            employees: this.props.employees,
-            advances: this.props.advances, 
-            rOs: this.props.rOs,
-            sections: this.props.sections,
-            categories: this.props.categories,
-            options: this.props.options         
-             })
-        }).catch(e => log(e))
+    componentDidMount(){
+        let {id} = this.state
+        if(id !== undefined)
+        get(`/api/advent/${id}`)
+            .then(data => this.setState(Object.assign({}, this.state, data)))
     }
     render() {
-      
-
-        return <div className="advent-view">
-            <ul>
-                <li>{advent.eventName}</li>
-                <li>{advent.startDate}</li>
-                <li>{advent.endDate}</li>
-            </ul>
-            <div className="advent-advance-view">
-            <ul>
-                <li>{advance.advanceName}</li>
-                <li>{advance.dueDate}</li>
-                <li>{section.sectionName}</li>
-                <li>{category.categoryName}</li>
-                <li>{option.map(optionName)}</li>
-            </ul>
+    
+        return <div className="advance-return-view">
+                <ul>
+                   {(this.state.advent || []).map(Advent)}
+                   {(this.state.rootObject || []).map(RootObject)}
+                   {(this.state.advances || []).map(Advance)}
+                   {(this.state.advance.sections || []).map(Section)}
+                   {(this.state.section.categories || []).map(Category)}
+                   {(this.state.category.options || []).map(Option)}
+                   {(this.state.employees || []).map(Employee)}
+                </ul>
             </div>  
-            <div className="advent-employee-view">
-            <ul>
-                <li>{employee.fName}</li>
-                <li>{employee.lName}</li>
-                <li>{employee.department}</li>
-                <li>{employee.phone}</li>
-                <li>{employee.email}</li>
-            </ul>
-            </div>
-    </div>
     }
 }
 
@@ -234,7 +224,7 @@ export class EmployeeForm extends Component {
     }
     render(){
         return <div className="employee-form">
-            <span>New Employee</span>
+            
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" required key={Math.random()} defaultValue={this.props.employee.fName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" required key={Math.random()} defaultValue={this.props.employee.lName || ""} /> </li>
@@ -262,13 +252,14 @@ export class AdvanceForm extends Component {
     render(){
         console.log(this.props)
         return <div className="advance-form">
-            <span>Advance</span>
+            
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" required key={Math.random()} defaultValue={this.props.advance.advanceName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" required key={Math.random()} defaultValue={this.props.advance.dueDate || ""} /> </li>
                
             </ul>
               <ul>
+                <span className="section">Section</span>
                 {(this.props.advance.sections || []).map(e => <SectionForm section={e} />)}
                 <button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add a section?</button>
             </ul>
@@ -298,12 +289,13 @@ export class SectionForm extends Component {
     }
     render(){
         return <div className="section-form">
-            <span>Section</span>
+            
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" required key={Math.random()} defaultValue={this.props.section.sectionName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" required key={Math.random()} defaultValue={this.props.section.sectionDescription || ""} /> </li>
             </ul>
             <ul>
+                <span className="category">Category</span>
                 {(this.props.section.categories || []).map(e => <CategoryForm category={e} />)}
                 <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add a category?</button>
             </ul>
@@ -329,11 +321,11 @@ export class CategoryForm extends Component {
     
     render(){
         return <div className="category-form">
-            <span>Category</span>
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "categoryName")} onBlur={update} ref="categoryName" placeholder="Category Name" required key={Math.random()} defaultValue={this.props.category.categoryName || ""} /> </li>
             </ul>
             <ul>
+                <span className="option">Option</span>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add an option?</button>
             </ul>  
@@ -360,7 +352,6 @@ export class OptionForm extends Component {
     }
     render(){
         return <div className="option-form">
-            <span>Option</span>
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
             </ul>
@@ -421,7 +412,7 @@ export class LocationForm extends Component {
                     <li>{results[0].geometry.location.lng}</li>
                 </ul>
                 
-                <button className="form-buttons" onClick={e => this.save(e)} type="click">Save this Location</button>
+                <button className="save-location" onClick={e => this.save(e)} type="click">Save this Location</button>
                 
            </div>
         }
@@ -433,7 +424,7 @@ export class LocationForm extends Component {
         return <div className="new-RO-form">
                  {this.state.errors ? <p>There were errors with your location search:</p> : null}
                  {err}
-                 <span>Location</span>
+                 
                 <div className="input-fields">
                     <input ref="address" placeholder="search locations by entering an address or zip code" /> 
                     <button className="google-button" onClick={e => this.getLocation(e)} type="submit">Search</button>

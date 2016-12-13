@@ -7,7 +7,7 @@ import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropd
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
-import { AdventForm, NewEvent, ParentComponent, EmployeeList } from './forms'
+import { AdventForm, NewEvent, ParentComponent, EmployeeList, AdvancePage } from './forms'
 
 
 
@@ -79,6 +79,7 @@ const reactApp = () =>
             <Route path="/api/employee/" component={EmployeeList}/>
             <Route path="/build" component={AdventForm}/>
             <Route path="/build/:id" component={AdventForm}/>
+            <Route path="/api/advent/:id" component={AdvancePage}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,

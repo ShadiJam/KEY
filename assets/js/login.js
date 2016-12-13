@@ -130,12 +130,9 @@ export class EmployeeView extends Component {
         }
     }
     render(){
-        return <div className="employeeView">
-            <div className="grid grid-3-600">
+        return <div className="advent-element">
                 {this.state.items.map(Advent)}
             </div>
-            
-        </div>
     }
 }
 
