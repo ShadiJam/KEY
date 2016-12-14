@@ -1,15 +1,12 @@
 // 'using' statements
 import "babel-polyfill"
-import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
-import { AdventForm, NewEvent, ParentComponent, EmployeeList, AdvancePage } from './forms'
-
-
+import { AdventForm, NewEvent, ParentComponent, EmployeeList, AdventPage } from './forms'
 
 import Forms from './forms'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
@@ -20,11 +17,13 @@ import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.git
 // --------------
 
 export const get = (url) =>
-    fetch(url, {credentials: 'same-origin'})
+    fetch(url, {
+        credentials: 'same-origin',
+        headers: {'Content-Type': 'application/json'}
+    })
     .then(r => {
         return r.json()
     })
-    .catch(e => log(e))
 
 export const post = (url, data) => 
     fetch(url, { 
@@ -33,7 +32,6 @@ export const post = (url, data) =>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
-    .catch(e => log(e))
     .then(r => r.json())
 
 export const put = (url, data) => 
@@ -43,7 +41,6 @@ export const put = (url, data) =>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
-    .catch(e => log(e))
     .then(r => r.json())
 
 export const remove = (url, data) => 
@@ -53,7 +50,6 @@ export const remove = (url, data) =>
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     })
-    .catch(e => log(e))
     .then(r => r.json())  
 // ----------------
 
@@ -79,7 +75,7 @@ const reactApp = () =>
             <Route path="/api/employee" component={EmployeeList}/>
             <Route path="/build" component={AdventForm}/>
             <Route path="/build/:id" component={AdventForm}/>
-            <Route path="/api/advent/:id" component={AdvancePage}/>
+            <Route path="/api/advent/:id" component={AdventPage}/>
             <Route path="*" component={Error}/>
         </Router>
     </Layout>,

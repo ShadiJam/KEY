@@ -37,7 +37,7 @@ export class LoginForm extends Component {
         return <form className="login-form" onSubmit={e => this.submit(e)}>
             {this.state.errors ? <p>There were errors with your Login:</p> : null}
             {err}
-
+            <span></span>
             <h4>Login</h4>   
             <div className="input-fields">
                 <input ref="email" type="email" placeholder="user@email.com" required/>
@@ -100,8 +100,21 @@ export class Login extends Component {
         } 
         return (
             <div className="login-stuff">
+            <h1>KEY</h1>
+            <span></span>
+                <div className="description">
+                <ul>
+                    <li className="description">Web based software system uniting business management with the internal advance process for large or small scale event production.</li>
+                    <li className="description">Collect event information through customized form building.</li> 
+                    <li className="description">Communicate critical event information to your team and track your progress.</li>
+                    <li className="description"> Customized event management in one place.</li>
+                </ul>
+                </div>
+                <div className="login-input-stuff">
                 <LoginForm />
                 <RegisterForm />
+                </div>
+                
             </div>
         )
     }

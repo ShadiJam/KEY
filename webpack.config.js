@@ -21,7 +21,7 @@ let u = {
       {
         exclude: /node_modules/,
         loader: "babel-loader",
-        query: { cacheDirectory: true, compact: true },
+        query: { cacheDirectory: false, compact: true },
         test: /\.(jsx|js|es|es6|mjs)$/,
       }
     ]

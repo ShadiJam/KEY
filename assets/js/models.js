@@ -5,10 +5,11 @@ export const employeeModel = (
     , lName
     , fullName
     , department
+    , position
     , phone
     , email
     , adventId
-) => ({ id, fName,lName,department,phone,email,adventId })
+) => ({ id, fName,lName,department,position,phone,email,adventId })
 
 export const advanceSectionJoinModel = (
     id

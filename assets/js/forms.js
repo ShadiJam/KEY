@@ -5,85 +5,35 @@ import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavDropdown, Menu
 import * as components from './components'
 import { Employee, Advance, Advent, Section, Category, Option, RootObject, Result, EventLocation } from './components'
 
-
-
 let update // DANGER WILL ROBINSON, DOUNT TOUCH ME
     , getRootState 
-
-    
-export class EmployeeList extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            items: [],
-            employees: []
-        }
-        update = () => this.forceUpdate()
-    }
-    componentDidMount(){
-        get('/api/employee').then(employees => {
-                this.setState({items: employees})
-            }).catch(e => log(e))
-    }
-    pushNewEmployee(e){
-        e.preventDefault()
-        let {employees} = this.state
-        this.setState({ employees: [...employees, models.employeeModel()]})
-        update()  
-    }
-    save(e){
-        e.preventDefault()
-        post('/api/employee', {
-            employees: this.state.employees,
-            }).then(x => {
-            window.location.hash = "#/api/employee"
-        }).catch(e => {
-            this.setState({ errors: e })
-        })
-        update()
-    }
-    render(){
-        console.log(this.state)
-        return <div className="employee">
-            
-            <div className="employee-view">
-                {this.state.items.map(Employee)}
-            </div>
-            <ul className="new-employee-form">
-                {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
-            </ul>
-            <div>
-                 <button className="form-buttons" onClick={e => this.save(e)}>Save</button>
-            </div>
-        </div>
-        }
-    }
 
 
 export class AdventForm extends Component {
     constructor(props){
         super(props)
-        let {routeParams: {id}} = this.props
         this.state = {
             employees: [],
             eventLocations: [],
             advances: [],
             sections: [],
             categories: [],
-            options: [],
-            id: parseInt(id)
+            options: []
         }
         update = () => this.forceUpdate()
         getRootState = () => this.state
     }
     componentDidMount(){
-        console.log(1,this.props)
-        let {id} = this.state
+        let {routeParams: {id}} = this.props
+        console.log(`/api/advent/${id}`)
         if(id === undefined) return
-            get(`/api/advent/${id}`)
-                .then(data => this.setState(Object.assign({}, this.state, data)))
-                .then(d => this.forceUpdate())
+        
+        get(`/api/advent/${id}`)
+            .catch(e => {
+                window.location.hash = '#/'
+            })
+            .then(data => this.setState(Object.assign({}, this.state, data)))
+            .then(d => this.forceUpdate())
     }
     pushNewEmployee(e){
         e.preventDefault()
@@ -99,7 +49,7 @@ export class AdventForm extends Component {
         update()
         console.log(this.state)
     }    
-    pushNewrO(e){
+    pushNewLocation(e){
         e.preventDefault()
         let {eventLocations} = this.state
         this.setState({ eventLocations: [...eventLocations, models.eventLocationModel()] })
@@ -111,14 +61,20 @@ export class AdventForm extends Component {
     }
     save(e){
         e.preventDefault()
-        if(this.state.id !== undefined){ 
+        console.log(this.state)
+
+        let {id} = this.state
+
+        if(typeof id === "number"){ 
             put('/api/advent/'+this.state.id, this.state).then(x => {
                 window.location.hash = `#/api/advent/${this.state.id}`
             }).catch(e => {
                 this.setState({ errors: e })
             })
         } else {
+            delete this.state.id
             post('/api/advent/', this.state).then(x => {
+                if(typeof x.id !== "number") throw 'Did not save.'
                 window.location.hash = `#/api/advent/${x.id}`
             }).catch(e => {
                 this.setState({ errors: e })
@@ -128,7 +84,11 @@ export class AdventForm extends Component {
     
     render(){
          return <div className="advent-form">
-             <div className="advent-input-fields">
+            { this.state.errors 
+                ? <div className="errors"><p>{this.state.errors}</p></div> 
+                : undefined }
+
+            <div className="advent-input-fields">
                 <div className="title"><span>Event Name</span>
                  <input className="input-fields" onBlur={e => this.change(e, "eventName")} ref="eventName" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""} /> 
                 </div>
@@ -140,53 +100,52 @@ export class AdventForm extends Component {
                 </div>
             </div>
             <ul>
-                <span className="localion">Location</span>
-                {(this.state.eventLocations || []).map(eventLocation => <LocationForm eventlocation={location}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</button>
+                <span className="location">Location</span>
+                {(this.state.eventLocations || []).map(l => <LocationForm eventlocation={l}/>)}
+                <button className="form-buttons" onClick={e => this.pushNewLocation(e)}>New Location</button>
             </ul>
             <ul>
                 <span className="employee">Employee</span>
                 {(this.state.employees || []).map(e => <EmployeeForm employee={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>Add employees?</button>
+                <button className="form-buttons" onClick={e => this.pushNewEmployee(e)}>New Employee</button>
             </ul>
             <ul>
                 <span className="advance">Advance</span>
                 {(this.state.advances || []).map(e => <AdvanceForm advance={e} employees={this.state.employees} />)}
-                <button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>Create an advance?</button>
+                <button className="form-buttons" onClick={e => this.pushNewAdvance(e)}>New Advance</button>
             </ul>
            
-            <button className="form-buttons" onClick={e => this.save(e)}> BIG SAVE BUTTON </button>
+            <button className="form-buttons" onClick={e => this.save(e)}> SAVE and PREVIEW </button>
         </div>
     }
+
 }
 
-export class AdvancePage extends Component {
+export class AdventPage extends Component {
     constructor(props){
         super(props)
-        let {routeParams: {id}} = this.props
-        this.state = {
-            id: props.params.id,
-            advances: [],
-            sections: [],
-            categories: [],
-            options: [],
-            employees: [],
-            eventLocations: []
-        }
+        this.state = {}
     }
+
     componentDidMount(){
-        console.log(this.state)
-        let {id} = this.state
-        if(id !== undefined) 
-        get(`/api/advent/${id}`)
+       
+        let {routeParams: {id}} = this.props
+        
+        if(id === undefined) {
+            window.location.hash = '#/'
+            return
+        }
+
+        let x = get(`/api/advent/${id}`)
             .then(data => this.setState(Object.assign({}, this.state, data)))
+            .catch(e => {
+                console.log(e)
+                window.location.hash = '#/'
+            })
     }
     
     render() {
-        console.log(this.state)
-        const section = this.state.advances.sections || {}
-        const category = this.state.sections.categories || {}
-        const option = this.state.categories.sections || {}
+       
         return <div className="advance-return-view">
                 <ul>
                     <span className="advent-view">Event Name</span>
@@ -199,20 +158,12 @@ export class AdvancePage extends Component {
                     {(this.state.eventLocations || []).map(EventLocation)}
                     <span className="advent-view">Advances</span>
                     {(this.state.advances || []).map(Advance)}
-                    <span className="advent-view">Sections</span>
-                    <li>{this.state.sectionName}</li>
-                    <li>{this.state.sectionDescription}</li>
-                    <span className="advent-view">Categories</span>
-                    <li>{this.state.categoryName}</li>
-                    <span className="advent-view">Options</span>
-                    <li>{this.state.optionName}</li>
                     <span className="advent-view">Employees</span>
                     {(this.state.employees || []).map(Employee)}
-                    
                 </ul>
                 <a href={`#/build/${this.state.id}`}>
-                <button className="build-button">Edit</button>
-            </a>
+                    <button className="build-button">Edit</button>
+                </a>
             </div>  
     }
 }
@@ -232,6 +183,7 @@ export class EmployeeForm extends Component {
                 <li> <input onChange={e => this.change(e, "fName")} onBlur={update} ref="fName" placeholder="First Name" required key={Math.random()} defaultValue={this.props.employee.fName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "lName")} onBlur={update} ref="lName" placeholder="Last Name" required key={Math.random()} defaultValue={this.props.employee.lName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "department")} onBlur={update} ref="department" placeholder="Department" required key={Math.random()} defaultValue={this.props.employee.department || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "position")} onBlur={update} ref="position" placeholder="Position" required key={Math.random()} defaultValue={this.props.employee.position || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "phone")} ref="phone" onBlur={update} placeholder="Mobile Number" required key={Math.random()} defaultValue={this.props.employee.phone || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "email")} ref="email" onBlur={update} placeholder="email@email.com" required key={Math.random()} defaultValue={this.props.employee.email || ""} /> </li>
             </ul>
@@ -253,9 +205,7 @@ export class AdvanceForm extends Component {
         update()
     }
     render(){
-        console.log(this.props)
         return <div className="advance-form">
-            
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" required key={Math.random()} defaultValue={this.props.advance.advanceName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" required key={Math.random()} defaultValue={this.props.advance.dueDate || ""} /> </li>
@@ -264,7 +214,8 @@ export class AdvanceForm extends Component {
               <ul>
                 <span className="section">Section</span>
                 {(this.props.advance.sections || []).map(e => <SectionForm section={e} />)}
-                <button className="form-buttons" onClick={e => this.pushNewSection(e)}>Add a section?</button>
+                <button className="form-buttons" onClick={e => this.pushNewSection(e)}>New Section</button>
+                <span></span>
             </ul>
             
         </div>
@@ -299,7 +250,7 @@ export class SectionForm extends Component {
             <ul>
                 <span className="category">Category</span>
                 {(this.props.section.categories || []).map(e => <CategoryForm category={e} />)}
-                <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>Add a category?</button>
+                <button className="form-buttons" onClick={e => this.pushNewCategory(e)}>New Category</button>
             </ul>
             
         </div>
@@ -329,7 +280,7 @@ export class CategoryForm extends Component {
             <ul>
                 <span className="option">Option</span>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewOption(e)}>Add an option?</button>
+                <button className="form-buttons" onClick={e => this.pushNewOption(e)}>New Option</button>
             </ul>  
         </div>
     }
@@ -341,13 +292,13 @@ export class OptionForm extends Component {
         // this.props.option is an object passed in that holds default or existing advance data
         
     }
-    pushNewrO(e){
-        e.preventDefault()
-        let {option} = this.props
-        if(!option.eventLocations) option.eventLocations = []
-        option.eventLocations.push(models.eventLocationModel())
-        update()
-    }
+    // pushNewrO(e){
+    //     e.preventDefault()
+    //     let {option} = this.props
+    //     if(!option.eventLocations) option.eventLocations = []
+    //     option.eventLocations.push(models.eventLocationModel())
+    //     update()
+    // }
     change(e, name){
         e.preventDefault()
         this.props.option[name] = this.refs[name].value
@@ -358,10 +309,7 @@ export class OptionForm extends Component {
                 <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
             </ul>
                
-            <ul>
-                {(this.props.option.eventLocations || []).map(location => <LocationForm location={location} label="Option"/>)}
-                <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add location as an option?</button>
-            </ul>
+         
         </div>
     }
 }
@@ -419,4 +367,27 @@ export class LocationForm extends Component {
     }
 }
 
-
+export class EmployeeList extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            items: [],
+            employees: []
+        }
+        update = () => this.forceUpdate()
+    }
+    componentDidMount(){
+        get('/api/employee').then(employees => {
+                this.setState({items: employees})
+            }).catch(e => log(e))
+    }
+    render(){
+        console.log(this.state)
+        return <div className="employee">
+            
+            <div className="employee-view">
+                {this.state.items.map(Employee)}
+            </div>
+        </div>
+    }
+}

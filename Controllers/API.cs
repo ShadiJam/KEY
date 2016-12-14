@@ -25,69 +25,68 @@ public class AdventController : CRUDController<Advent> {
     }
 }
 
-[Route("api/employee")]
-public class EmployeeController : CRUDController<Employee> {
-    public EmployeeController(IRepository<Employee> r) : base(r){}
+// [Route("api/employee")]
+// public class EmployeeController : CRUDController<Employee> {
+//     public EmployeeController(IRepository<Employee> r) : base(r){}
     
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(employee => 
-            employee.fName.ToLower().IndexOf(term.ToLower()) != -1
-            || employee.lName.ToLower().IndexOf(term.ToLower()) != -1
-            || employee.department.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
-}
+//     [HttpGet("search")]
+//     public IActionResult Search([FromQuery]string term, int listId = -1){
+//         return Ok(r.Read(dbset => dbset.Where(employee => 
+//             employee.fName.ToLower().IndexOf(term.ToLower()) != -1
+//             || employee.lName.ToLower().IndexOf(term.ToLower()) != -1
+//             || employee.department.ToLower().IndexOf(term.ToLower()) != -1
+//         )));
+//     }
+// }
 
-[Route("api/advance")]
-public class AdvanceController : CRUDController<Advance> {
-    public AdvanceController(IRepository<Advance> r) : base(r){}
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(advance => 
-            advance.advanceName.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
-}
+// [Route("api/advance")]
+// public class AdvanceController : CRUDController<Advance> {
+//     public AdvanceController(IRepository<Advance> r) : base(r){}
+//     [HttpGet("search")]
+//     public IActionResult Search([FromQuery]string term, int listId = -1){
+//         return Ok(r.Read(dbset => dbset.Where(advance => 
+//             advance.advanceName.ToLower().IndexOf(term.ToLower()) != -1
+//         )));
+//     }
+// }
 
 
-[Route("api/section")]
-public class SectionController : CRUDController<Section> {
-    public SectionController(IRepository<Section> r) : base(r){}
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(section => 
-            section.sectionName.ToLower().IndexOf(term.ToLower()) != -1
-            || section.sectionDescription.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
-}
+// [Route("api/section")]
+// public class SectionController : CRUDController<Section> {
+//     public SectionController(IRepository<Section> r) : base(r){}
+//     [HttpGet("search")]
+//     public IActionResult Search([FromQuery]string term, int listId = -1){
+//         return Ok(r.Read(dbset => dbset.Where(section => 
+//             section.sectionName.ToLower().IndexOf(term.ToLower()) != -1
+//             || section.sectionDescription.ToLower().IndexOf(term.ToLower()) != -1
+//         )));
+//     }
+// }
 
-[Route("api/category")]
-public class CategoryController : CRUDController<Category> {
-    public CategoryController(IRepository<Category> r) : base(r){}
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(category => 
-            category.categoryName.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
-}
+// [Route("api/category")]
+// public class CategoryController : CRUDController<Category> {
+//     public CategoryController(IRepository<Category> r) : base(r){}
+//     [HttpGet("search")]
+//     public IActionResult Search([FromQuery]string term, int listId = -1){
+//         return Ok(r.Read(dbset => dbset.Where(category => 
+//             category.categoryName.ToLower().IndexOf(term.ToLower()) != -1
+//         )));
+//     }
+// }
 
-[Route("api/option")]
-public class OptionController : CRUDController<Option> {
-    public OptionController(IRepository<Option> r) : base(r){}
-    [HttpGet("search")]
-    public IActionResult Search([FromQuery]string term, int listId = -1){
-        return Ok(r.Read(dbset => dbset.Where(option => 
-            option.optionName.ToLower().IndexOf(term.ToLower()) != -1
-        )));
-    }
-}
+// [Route("api/option")]
+// public class OptionController : CRUDController<Option> {
+//     public OptionController(IRepository<Option> r) : base(r){}
+//     [HttpGet("search")]
+//     public IActionResult Search([FromQuery]string term, int listId = -1){
+//         return Ok(r.Read(dbset => dbset.Where(option => 
+//             option.optionName.ToLower().IndexOf(term.ToLower()) != -1
+//         )));
+//     }
+// }
 
 
 [Route("api/location")]
-
 public class LocationController: Controller
 {
     private GoogleLocationService gs;

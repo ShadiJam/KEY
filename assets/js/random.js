@@ -157,3 +157,8 @@
 //       onChange={this.handleChange}/>
 //   }
 // }
+
+//    <ul>
+//     {(this.props.option.eventlocation || []).map(eventLocations => <LocationForm eventlocation={eventLocations} label="Option"/>)}
+//     <button className="form-buttons" onClick={e => this.pushNewrO(e)}>New Location As Option</button>
+//    </ul>

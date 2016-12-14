@@ -35,6 +35,7 @@ export const Employee = (employee) =>
         <li>{employee.fName}</li>
         <li>{employee.lName}</li>
         <li>{employee.department}</li>
+        <li>{employee.position}</li>
         <li>{employee.phone}</li>
         <li>{employee.email}</li>
         <span></span>
@@ -62,17 +63,23 @@ export const Advance = (advance) =>
             <li>{advance.advanceName}</li>
             <li>{advance.isAssigned}</li>
             <li>{advance.dueDate}</li>
+            <span className="advent-view">Sections</span>
+            {(advance.sections || []).map(Section)}
     </div>
 
 export const Section = (section) =>
     <div className="section">
         <li>{section.sectionName}</li>
         <li>{section.sectionDescription}</li>
+        <span className="advent-view">Categories</span>
+        {(section.categories || []).map(Category)}
     </div>
 
 export const Category = (category) =>
     <div className="category">
             <li>{category.categoryName}</li>
+            <span className="advent-view">Options</span>
+            {(category.options|| []).map(Option)}
     </div>
 
 export const Option = (option) =>

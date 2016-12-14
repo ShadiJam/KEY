@@ -10,17 +10,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 public class Employee : HasId {
     [Required]
     public int Id { get; set; }
     public string fName { get; set;}
     public string lName { get; set; }
     public string department { get; set; }
+    public string position { get; set; }
     public string phone { get; set; }
     public string email { get; set; } //create actual email property here
-    public int AdvanceId { get; set; } 
+    public int AdventId { get; set; }
 }
-
     
     //create function that allows admin user to add employee
     // write logic for downloading file here
@@ -104,9 +105,8 @@ public class Option : HasId {
     // public List<GoogleAPI.RootObject> ROs { get; set; }
     public string optionName { get; set; }
     public int CategoryId { get; set; }
-}
     
-
+}
 
 public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Employee> Employees { get; set; }
@@ -121,7 +121,7 @@ public partial class DB : IdentityDbContext<IdentityUser> {
 
 public partial class Handler {
     public void RegisterRepos(IServiceCollection services){
-        Repo<Employee>.Register(services, "Employees");
+        // Repo<Employee>.Register(services, "Employees");
         
         Repo<Advent>.Register(services, "Advents",
             d => d
@@ -132,24 +132,30 @@ public partial class Handler {
                         .ThenInclude(c => c.Categories)
                             .ThenInclude(o => o.Options)
         );
+
+        // Repo<EventLocation>.Register(services, "EventLocations",
+        //     d => d
+        //         .Include(f => f.FormattedAddress)
+        //         .Include(l => l.Lat)
+        //         .Include(l => l.Lng));
         
-        Repo<Advance>.Register(services, "Advances",
-            d => d
-                .Include(s => s.Sections)
-                .ThenInclude(c => c.Categories)
-                .ThenInclude(o => o.Options));
+        // Repo<Advance>.Register(services, "Advances",
+        //     d => d
+        //         .Include(s => s.Sections)
+        //         .ThenInclude(c => c.Categories)
+        //         .ThenInclude(o => o.Options));
 
-        Repo<AdvanceSectionJoin>.Register(services, "AdvanceSectionJoins");
+        // Repo<AdvanceSectionJoin>.Register(services, "AdvanceSectionJoins");
 
-        Repo<Section>.Register(services, "Sections",
-            d => d  
-                .Include(c => c.Categories));
+        // Repo<Section>.Register(services, "Sections",
+        //     d => d  
+        //         .Include(c => c.Categories));
 
-        Repo<Category>.Register(services, "Categories",
-            d => d
-                .Include(o => o.Options));
+        // Repo<Category>.Register(services, "Categories",
+        //     d => d
+        //         .Include(o => o.Options));
 
-        Repo<Option>.Register(services, "Options");
+        // Repo<Option>.Register(services, "Options");
 
     }
 }

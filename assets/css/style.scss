@@ -69,9 +69,10 @@ div.app {
 
 .login-stuff {
     padding: 30px;
+    margin: 0;
 }
 
-.location, .new-RO-form, .option-form, .category-form, .section-form, .advance-form, .employee-form  {
+.location, .new-RO-form, .advance-form, .employee-form  {
      max-width: 600px;
      margin: 1.5rem auto;
      input {
@@ -178,10 +179,28 @@ button.newAdvent {
 }
 
 
-div.option-form div.category-form div.section-form div.advance-form div.employee-form {
+ div.advance-form div.employee-form {
     border: 1px solid #35393C;
     display: block;
 }
+
+
+
+div.option-form {
+    max-width: 350px;
+}
+
+.section-form {
+    max-width: 500px;
+    align-content: center;
+    margin: 0;
+}
+
+.category-form {
+    max-width: 420px;
+}
+
+
 
 div.overview {
     div.overview-style {
@@ -208,9 +227,26 @@ div.overview {
 
 
 div.login-stuff {
-    width: 300px;
     height: 100%;
-    max-width: 300px;
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+li.description {
+    width: 200px;
+    display: block;
+    float: left;
+}
+
+div.login-input-stuff {
+    height: 100%;
+    width: 300px;
+    h4 {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 button.register-button {
@@ -237,8 +273,14 @@ form.register-form {
         }
 }
 
-form.login-form h4 {
+form.login-form {
+    padding-top: 20px;
+    display: inline-block;
+    h4 {
     margin-left: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    }
 }
 
 button.create-event {
