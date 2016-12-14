@@ -5,7 +5,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
-import { Header, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
+import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
 import { AdventForm, NewEvent, ParentComponent, EmployeeList, AdvancePage } from './forms'
 

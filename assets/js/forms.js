@@ -3,12 +3,14 @@ import * as models from './models'
 import {get, post, put, log } from './app'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavDropdown, MenuItem , DateTimeField, DateTimePicker } from 'react-bootstrap';
 import * as components from './components'
-import { Employee, Advance, Advent, Section, Category, Option, RootObject, Result } from './components'
+import { Employee, Advance, Advent, Section, Category, Option, RootObject, Result, EventLocation } from './components'
 
 
 
 let update // DANGER WILL ROBINSON, DOUNT TOUCH ME
     , getRootState 
+
+    
 export class EmployeeList extends Component {
     constructor(props){
         super(props)
@@ -57,6 +59,7 @@ export class EmployeeList extends Component {
         </div>
         }
     }
+
 
 export class AdventForm extends Component {
     constructor(props){
@@ -138,7 +141,7 @@ export class AdventForm extends Component {
             </div>
             <ul>
                 <span className="localion">Location</span>
-                {(this.state.eventLocations || []).map(location => <LocationForm eventlocation={location}/>)}
+                {(this.state.eventLocations || []).map(eventLocation => <LocationForm eventlocation={location}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewrO(e)}>Add an event location?</button>
             </ul>
             <ul>
@@ -161,20 +164,29 @@ export class AdvancePage extends Component {
     constructor(props){
         super(props)
         let {routeParams: {id}} = this.props
-        this.state = { 
+        this.state = {
             id: props.params.id,
             advances: [],
+            sections: [],
+            categories: [],
+            options: [],
             employees: [],
             eventLocations: []
-         }
+        }
     }
     componentDidMount(){
+        console.log(this.state)
         let {id} = this.state
-        if(id !== undefined)
+        if(id !== undefined) 
         get(`/api/advent/${id}`)
             .then(data => this.setState(Object.assign({}, this.state, data)))
     }
+    
     render() {
+        console.log(this.state)
+        const section = this.state.advances.sections || {}
+        const category = this.state.sections.categories || {}
+        const option = this.state.categories.sections || {}
         return <div className="advance-return-view">
                 <ul>
                     <span className="advent-view">Event Name</span>
@@ -183,16 +195,20 @@ export class AdvancePage extends Component {
                     <li>{this.state.startDate}</li>
                     <span className="advent-view">End Date</span>
                     <li>{this.state.endDate}</li>
+                    <span className="advent-view">Location</span>
+                    {(this.state.eventLocations || []).map(EventLocation)}
                     <span className="advent-view">Advances</span>
                     {(this.state.advances || []).map(Advance)}
                     <span className="advent-view">Sections</span>
-                    {(this.state.sectionName || []).map(Section)}
+                    <li>{this.state.sectionName}</li>
+                    <li>{this.state.sectionDescription}</li>
                     <span className="advent-view">Categories</span>
-                    {(this.state.categoryName || []).map(Category)}
+                    <li>{this.state.categoryName}</li>
                     <span className="advent-view">Options</span>
-                    {(this.state.optionName || []).map(Option)}
+                    <li>{this.state.optionName}</li>
                     <span className="advent-view">Employees</span>
                     {(this.state.employees || []).map(Employee)}
+                    
                 </ul>
                 <a href={`#/build/${this.state.id}`}>
                 <button className="build-button">Edit</button>
@@ -200,7 +216,6 @@ export class AdvancePage extends Component {
             </div>  
     }
 }
-
 
 export class EmployeeForm extends Component {
     constructor(props){
@@ -255,7 +270,6 @@ export class AdvanceForm extends Component {
         </div>
     }
 }
-
 
 export class SectionForm extends Component {
     constructor(props){
@@ -393,7 +407,7 @@ export class LocationForm extends Component {
             {(this.state.errors || []).map(e => <li>{e}</li>)}
             </ul>
         
-        return <div className="new-RO-form">
+        return <div className="new-event-location-form">
                  {this.state.errors ? <p>There were errors with your location search:</p> : null}
                  {err}
                  

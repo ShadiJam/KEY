@@ -7,7 +7,7 @@ import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropd
 // import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, RootObject, Result, Location, Geometry } from './components'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import Forms from './forms'
 
 import * as models from './models'
@@ -50,8 +50,6 @@ export class LoginForm extends Component {
     }
 }
 
-
-
 export class RegisterForm extends Component {
     constructor(props){
         super(props)
@@ -87,7 +85,6 @@ export class RegisterForm extends Component {
         </form>
     }
 }
-
 
 export class Login extends Component {
     constructor(props){

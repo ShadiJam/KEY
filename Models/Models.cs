@@ -18,7 +18,7 @@ public class Employee : HasId {
     public string department { get; set; }
     public string phone { get; set; }
     public string email { get; set; } //create actual email property here
-    // public int AdventId { get; set; } ***ADDING THIS TO EMPLOYEE BREAKS IT
+    public int AdvanceId { get; set; } 
 }
 
     
@@ -33,7 +33,7 @@ public class Advent : HasId {
     public DateTime endDate { get; set; }
     public List<Advance> Advances { get; set; } = new List<Advance>();
     public List<EventLocation> EventLocations { get; set; } = new List<EventLocation>();
-    public List<Employee> Employees { get; set; }
+    public List<Employee> Employees { get; set; } = new List<Employee>();
   
     // write logic for downloading file here
 }
@@ -48,8 +48,7 @@ public class Advance : HasId {
     public int employeeId { get; set; }
     public List<Section> Sections { get; set; } = new List<Section>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
-
-    public int AdventId { get; set; } // ****ADDING THIS MAKES IT BREAK
+    public int AdventId { get; set; } 
 }
   
 public class Section : HasId { 
@@ -57,7 +56,7 @@ public class Section : HasId {
     public int Id { get; set; }
     public string sectionName { get; set; }
     public string sectionDescription { get; set; }
-    public int advanceId { get; set; }
+    public int AdvanceId { get; set; }
     public List<Category> Categories { get; set; } = new List<Category>();
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
 }
@@ -68,7 +67,7 @@ public class Category : HasId {
     public string categoryName { get; set; }
     public List<Option> Options { get; set; } = new List<Option>();
     public int SectionId { get; set; }
-    public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; }
+    public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
     // create function that allows admin user to approve/deny advance
     // create function that allows employee user to respond to an advance request
 }
@@ -77,7 +76,7 @@ public class AdvanceSectionJoin : HasId {
     [Required]
     public int Id { get; set; }
     public Advance Advance { get; set; }
-    public int advanceId {get;set;}
+    public int AdvanceId {get;set;}
     public Section Section { get; set; }
     public int SectionId {get;set;}
 }
@@ -104,7 +103,7 @@ public class Option : HasId {
     public int Id { get; set; }
     // public List<GoogleAPI.RootObject> ROs { get; set; }
     public string optionName { get; set; }
-    public int categoryId { get; set; }
+    public int CategoryId { get; set; }
 }
     
 
@@ -117,10 +116,7 @@ public partial class DB : IdentityDbContext<IdentityUser> {
     public DbSet<Section> Sections { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Option> Options { get; set; }
-    public DbSet<GoogleAPI.RootObject> ROs { get; set; }
-    public DbSet<GoogleAPI.Location> Locations { get; set; }
-    public DbSet<GoogleAPI.Geometry> Geometries { get; set; }
-    public DbSet<GoogleAPI.Result> Results { get; set; }
+    public DbSet<EventLocation> EventLocations { get; set; }
 }
 
 public partial class Handler {

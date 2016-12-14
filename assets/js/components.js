@@ -18,8 +18,8 @@ export const Header = () =>
                     <li className="portfolio span2">
                         <a className="key" href="#/">KEY</a>
                             <ul id="secondary">
-                                <li className="project"><a href="#/api/employee/:id">EVENTS</a></li>
-                                <li className="project"><a href="#/api/employee/">TEAMS</a></li>
+                                <li className="project"><a href="#/api/employee/:id">EVENT</a></li>
+                                <li className="project"><a href="#/api/employee">TEAM</a></li>
                                 <li className="project"><a href="#/build">BUILD</a></li>
                                 
                             </ul>
@@ -80,32 +80,12 @@ export const Option = (option) =>
         <li>{option.optionName}</li>
     </div>
 
-
-
-export const RootObject = (rootObject) =>
-        <div className="rootObject">
-            <p>{rootObject.Results}</p>
-        </div>
-
-export const Result = (results) =>
-        <div>
-            <p>{rootObject.Results.formatted_address}</p>
-            <p>{rootObject.Results.Geometry}</p>
-        </div>
-
-export const Location = (location) =>
-    <div>
-        <p>{rootObject.Results.geometry.location.lat}</p>
-        <p>{rootObject.Results.geometry.location.lng}</p>
+export const EventLocation = (eventLocation) =>
+    <div className="event-location">
+            <li>{eventLocation.formattedAddress}</li>
+            <li>{eventLocation.lat}</li>
+            <li>{eventLocation.lng}</li>
     </div>
-
-export const Geometry = (geometry) =>
-    <div>
-        <p>{rootObject.Results.geometry.location}</p>
-    </div>
-
-
-       
     
 
 
