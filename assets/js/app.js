@@ -2,11 +2,13 @@
 import "babel-polyfill"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+// import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 import { Button, FormGroup, FormControl, ControlLabel, HelpBlock, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
-import { Forms, AdventForm, NewEvent, ParentComponent, EmployeeList, AdventPage } from './forms'
-import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
+import { Forms, AdventForm, NewEvent, AdventPage, update, rootComponent, prop } from './forms'
+import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeList } from './login'
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 // console.log(Boot) // what hast thou provided?
@@ -49,11 +51,15 @@ export const remove = (url, data) =>
         body: JSON.stringify(data)
     })
     .then(r => r.json())  
+
+
 // ----------------
 
 export const log = (...a) => console.log(...a)
 
 export const Error = () => <div>Page Not Found</div>
+
+
 
 const Layout = ({children}) => 
         <div>
@@ -83,4 +89,3 @@ reactApp()
 
 
 
-    //        <Route path="/api/advent/:id" component={EmployeeView}/>

@@ -2,12 +2,21 @@ import React, {Component} from 'react'
 import * as models from './models'
 import {get, post, put, log } from './app'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavDropdown, MenuItem , DateTimeField, DateTimePicker } from 'react-bootstrap';
+// import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 import * as components from './components'
-import { Employee, Advance, Advent, Section, Category, Option, RootObject, Result, EventLocation } from './components'
+import { Employee, Advance, Advent, Section, Category, Option, RootObject, Result, EventLocation, EmployeeTable } from './components'
 
-let update // DANGER WILL ROBINSON, DOUNT TOUCH ME
-    , getRootState 
+let prop = (rootComponent) => 
+    (v) => 
+        v===undefined ? (rootComponent && rootComponent.forceUpdate()) : (rootComponent=v)
+export const update = prop()
 
+// how this works:
+// update() // no input, invoke forceUpdate if it can
+// update(this) (inside a React component) it sets rootComponent
+
+let getRootState 
 
 export class AdventForm extends Component {
     constructor(props){
@@ -20,7 +29,7 @@ export class AdventForm extends Component {
             categories: [],
             options: []
         }
-        update = () => this.forceUpdate()
+        update(this)
         getRootState = () => this.state
     }
     componentDidMount(){
@@ -94,10 +103,10 @@ export class AdventForm extends Component {
                  <input className="input-fields" onBlur={e => this.change(e, "eventName")} ref="eventName" placeholder="Event Name" required key={Math.random()} defaultValue={this.state.eventName || ""} /> 
                 </div>
                 <div className="title"><span>Start Date</span>
-                 <input className="input-fields" onBlur={e => this.change(e, "startDate")}  ref="startDate" placeholder="Start Date" required key={Math.random()} defaultValue={this.state.startDate || ""} />
+                 <input className="input-fields" onBlur={e => this.change(e, "startDate")} type="date" ref="startDate" format="MM/DD/YYYY"placeholder="Start Date" required key={Math.random()} defaultValue={this.state.startDate || "26/01/2017"} />
                 </div>
                 <div className="title"><span>End Date</span>
-                 <input className="input-fields" onBlur={e => this.change(e, "endDate")} ref="endDate" placeholder="End Date" required key={Math.random()} defaultValue={this.state.endDate || ""} /> 
+                 <input className="input-fields" onBlur={e => this.change(e, "31/01/2017")} type="date" ref="endDate" placeholder="End Date" format="MM/DD/YYYY" required key={Math.random()} defaultValue={this.state.endDate || ""} /> 
                 </div>
             </div>
             <ul>
@@ -126,8 +135,10 @@ export class AdventPage extends Component {
     constructor(props){
         super(props)
         this.state = {}
-        update = () => this.forceUpdate()
+        update(this)
+        getRootState = () => this.state
     }
+
     componentDidMount(){
         let {routeParams: {id}} = this.props
         
@@ -143,9 +154,9 @@ export class AdventPage extends Component {
                 window.location.hash = '#/'
             })
        }
+
     
     render() {
-       
         return <div className="advance-return-view">
                 <ul>
                     <span className="advent-view"></span>
@@ -160,8 +171,9 @@ export class AdventPage extends Component {
                 </ul>
                 <a href={`#/build/${this.state.id}`}>
                     <button className="build-button">Edit</button>
-                    <button className="build-button">Send</button>
                 </a>
+                    <button className="build-button">Send</button>
+                
             </div>  
     }
 }
@@ -193,7 +205,6 @@ export class EmployeeForm extends Component {
 export class AdvanceForm extends Component {
     constructor(props){
         super(props)
-        update = () => this.forceUpdate()
     }
     change(e, name){
         this.props.advance[name] = this.refs[name].value
@@ -207,7 +218,7 @@ export class AdvanceForm extends Component {
         return <div className="advance-form">
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" required key={Math.random()} defaultValue={this.props.advance.advanceName || ""} /> </li>
-                <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" required key={Math.random()} defaultValue={this.props.advance.dueDate || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" type="date" placeholder="Due Date " required key={Math.random()} defaultValue={this.props.advance.dueDate || "15/01/2017"} /> </li>
                 <li><textArea onChange={e => this.change(e, "advanceIntro")} ref="advanceIntro" placeholder="Include your advance intro here...for example: Thank you for being part of YOUR EVENT NAME. In order to ensure your needs are met during the event, please take a moment to fill out the form below. Note that if you need to make any edits after your initial submission, simply follow the link back to this page, fill out the form again, and resubmit. Your information will be updated automatically. All requests are subject to approval and must be submitted by the due date below in order to be considered." required key={Math.random()} defaultValue={this.props.advance.advanceIntro || ""}/> </li>
               </ul>
               <ul>
@@ -224,7 +235,6 @@ export class AdvanceForm extends Component {
 export class SectionForm extends Component {
     constructor(props){
         super(props)
-        update = () => this.forceUpdate()
         // this.props.section is an object passed in that holds default or existing section data
         // this.state = {
         //     eventLocations: [],
@@ -260,7 +270,6 @@ export class SectionForm extends Component {
 export class CategoryForm extends Component {
     constructor(props){
         super(props)
-        update = () => this.forceUpdate()
         // this.props.category is an object passed in that holds default or existing advance data
     }
     pushNewOption(e){
@@ -290,7 +299,6 @@ export class CategoryForm extends Component {
 export class OptionForm extends Component {
     constructor(props){
         super(props)
-        update = () => this.forceUpdate()
         // this.props.option is an object passed in that holds default or existing advance data
     }
    
@@ -302,7 +310,7 @@ export class OptionForm extends Component {
         return <div className="option-form">
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name, you can provide multiple options and the user can provide information in the field below." required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
-                <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || 0} /> </li>
+                <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || ""} /> </li>
              </ul>
         </div>
     }

@@ -39,16 +39,16 @@ public class EmployeeController : CRUDController<Employee> {
     }
 }
 
-// [Route("api/advance")]
-// public class AdvanceController : CRUDController<Advance> {
-//     public AdvanceController(IRepository<Advance> r) : base(r){}
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(advance => 
-//             advance.advanceName.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
-// }
+[Route("api/advance")]
+public class AdvanceController : CRUDController<Advance> {
+    public AdvanceController(IRepository<Advance> r) : base(r){}
+    [HttpGet("search")]
+    public IActionResult Search([FromQuery]string term, int listId = -1){
+        return Ok(r.Read(dbset => dbset.Where(advance => 
+            advance.advanceName.ToLower().IndexOf(term.ToLower()) != -1
+        )));
+    }
+}
 
 [Route("api/location")]
 public class LocationController: Controller

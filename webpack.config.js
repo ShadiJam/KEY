@@ -73,7 +73,7 @@ const defaultPlugins = () => [
     //     }
     //   }
     // }),
-  ].concat(isDebug ? [new webpack.HotModuleReplacementPlugin] : [])
+  ]//.concat(isDebug ? [new webpack.HotModuleReplacementPlugin] : [])
 
 let configs = [
   // browser

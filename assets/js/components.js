@@ -6,7 +6,7 @@ import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar } from 'react-bootstrap';
 import { get, post, log, Error, Layout, reactapp } from './app'
 import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
-import Forms from './forms'
+import { update, rootComponent, prop } from './forms'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 
 
@@ -20,16 +20,33 @@ export const Header = () =>
                     <li className="portfolio span2">
                         <a className="key" href="#/">KEY</a>
                             <ul id="secondary">
-                                <li className="project"><a href="#/api/employee/:id">EVENT</a></li>
+                                <li className="project"><a className="project" href="#/api/employee/:id">EVENT</a></li>
                                 <li className="project"><a href="#/build">BUILD</a></li>
-                                <li className="project"><a href="">COLLECT</a></li>
+                                <li className="project"><a href="#/api/employee">TEAM</a></li>
                             </ul>
                         </li>
                     </ul>
                 </nav>
             </header>
         </div>
-       
+
+
+class EmployeeTable extends Component {
+  render() {
+    return (
+      <BootstrapTable data={ employees } striped hover condensed>
+        <TableHeaderColumn dataField='fName' isKey>First Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='lName'>Last Name</TableHeaderColumn>
+        <TableHeaderColumn dataField='department'>Department</TableHeaderColumn>
+        <TableHeaderColumn dataField='position'>Position</TableHeaderColumn>
+        <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
+        <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+      </BootstrapTable>
+    )
+  }
+}
+
+
 export const Employee = (employee) =>
     <div className="employee">
         <ul className="employee-list">
@@ -43,12 +60,32 @@ export const Employee = (employee) =>
         </ul>
     </div>
 
+// export class DateRender extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = {
+//         items: []
+//         }
+//     }
+//     change(){
+//     	if(item !== dateTime) return
+        
+//         let item = 
+//         (dateTime.getMonth()+1) + '/' + 
+//                   dateTime.getDate() + '/' +  
+//                   dateTime.getFullYear())
+//         }
+//     render(){
+//         return <div>{input}</div>
+//     }
+// }
+
 export const Advent = (advent) =>
     <div className="advent">
         <ul className="advent-list">
         <li>{advent.eventName}</li>
-        <li>{advent.startDate}</li>
-        <li>{advent.endDate}</li>
+        <li>{DateRender(advent.startDate)}</li>
+        <li>{DateRender(advent.endDate)}</li>
         </ul>
             <a href={`#/api/advent/${advent.id}`}>
                 <button className="view-button">View</button>
@@ -63,7 +100,7 @@ export const Advance = (advance) =>
     <div className="advance">
             <li>{advance.advanceName}</li>
             <li>{advance.isAssigned}</li>
-            <li>{advance.dueDate}</li>
+            <li>{DateRender(advance.dueDate)}</li>
             <span className="advent-view"></span>
             {(advance.sections || []).map(Section)}
     </div>
@@ -85,7 +122,7 @@ export const Category = (category) =>
 export const Option = (option) =>
     <div className="option">
         <li>{option.optionName}</li>
-        <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || 0}/></li>
+        <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={option.optionValue || ""}/></li>
     </div>
 
 export const EventLocation = (eventLocation) =>

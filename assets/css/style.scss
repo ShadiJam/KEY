@@ -48,10 +48,11 @@ div.app {
     background-size: cover;
     max-width: 100%;
     max-height: 100%;
-    margin: 0;
     background-color: #2D3142;
     color: #F2E9E4;
     padding: 20px;
+    padding-right: 150px;
+    padding-left: 150px;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
@@ -191,6 +192,7 @@ button.newAdvent {
 
 div.option-form {
     max-width: 350px;
+    
 }
 
 .section-form {
@@ -299,6 +301,16 @@ button.create-event {
 }
 
 ul.input-fields textarea {
+    clear: left;
+    width: 250px;
+    background-color: #48483A;
+    color: #F2E9E4;
+    text-align: center;
+    margin: 3px;
+    list-style-type: none;
+}
+
+div.option input {
     clear: left;
     width: 250px;
     background-color: #48483A;

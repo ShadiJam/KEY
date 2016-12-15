@@ -2,12 +2,15 @@
 import "babel-polyfill"
 import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
+// import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
 import Forms from './forms'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
+import { update, rootComponent, prop } from './forms'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation, EmployeeTable } from './components'
 import * as models from './models'
 
 
@@ -104,7 +107,7 @@ export class Login extends Component {
                 <ul>
                     <li className="description">Web based software system uniting business management with the internal advance process for large or small scale event production.</li>
                     <li className="description">Collect event information with customized form building.</li> 
-                    <li className="description">Communicate critical event information to your team and track your progress.</li>
+                    <li className="description">Communicate critical event information to your team and track progress in real time against tight deadlines.</li>
                     <li className="description"> Customized event management in one place.</li>
                 </ul>
                 </div>
@@ -145,6 +148,24 @@ export class EmployeeView extends Component {
     }
 }
 
+export class EmployeeList extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            items: []
+        }
+    }
+    componentDidMount(){
+        get('/api/employee').then(employees => {
+            this.setState({items: employees})
+        }).catch(e => log(e))
+    }
+    render(){
+        return <div className="advent-element">
+                {this.state.items.map(Employee)}
+            </div>
+    }
+}
 
 
 
