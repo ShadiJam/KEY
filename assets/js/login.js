@@ -4,12 +4,10 @@ import fetch from "isomorphic-fetch"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-// import { Datepicker } from 'react-bootstrap-date-picker'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import Forms from './forms'
-
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import * as models from './models'
 
 

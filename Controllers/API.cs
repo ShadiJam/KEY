@@ -50,42 +50,6 @@ public class EmployeeController : CRUDController<Employee> {
 //     }
 // }
 
-
-// [Route("api/section")]
-// public class SectionController : CRUDController<Section> {
-//     public SectionController(IRepository<Section> r) : base(r){}
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(section => 
-//             section.sectionName.ToLower().IndexOf(term.ToLower()) != -1
-//             || section.sectionDescription.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
-// }
-
-// [Route("api/category")]
-// public class CategoryController : CRUDController<Category> {
-//     public CategoryController(IRepository<Category> r) : base(r){}
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(category => 
-//             category.categoryName.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
-// }
-
-// [Route("api/option")]
-// public class OptionController : CRUDController<Option> {
-//     public OptionController(IRepository<Option> r) : base(r){}
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(option => 
-//             option.optionName.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
-// }
-
-
 [Route("api/location")]
 public class LocationController: Controller
 {

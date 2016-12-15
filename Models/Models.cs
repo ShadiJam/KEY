@@ -43,6 +43,7 @@ public class Advance : HasId {
     [Required]
     public int Id { get; set; }
     public string advanceName { get; set; }
+    public string advanceIntro { get; set; }
     public bool isAssigned { get; set; } = false;
     public bool isComplete { get; set; } = false;
     public DateTime dueDate { get; set; }
@@ -69,8 +70,7 @@ public class Category : HasId {
     public List<Option> Options { get; set; } = new List<Option>();
     public int SectionId { get; set; }
     public List<AdvanceSectionJoin> AdvanceSectionJoins { get; set; } = new List<AdvanceSectionJoin>();
-    // create function that allows admin user to approve/deny advance
-    // create function that allows employee user to respond to an advance request
+   
 }
 
 public class AdvanceSectionJoin : HasId {

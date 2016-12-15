@@ -5,12 +5,10 @@ import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, HelpBlock, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
+import { Forms, AdventForm, NewEvent, ParentComponent, EmployeeList, AdventPage } from './forms'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'
-import { AdventForm, NewEvent, ParentComponent, EmployeeList, AdventPage } from './forms'
 
-import Forms from './forms'
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
-// import { Datepicker } from 'react-bootstrap-date-picker'
 // console.log(Boot) // what hast thou provided?
 
 // Utility methods

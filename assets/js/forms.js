@@ -126,10 +126,9 @@ export class AdventPage extends Component {
     constructor(props){
         super(props)
         this.state = {}
+        update = () => this.forceUpdate()
     }
-
     componentDidMount(){
-       
         let {routeParams: {id}} = this.props
         
         if(id === undefined) {
@@ -143,7 +142,7 @@ export class AdventPage extends Component {
                 console.log(e)
                 window.location.hash = '#/'
             })
-    }
+       }
     
     render() {
        
@@ -155,15 +154,13 @@ export class AdventPage extends Component {
                     <li>End Date:   {this.state.endDate}</li>
                     <li>{(this.state.eventLocations || []).map(EventLocation)}</li>
                     <span className="advent-view"></span>
-                    <p> Thank you for being part of {this.state.eventName}. In order to ensure your needs are met during the event, please take a moment to fill out the form below. </p>
-                    <p>Note that if you need to make any edits after your initial submission, simply follow the link back to this page, fill out the form again, and resubmit. Your information will be updated automatically.</p> 
-                    <p>All requests are subject to approval and must be submitted by the due date below in order to be considered.</p>
                     <ul>{(this.state.advances || []).map(Advance)}</ul>
                     <span className="advent-view">Employees</span>
                     {(this.state.employees || []).map(Employee)}
                 </ul>
                 <a href={`#/build/${this.state.id}`}>
                     <button className="build-button">Edit</button>
+                    <button className="build-button">Send</button>
                 </a>
             </div>  
     }
@@ -196,6 +193,7 @@ export class EmployeeForm extends Component {
 export class AdvanceForm extends Component {
     constructor(props){
         super(props)
+        update = () => this.forceUpdate()
     }
     change(e, name){
         this.props.advance[name] = this.refs[name].value
@@ -210,8 +208,8 @@ export class AdvanceForm extends Component {
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "advanceName")} ref="advanceName" placeholder="Advance Name" required key={Math.random()} defaultValue={this.props.advance.advanceName || ""} /> </li>
                 <li> <input onChange={e => this.change(e, "dueDate")} ref="dueDate" placeholder="Due Date DD/MM/YR" required key={Math.random()} defaultValue={this.props.advance.dueDate || ""} /> </li>
-               
-            </ul>
+                <li><textArea onChange={e => this.change(e, "advanceIntro")} ref="advanceIntro" placeholder="Include your advance intro here...for example: Thank you for being part of YOUR EVENT NAME. In order to ensure your needs are met during the event, please take a moment to fill out the form below. Note that if you need to make any edits after your initial submission, simply follow the link back to this page, fill out the form again, and resubmit. Your information will be updated automatically. All requests are subject to approval and must be submitted by the due date below in order to be considered." required key={Math.random()} defaultValue={this.props.advance.advanceIntro || ""}/> </li>
+              </ul>
               <ul>
                 <span className="section">Section</span>
                 {(this.props.advance.sections || []).map(e => <SectionForm section={e} />)}
@@ -226,6 +224,7 @@ export class AdvanceForm extends Component {
 export class SectionForm extends Component {
     constructor(props){
         super(props)
+        update = () => this.forceUpdate()
         // this.props.section is an object passed in that holds default or existing section data
         // this.state = {
         //     eventLocations: [],
@@ -246,7 +245,7 @@ export class SectionForm extends Component {
             
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "sectionName")} onBlur={update} ref="sectionName" placeholder="Section Name" required key={Math.random()} defaultValue={this.props.section.sectionName || ""} /> </li>
-                <li> <input onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description - not required" required key={Math.random()} defaultValue={this.props.section.sectionDescription || ""} /> </li>
+                <li> <textArea onChange={e => this.change(e, "sectionDescription")} onBlur={update} ref="sectionDescription" placeholder="Brief Description about this section, for example: Please provide the number of credentials you need for each day below." required key={Math.random()} defaultValue={this.props.section.sectionDescription || ""} /> </li>
             </ul>
             <ul>
                 <span className="category">Category</span>
@@ -261,14 +260,10 @@ export class SectionForm extends Component {
 export class CategoryForm extends Component {
     constructor(props){
         super(props)
+        update = () => this.forceUpdate()
         // this.props.category is an object passed in that holds default or existing advance data
     }
     pushNewOption(e){
-        if(!this.props.category.options) this.props.category.options = []
-        this.props.category.options.push(models.optionModel())
-        update()
-    }
-     pushNewInput(e){
         if(!this.props.category.options) this.props.category.options = []
         this.props.category.options.push(models.optionModel())
         update()
@@ -287,8 +282,6 @@ export class CategoryForm extends Component {
                 <span className="option">Option</span>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewOption(e)}>New Option</button>
-                {(this.props.category.options || []).map(e => <InputField option={e}/>)}
-                <button className="form-buttons" onClick={e => this.pushNewInput(e)}>Include Input Field</button>
             </ul>  
         </div>
     }
@@ -297,6 +290,7 @@ export class CategoryForm extends Component {
 export class OptionForm extends Component {
     constructor(props){
         super(props)
+        update = () => this.forceUpdate()
         // this.props.option is an object passed in that holds default or existing advance data
     }
    
@@ -307,30 +301,12 @@ export class OptionForm extends Component {
     render(){
         return <div className="option-form">
             <ul className="input-fields">
-                <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
+                <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name, you can provide multiple options and the user can provide information in the field below." required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
+                <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || 0} /> </li>
              </ul>
         </div>
     }
 }
-
-export class InputField extends Component {
-    constructor(props){
-        super(props)
-    }
-    change(e, name){
-        e.preventDefault()
-        this.props.option[name] = this.refs[name].value
-    }
-    render(){
-        return <div className="option-form">
-            <ul className="input-fields">
-                <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || 0} /> </li>
-            </ul>
-        </div>
-    }
-}
-
-            
 
 export class LocationForm extends Component {
     constructor(props){

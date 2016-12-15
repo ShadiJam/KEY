@@ -37,6 +37,7 @@ export const adventModel = (
 export const advanceModel = (
     id
     , advanceName
+    , advanceIntro
     , isAssigned
     , isComplete
     , employeeId
@@ -44,7 +45,7 @@ export const advanceModel = (
     , dueDate
     , adventId
     , advanceSectionJoins
-) => ({id, advanceName, isAssigned, isComplete, employeeId, sections, dueDate, advanceSectionJoins})
+) => ({id, advanceName, advanceIntro, isAssigned, isComplete, employeeId, sections, dueDate, advanceSectionJoins})
 
 export const sectionModel = (
     id
