@@ -2,7 +2,6 @@ using Xunit;
 using System;
 using System.Collections.Generic;
 
-
 public class SimpleTests {
 
     /* 
@@ -25,7 +24,6 @@ public class SimpleTests {
     //     var controller = new HomeController();
     //     var result = controller.Root() as View;
     //     Assert.True(result.View == "Empty");
-        
     // }
 //Issue with testing of respository and APIs - told to only test models
     // [Fact]
@@ -47,26 +45,20 @@ public class SimpleTests {
     //     Assert.NotNull(result); // or should it be Assert.True()?
     // }
 
-    // [Theory]
-    // public void IsAssigned(){
-    //     Advance a = new Advance();
-    //     Advance b = new Advance();
-    //     Assert.False(a.isComplete());
-    //     Assert.False(b.isAssigned());
-    // }
+   
 
     // [Theory]
 
     // public void ListIsNotNull(){
-    //     // var result = new List<Object>();
-    //     Assert.NotNull(Employees);
-    //     Assert.NotNull(Advances);
-    //     Assert.NotNull(ROs);
-    //     Assert.NotNull(Sections);
-    //     Assert.NotNull(AdvanceSectionJoins);
-    //     Assert.NotNull(Categories);
-    //     Assert.NotNull(Options);
+    //     var result = new List<Object>();
+    //     Assert.NotNull(employees);
+    //     Assert.NotNull(advances);
+    //     Assert.NotNull(sections);
+    //     Assert.NotNull(categories);
+    //     Assert.NotNull(options);
     // }
+
+
 
     [Fact]
 
@@ -76,7 +68,70 @@ public class SimpleTests {
             new DateTime(2003, 1, 1),
             new DateTime(2006, 1, 12));
     }
+
+    // [Fact]
+
+    // public void PopReturnsPushedItem(){
+    //     int actual = stack.Peek();
+    //     Assert.Equal(pushedValue, actual);
+    // }
+
+
+    // public void manyPushInputs(){
+    //     Input<object> obj;
+    //     object firstPush = x;
+    //     object secondPush = y;
+    //     object thirdPush = z;
+    //     object fourthPush = a;
+    //     object fifthPush = b;
+    //     object sixthPush = c;
+    // }
+    
+
+    // public void inputArray(){
+    //     object arr = new Input();
+    //     arr.Push(firstPush);
+    //     arr.Push(secondPush);
+    //     arr.Push(thirdPush);
+    //     arr.Push(fourthPush);
+    //     arr.Push(fifthPush);
+    //     arr.Push(sixthPush);
+    // }
+
+    // [Fact]
+    // public void confirmArrayIndex(){
+    //     int num = arr.Count;
+    //     Assert.Equal(6, num);
+    // }
+
+    // [Fact]
+    // public void returnsPushedObject(){
+    //     object val = arr.Pop();
+    //     Assert.Equal(pushedValue, val);
+    // }
+
+
+// public class StringArray{
+//     [Fact]
+//     public void popWillDeletePushString(){
+//         string() opt = new string();
+//         opt.Push("optionName");
+
+//         string actual = opt.Pop();
+//         Assert.Equal("optionName", actual);
+//     }
+// }
+
+    // [Theory]
+    // public void IsAssigned(){
+    //     Advance a = new Advance();
+    //     Advance b = new Advance();
+    //     Assert.False(a.isComplete());
+    //     Assert.False(b.isAssigned());
+    // }
 }
+
+
 
   
     

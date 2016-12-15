@@ -105,7 +105,7 @@ export class Login extends Component {
                 <div className="description">
                 <ul>
                     <li className="description">Web based software system uniting business management with the internal advance process for large or small scale event production.</li>
-                    <li className="description">Collect event information through customized form building.</li> 
+                    <li className="description">Collect event information with customized form building.</li> 
                     <li className="description">Communicate critical event information to your team and track your progress.</li>
                     <li className="description"> Customized event management in one place.</li>
                 </ul>

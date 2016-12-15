@@ -102,10 +102,9 @@ public class EventLocation : HasId {
 public class Option : HasId {
     [Required]
     public int Id { get; set; }
-    // public List<GoogleAPI.RootObject> ROs { get; set; }
     public string optionName { get; set; }
+    public int optionValue { get; set; }
     public int CategoryId { get; set; }
-    
 }
 
 public partial class DB : IdentityDbContext<IdentityUser> {
@@ -130,14 +129,15 @@ public partial class Handler {
                 .Include(a => a.Advances)
                     .ThenInclude(s => s.Sections)
                         .ThenInclude(c => c.Categories)
-                            .ThenInclude(o => o.Options)
-        );
+                            .ThenInclude(o => o.Options));
 
-        // Repo<EventLocation>.Register(services, "EventLocations",
-        //     d => d
-        //         .Include(f => f.FormattedAddress)
-        //         .Include(l => l.Lat)
-        //         .Include(l => l.Lng));
+        Repo<Employee>.Register(services, "Employees");
+
+        Repo<EventLocation>.Register(services, "EventLocations",
+            d => d
+                .Include(f => f.FormattedAddress)
+                .Include(l => l.Lat)
+                .Include(l => l.Lng));
         
         // Repo<Advance>.Register(services, "Advances",
         //     d => d
@@ -151,9 +151,7 @@ public partial class Handler {
         //     d => d  
         //         .Include(c => c.Categories));
 
-        // Repo<Category>.Register(services, "Categories",
-        //     d => d
-        //         .Include(o => o.Options));
+        // Repo<Category>.Register(services, "Categories");
 
         // Repo<Option>.Register(services, "Options");
 

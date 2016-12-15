@@ -59,8 +59,9 @@ export const sectionModel = (
 export const optionModel = (
     id  
     , optionName
+    , optionValue
     , categoryId
-) => ({id, optionName, categoryId})
+) => ({id, optionName, optionValue, categoryId})
 
 export const eventLocationModel = (
     id

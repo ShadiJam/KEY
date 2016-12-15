@@ -19,7 +19,6 @@ export const Header = () =>
                         <a className="key" href="#/">KEY</a>
                             <ul id="secondary">
                                 <li className="project"><a href="#/api/employee/:id">EVENT</a></li>
-                                <li className="project"><a href="#/api/employee">TEAM</a></li>
                                 <li className="project"><a href="#/build">BUILD</a></li>
                                 
                             </ul>
@@ -63,41 +62,63 @@ export const Advance = (advance) =>
             <li>{advance.advanceName}</li>
             <li>{advance.isAssigned}</li>
             <li>{advance.dueDate}</li>
-            <span className="advent-view">Sections</span>
+            <span className="advent-view"></span>
             {(advance.sections || []).map(Section)}
     </div>
 
 export const Section = (section) =>
     <div className="section">
-        <li>{section.sectionName}</li>
+        <h3>{section.sectionName}</h3>
         <li>{section.sectionDescription}</li>
-        <span className="advent-view">Categories</span>
         {(section.categories || []).map(Category)}
     </div>
 
 export const Category = (category) =>
     <div className="category">
-            <li>{category.categoryName}</li>
-            <span className="advent-view">Options</span>
+            <span className="advent-view"></span>
+            <h4>{category.categoryName}</h4>
             {(category.options|| []).map(Option)}
     </div>
 
 export const Option = (option) =>
     <div className="option">
         <li>{option.optionName}</li>
+        <li>{}</li> 
     </div>
+
+
+        
 
 export const EventLocation = (eventLocation) =>
     <div className="event-location">
-            <li>{eventLocation.formattedAddress}</li>
-            <li>{eventLocation.lat}</li>
-            <li>{eventLocation.lng}</li>
+            <li>Address:    {eventLocation.formattedAddress}</li>
+            <li>Latitude:   {eventLocation.lat}</li>
+            <li>Longitude:   {eventLocation.lng}</li>
     </div>
     
 
 
-    
 
+<div>
+    <li> <FormGroup onChange={e => this.change(e, "EmployeeId")} ref="EmployeeId" controlId="formControlsSelect">
+                       <ControlLabel>Assign Advance</ControlLabel>
+                         <FormControl componentClass="select" placeholder="select">
+                             <option value="select">choose Employee</option>
+                             {this.props.employees.map(e => <option value={e.id}>{e.fName}{e.lName}</option>)}
+                         </FormControl>
+                     </FormGroup>
+                 </li> 
+                <li> 
+                    <FormGroup onChange={e => this.change(e, "isComplete")} ref="isComplete" controlId="formControlsSelect">
+                        <ControlLabel>Advance Complete?</ControlLabel>
+                        <FormControl componentClass="select" placeholder="select">
+                            <option value="select">Select</option>
+                            <option value="other">Yes</option>
+                            <option value="other">No</option>
+                        </FormControl>
+                    </FormGroup>
+                </li>
+            </div>
 
     
           

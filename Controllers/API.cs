@@ -25,19 +25,19 @@ public class AdventController : CRUDController<Advent> {
     }
 }
 
-// [Route("api/employee")]
-// public class EmployeeController : CRUDController<Employee> {
-//     public EmployeeController(IRepository<Employee> r) : base(r){}
+[Route("api/employee")]
+public class EmployeeController : CRUDController<Employee> {
+    public EmployeeController(IRepository<Employee> r) : base(r){}
     
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(employee => 
-//             employee.fName.ToLower().IndexOf(term.ToLower()) != -1
-//             || employee.lName.ToLower().IndexOf(term.ToLower()) != -1
-//             || employee.department.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
-// }
+    [HttpGet("search")]
+    public IActionResult Search([FromQuery]string term, int listId = -1){
+        return Ok(r.Read(dbset => dbset.Where(employee => 
+            employee.fName.ToLower().IndexOf(term.ToLower()) != -1
+            || employee.lName.ToLower().IndexOf(term.ToLower()) != -1
+            || employee.department.ToLower().IndexOf(term.ToLower()) != -1
+        )));
+    }
+}
 
 // [Route("api/advance")]
 // public class AdvanceController : CRUDController<Advance> {

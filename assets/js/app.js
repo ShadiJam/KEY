@@ -2,7 +2,7 @@
 import "babel-polyfill"
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import { Button, FormGroup, FormControl, ControlLabel, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, ControlLabel, HelpBlock, Navbar, NavItem, NavDropdown, MenuItem, DateTimePicker, DateTimeField } from 'react-bootstrap';
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeLoggedIn } from './login'

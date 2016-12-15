@@ -35,6 +35,7 @@ export class AdventForm extends Component {
             .then(data => this.setState(Object.assign({}, this.state, data)))
             .then(d => this.forceUpdate())
     }
+    
     pushNewEmployee(e){
         e.preventDefault()
         let {employees} = this.state
@@ -148,16 +149,16 @@ export class AdventPage extends Component {
        
         return <div className="advance-return-view">
                 <ul>
-                    <span className="advent-view">Event Name</span>
-                    <li>{this.state.eventName}</li>
-                    <span className="advent-view">Start Date</span>
-                    <li>{this.state.startDate}</li>
-                    <span className="advent-view">End Date</span>
-                    <li>{this.state.endDate}</li>
-                    <span className="advent-view">Location</span>
-                    {(this.state.eventLocations || []).map(EventLocation)}
-                    <span className="advent-view">Advances</span>
-                    {(this.state.advances || []).map(Advance)}
+                    <span className="advent-view"></span>
+                    <h3>Welcome to {this.state.eventName} !</h3>
+                    <li>Start Date:   {this.state.startDate}</li>
+                    <li>End Date:   {this.state.endDate}</li>
+                    <li>{(this.state.eventLocations || []).map(EventLocation)}</li>
+                    <span className="advent-view"></span>
+                    <p> Thank you for being part of {this.state.eventName}. In order to ensure your needs are met during the event, please take a moment to fill out the form below. </p>
+                    <p>Note that if you need to make any edits after your initial submission, simply follow the link back to this page, fill out the form again, and resubmit. Your information will be updated automatically.</p> 
+                    <p>All requests are subject to approval and must be submitted by the due date below in order to be considered.</p>
+                    <ul>{(this.state.advances || []).map(Advance)}</ul>
                     <span className="advent-view">Employees</span>
                     {(this.state.employees || []).map(Employee)}
                 </ul>
@@ -267,6 +268,11 @@ export class CategoryForm extends Component {
         this.props.category.options.push(models.optionModel())
         update()
     }
+     pushNewInput(e){
+        if(!this.props.category.options) this.props.category.options = []
+        this.props.category.options.push(models.optionModel())
+        update()
+    }
     change(e, name){
         e.preventDefault()
         this.props.category[name] = this.refs[name].value
@@ -281,6 +287,8 @@ export class CategoryForm extends Component {
                 <span className="option">Option</span>
                 {(this.props.category.options || []).map(e => <OptionForm option={e}/>)}
                 <button className="form-buttons" onClick={e => this.pushNewOption(e)}>New Option</button>
+                {(this.props.category.options || []).map(e => <InputField option={e}/>)}
+                <button className="form-buttons" onClick={e => this.pushNewInput(e)}>Include Input Field</button>
             </ul>  
         </div>
     }
@@ -290,15 +298,8 @@ export class OptionForm extends Component {
     constructor(props){
         super(props)
         // this.props.option is an object passed in that holds default or existing advance data
-        
     }
-    // pushNewrO(e){
-    //     e.preventDefault()
-    //     let {option} = this.props
-    //     if(!option.eventLocations) option.eventLocations = []
-    //     option.eventLocations.push(models.eventLocationModel())
-    //     update()
-    // }
+   
     change(e, name){
         e.preventDefault()
         this.props.option[name] = this.refs[name].value
@@ -307,12 +308,29 @@ export class OptionForm extends Component {
         return <div className="option-form">
             <ul className="input-fields">
                 <li> <input onChange={e => this.change(e, "optionName")} onBlur={update} ref="optionName" placeholder="Option Name" required key={Math.random()} defaultValue={this.props.option.optionName || ""} /> </li>
-            </ul>
-               
-         
+             </ul>
         </div>
     }
 }
+
+export class InputField extends Component {
+    constructor(props){
+        super(props)
+    }
+    change(e, name){
+        e.preventDefault()
+        this.props.option[name] = this.refs[name].value
+    }
+    render(){
+        return <div className="option-form">
+            <ul className="input-fields">
+                <li><input onChange={e => this.change(e, "optionValue")} onBlur={update} ref="optionValue" placeholder="Enter Amount" required key={Math.random()} defaultValue={this.props.option.optionValue || 0} /> </li>
+            </ul>
+        </div>
+    }
+}
+
+            
 
 export class LocationForm extends Component {
     constructor(props){
@@ -360,34 +378,14 @@ export class LocationForm extends Component {
                  {err}
                  
                 <div className="input-fields">
-                    <input ref="address" placeholder="search locations by entering an address or zip code" /> 
+                    <input ref="address" placeholder="Search locations: enter an address or zip code" /> 
                     <button className="google-button" onClick={e => this.getLocation(e)} type="submit">Search</button>
                 </div>
         </div>          
     }
 }
 
-export class EmployeeList extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            items: [],
-            employees: []
-        }
-        update = () => this.forceUpdate()
-    }
-    componentDidMount(){
-        get('/api/employee').then(employees => {
-                this.setState({items: employees})
-            }).catch(e => log(e))
-    }
-    render(){
-        console.log(this.state)
-        return <div className="employee">
-            
-            <div className="employee-view">
-                {this.state.items.map(Employee)}
-            </div>
-        </div>
-    }
-}
+
+
+
+
