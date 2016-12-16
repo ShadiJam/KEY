@@ -9,14 +9,14 @@ Most large scale events require internal staff to collect multitudes of informat
 
 By allowing the user to build an advance form that is made of entities inside entities, users can build multiple advances for one event or more. Each advance is made up of as many sections as the user requires. Each section can have one or multiple categories. Finally, each category can have multiple options.
 
-Each event also has an employee list. This allows users to keep track of key team members, assign them advances inside the application, and track their progress based on the due date they've assigned.
+Each event also has an employee list. This will allows users to keep track of key team members, assign them advances inside the application, and track their progress based on the due date they've assigned.
 
 Although the concept of __KEY__ has been conceived over years of experience, during the production of several major events, the application itself is just three young weeks into it's inception and will continue to be developed over the coming months. 
 
 ### Usage
 The dynamic structure of __KEY__ is what allows the user to make it their own. Users can create customized forms that will collect the data they need. Once the advances are completed, the program collects the information using PostgreSQL database systems. 
 
-Users have the choice of viewing and sorting their data in [DBGlass](http://dbglass.web-pal.com/) or right inside the application. 
+Users will have the choice of viewing and sorting their data in [DBGlass](http://dbglass.web-pal.com/) or right inside the application. 
 
 If a particular form is resubmitted due to changes, the information in the database and in the application is automatically updated. 
 
