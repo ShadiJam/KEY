@@ -1,3 +1,48 @@
+# KEY
+
+
+## Overview
+
+An event production web application uniting the advance process with business management.
+
+Most large scale events require internal staff to collect multitudes of information and manually track each detail.  __KEY__ allows the user to curate the internal advance procedure specifically to their requirements.
+
+By allowing the user to build an advance form that is made of entities inside entities, users can build multiple advances for one event or more. Each advance is made up of as many sections as the user requires. Each section can have one or multiple categories. Finally, each category can have multiple options.
+
+Each event also has an employee list. This allows users to keep track of key team members, assign them advances inside the application, and track their progress based on the due date they've assigned.
+
+Although the concept of __KEY__ has been conceived over years of experience, during the production of several major events, the application itself is just three young weeks into it's inception and will continue to be developed over the coming months. 
+
+### Usage
+The dynamic structure of __KEY__ is what allows the user to make it their own. Users can create customized forms that will collect the data they need. Once the advances are completed, the program collects the information using PostgreSQL database systems. 
+
+Users have the choice of viewing and sorting their data in [DBGlass](http://dbglass.web-pal.com/) or right inside the application. 
+
+If a particular form is resubmitted due to changes, the information in the database and in the application is automatically updated. 
+
+Gone are the days of collecting catering, credential, or hotel room requests and requirements, using excel forms or hours of data entry. 
+
+### Utilities
+The application models and controllers are all within the ASP.Net MVC framework while the UI is completely rendered using ReactJS.NET. 
+
+### Get Started
+
+Simply click on the link, register, and begin building your application. Any questions or issues can be addressed right here in GitHub. 
+
+If you want to contribute, more detailed instructions are below under How To Use.
+
+##LICENSE
+
+The MIT License (MIT)
+
+Copyright (c) 2016 Shadi Jam
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 # .NET Core Boilerplate
 
 # How to use
