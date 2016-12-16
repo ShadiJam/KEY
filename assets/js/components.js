@@ -16,9 +16,9 @@ export const Header = () =>
     <div id="container" className="container">
         <ul id="secondary">
             <li className="key"><a className="key" href="#/">KEY</a></li>
-            <li className="project"><a className="project" href="#/api/employee/:id">event</a></li>
-            <li className="project"><a href="#/build">build</a></li>
-            <li className="project"><a href="#/api/employee">team</a></li>
+            <li className="project"><h4><a className="project" href="#/api/employee/:id">event</a></h4></li>
+            <li className="project"><h4><a href="#/build">build</a></h4></li>
+            <li className="project"><h4><a href="#/api/employee">team</a></h4></li>
         </ul>
     </div>
 
@@ -64,7 +64,7 @@ export const Advent = (advent) =>
             </li>
             <li>
                 <a href={`#/api/advent/${advent.id}`}>
-                    <h3> {advent.eventName} </h3>
+                    <h4> {advent.eventName} </h4>
                 </a>
             </li>
         </ul>
@@ -75,7 +75,6 @@ export const Advance = (advance) =>
     <div className="advance">
             <li>{advance.advanceName}</li>
             <li>{advance.isAssigned}</li>
-            <li>{advance.dueDate}</li>
             <span className="advent-view"></span>
             {(advance.sections || []).map(Section)}
     </div>

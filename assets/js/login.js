@@ -121,10 +121,9 @@ export class Login extends Component {
             <div className="login-stuff">
                 <div className="description">
                 <ul>
-                    <li className="description">Web based software system uniting business management with the internal advance process for large or small scale event production.</li>
-                    <li className="description">Collect event information with customized form building.</li> 
-                    <li className="description">Communicate critical event information to your team and track progress in real time against tight deadlines.</li>
-                    <li className="description"> Customized event management in one place.</li>
+                    <li className="description"><h5>A dynamic web based software system uniting business management with the internal advance process for large and small scale event production.</h5></li>
+                    <li className="description"><h5>Collect event information with customized form building, all in one place.</h5></li> 
+                    <li className="description"><h5>Communicate critical event information to your team and track progress in real time against tight deadlines.</h5></li>
                 </ul>
                 </div>
                 <div className="login-input-stuff">
@@ -159,7 +158,7 @@ export class EmployeeView extends Component {
     
     render(){
         return <div className="advent-element">
-         <h2>your events</h2>
+         <h3>your events</h3>
          <span></span>
                 {this.state.items.map(Advent)}
             </div>
