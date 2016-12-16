@@ -8,7 +8,7 @@ import { Button, FormGroup, FormControl, ControlLabel, HelpBlock, Navbar, NavIte
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Header, Employee, Advent, Advance, Section, Category, Option, EventLocation } from './components'
 import { Forms, AdventForm, NewEvent, AdventPage, update, rootComponent, prop } from './forms'
-import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeList } from './login'
+import { LoginForm, RegisterForm, Login, EmployeeView, EmployeeList, DateRender } from './login'
 
 import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
 // console.log(Boot) // what hast thou provided?

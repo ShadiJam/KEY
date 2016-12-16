@@ -10,10 +10,28 @@ import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { get, post, log, Error, Layout, reactapp } from './app'
 import Forms from './forms'
 import { update, rootComponent, prop } from './forms'
-import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation, EmployeeTable } from './components'
+import { Nav, Jumbotron, HomeContents, Employee, Advent, Advance, Section, Category, Option, EventLocation, EmployeeTable} from './components'
 import * as models from './models'
 
-
+// export class DateRender extends Component {
+//     constructor(props){
+//         super(props)
+//         this.state = {
+//         items: []
+//         }
+//     }
+//     change(){
+//     	if(item !== dateTime) return
+        
+//         let item = 
+//         this.setState((dateTime.getMonth()+1) + '/' + 
+//                   dateTime.getDate() + '/' +  
+//                   dateTime.getFullYear())
+//         }
+//     render(){
+//         return <div>{item}</div>
+//     }
+// }
 
 export class LoginForm extends Component {
     constructor(props){
@@ -101,8 +119,6 @@ export class Login extends Component {
         } 
         return (
             <div className="login-stuff">
-            <h1>KEY</h1>
-            <span></span>
                 <div className="description">
                 <ul>
                     <li className="description">Web based software system uniting business management with the internal advance process for large or small scale event production.</li>
@@ -143,6 +159,8 @@ export class EmployeeView extends Component {
     
     render(){
         return <div className="advent-element">
+         <h2>your events</h2>
+         <span></span>
                 {this.state.items.map(Advent)}
             </div>
     }
@@ -162,6 +180,8 @@ export class EmployeeList extends Component {
     }
     render(){
         return <div className="advent-element">
+             <h1>your team</h1>
+             <span></span>
                 {this.state.items.map(Employee)}
             </div>
     }

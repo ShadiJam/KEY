@@ -6,7 +6,7 @@ import {render} from 'react-dom'
 import { Button, FormGroup, FormControl, ControlLabel, Navbar } from 'react-bootstrap';
 import { get, post, log, Error, Layout, reactapp } from './app'
 import { LoginForm, RegisterForm, Login, EmployeeView } from './login'
-import { update, rootComponent, prop } from './forms'
+import { update, rootComponent, prop, DateRender } from './forms'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 
 
@@ -14,93 +14,68 @@ import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 
 export const Header = () =>
     <div id="container" className="container">
-        <header id="header">
-            <nav id="=menu">
-                <ul id="primary" className="row">
-                    <li className="portfolio span2">
-                        <a className="key" href="#/">KEY</a>
-                            <ul id="secondary">
-                                <li className="project"><a className="project" href="#/api/employee/:id">EVENT</a></li>
-                                <li className="project"><a href="#/build">BUILD</a></li>
-                                <li className="project"><a href="#/api/employee">TEAM</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-        </div>
+        <ul id="secondary">
+            <li className="key"><a className="key" href="#/">KEY</a></li>
+            <li className="project"><a className="project" href="#/api/employee/:id">event</a></li>
+            <li className="project"><a href="#/build">build</a></li>
+            <li className="project"><a href="#/api/employee">team</a></li>
+        </ul>
+    </div>
 
 
-class EmployeeTable extends Component {
-  render() {
-    return (
-      <BootstrapTable data={ employees } striped hover condensed>
-        <TableHeaderColumn dataField='fName' isKey>First Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='lName'>Last Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='department'>Department</TableHeaderColumn>
-        <TableHeaderColumn dataField='position'>Position</TableHeaderColumn>
-        <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
-        <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
-      </BootstrapTable>
-    )
-  }
-}
+// class EmployeeTable extends Component {
+//   render() {
+//     return (
+//       <BootstrapTable data={ employees } striped hover condensed>
+//         <TableHeaderColumn dataField='fName' isKey>First Name</TableHeaderColumn>
+//         <TableHeaderColumn dataField='lName'>Last Name</TableHeaderColumn>
+//         <TableHeaderColumn dataField='department'>Department</TableHeaderColumn>
+//         <TableHeaderColumn dataField='position'>Position</TableHeaderColumn>
+//         <TableHeaderColumn dataField='phone'>Phone</TableHeaderColumn>
+//         <TableHeaderColumn dataField='email'>Email</TableHeaderColumn>
+//       </BootstrapTable>
+//     )
+//   }
+// }
 
 
 export const Employee = (employee) =>
     <div className="employee">
         <ul className="employee-list">
-        <li>{employee.fName}</li>
-        <li>{employee.lName}</li>
-        <li>{employee.department}</li>
-        <li>{employee.position}</li>
-        <li>{employee.phone}</li>
-        <li>{employee.email}</li>
+        <li> {employee.fName}  ||  </li>
+        <li>{employee.lName}  ||  </li>
+        <li>{employee.department}  ||  </li>
+        <li>{employee.position}  ||  </li>
+        <li>{employee.phone}  ||  </li>
+        <li>{employee.email} </li>
         <span></span>
         </ul>
     </div>
 
-// export class DateRender extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {
-//         items: []
-//         }
-//     }
-//     change(){
-//     	if(item !== dateTime) return
-        
-//         let item = 
-//         (dateTime.getMonth()+1) + '/' + 
-//                   dateTime.getDate() + '/' +  
-//                   dateTime.getFullYear())
-//         }
-//     render(){
-//         return <div>{input}</div>
-//     }
-// }
+
 
 export const Advent = (advent) =>
     <div className="advent">
         <ul className="advent-list">
-        <li>{advent.eventName}</li>
-        <li>{DateRender(advent.startDate)}</li>
-        <li>{DateRender(advent.endDate)}</li>
+            <li>
+                <a href={`#/build/${advent.id}`}>
+                    <button className="build-button">Edit</button>
+                </a>
+            </li>
+            <li>
+                <a href={`#/api/advent/${advent.id}`}>
+                    <h3> {advent.eventName} </h3>
+                </a>
+            </li>
         </ul>
-            <a href={`#/api/advent/${advent.id}`}>
-                <button className="view-button">View</button>
-            </a>
-            <a href={`#/build/${advent.id}`}>
-                <button className="build-button">Edit</button>
-            </a>
-            <span></span>
-    </div>
+    <span></span>
+</div>
 
 export const Advance = (advance) =>
     <div className="advance">
             <li>{advance.advanceName}</li>
             <li>{advance.isAssigned}</li>
-            <li>{DateRender(advance.dueDate)}</li>
+            <li>{advance.dueDate}</li>
             <span className="advent-view"></span>
             {(advance.sections || []).map(Section)}
     </div>

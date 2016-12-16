@@ -19,7 +19,7 @@
 
     &:after {
         content: "";
-        display: inline-block;
+        display: none;
         width: 100%;
     }
 }
@@ -39,100 +39,55 @@
 @mixin grid_r 4, 800;
 @mixin grid_r 6, 1000;
 
+//General Background Styling
 
-
-div.app {
-    background-image: url();
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    max-width: 100%;
-    max-height: 100%;
-    background-color: #2D3142;
-    color: #F2E9E4;
-    padding: 20px;
-    padding-right: 150px;
-    padding-left: 150px;
+div.app {  
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-
-.menu-button {
-    height: 50px;
-    width: 50px;
-    position: fixed;
+body {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    padding-bottom: 40px;
 }
 
-.advance-category-button {
-    display: inline;
-    margin: 40px;
-}
-
-.login-stuff {
-    padding: 30px;
-    margin: 0;
-}
-
-.new-RO-form, .advance-form, .employee-form  {
-     max-width: 600px;
-     margin: 1.5rem auto;
-     input {
-        display: block;
-        padding: .5rem;
-        margin-bottom: 1.5rem;
-        width: 100%;
-    }
-}
-span.location {
-    margin: 0;
-    margin-top: 30px;
-}
-.form-buttons {
-     margin: 1.5rem auto;
-}
+//Navigation Menu Styling
 
 * header#header nav ul li {
-  border-top: 1px solid #E3D7FF;
+  border-top: 1px solid black;
   list-style-type: none;
   display: block;
-}
-
-ul#secondary {
-    padding-left: 30px;
-}
-nav#menu {
-    position: fixed;
-    float: left;
-    width: 100%;
-}
-nav a {
-    color: #F2E9E4;
+  margin: auto;
+  width: 70%;
+  margin-bottom: 40px;
 }
 
 a.key {
-    font-size: 125%;
+    font-size: 300%;
+}
+
+li.key {
+    display: inline-block; 
+}
+
+ul#secondary {
+    border-top: 1px solid black;
+    margin-top: 30px;
+    width: 70%;
+
+}
+
+ul#secondary li.project {
+    float: right;
+    margin-left: 30px;
+    margin-top: 7px;
 }
 
 /* below controls navigation sub-menues */
 header#header nav #primary li ul {
   display: block;
 }
-/* below controls nav menu lines 
-// header#header nav #primary li:hover,
-// header#header nav #primary li.active {
-//   border-color: white;
-//   color: white;
-  
-// }
-
-below gives sub-menues display 
-// header#header nav #primary li:hover ul,
-// header#header nav #primary li.active ul {
-//   display: block;
-//   padding: 0; */
- 
-
-
 
 /* below gives menu color when hovering */
 header#header nav #primary li:hover > a,
@@ -140,112 +95,11 @@ header#header nav #primary li.active > a {
   color: #317B22;
 }
 
-/* controls menu bar sizing and layout */
-*.row > [class*="span"] {
-  display: block;
-  float: right;
-  margin-right: 10px;
-  width: 100%;
-}
+// Login Page Styling 
 
-.span2 {
-  width: 30px;
-}
-
-div.advent {
-    list-style-type: none;
-}
-
-
-div.advent a.hover {
-    
-    h5 {
-        display: block;
-        color: #F2E9E4;
-    }
-}
-
-button.newAdvent {
-    margin: 20px;
-    display: block;
-    border: 1px solid #564D4A;
-    color: #F2E9E4;
-    padding: 15px;
-}
-
-.input-fields input {
-    display: inline;
-    border: 1px solid #564D4A;
-    color: #F2E9E4;
-    background-color: #48483A;
-    margin: 3px;
-    list-style-type: none;
-}
-
-
- div.advance-form div.employee-form {
-    border: 1px solid #35393C;
-    display: block;
-}
-
-
-
-div.option-form {
-    max-width: 350px;
-    
-}
-
-.section-form {
-    max-width: 500px;
-    align-content: center;
+.login-stuff {
+    padding: 30px;
     margin: 0;
-}
-
-.category-form {
-    max-width: 420px;
-}
-
-
-
-div.overview {
-    div.overview-style {
-        background-color: '#1f4662';
-        color: '#fff';
-        font-size: '12px';
-    }
-
-    div.header-style {
-        background-color: '#193549';
-        padding: '5px 10px';
-        font-family: 'monospace';
-        color: '#ffc600';
-    }
-
-    pre-style.pre-style text {
-        display: 'block';
-        padding: '10px 30px';
-        margin: '0';
-        overflow: 'scroll';
-    }
-}
-
-
-
-div.login-stuff {
-    height: 100%;
-    h1 {
-        padding: 0;
-        margin: 0;
-    }
-}
-
-li.description {
-    width: 200px;
-    display: block;
-    float: left;
-    margin-top: 20px; 
-    margin-left: 0;
-    margin-right: 20px;
 }
 
 div.login-input-stuff {
@@ -257,20 +111,12 @@ div.login-input-stuff {
     }
 }
 
-button.register-button {
-    background-color: #48483A;
-    color: #F2E9E4;
-    border: 1px solid #564D4A;
-    margin-top: 10px;
-    margin-left: 3px;
-}
-
-button.login-button {
-    background-color: #48483A;
-    color: #F2E9E4;
-    border: 1px solid #564D4A;
-    margin-top: 10px;
-    margin-left: 3px;
+div.login-stuff {
+    height: 100%;
+    h1 {
+        padding: 0;
+        margin: 0;
+    }
 }
 
 form.register-form {
@@ -291,6 +137,206 @@ form.login-form {
     }
 }
 
+button.register-button {
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #564D4A;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+button.login-button {
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #564D4A;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+// Employee and Advent List Styling 
+
+div.advent-element {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+}
+
+// Build Page Styling
+div.advent-form {
+    padding: 10px;
+    align: center;
+}
+
+div.title input.input-fields {
+    display: inline;
+    border: 1px solid #564D4A;
+    color: #F2E9E4;
+    background-color: #48483A;
+    list-style-type: none;
+    width: 250px;
+}
+
+.input-fields input {
+    display: inline;
+    border: 1px solid #564D4A;
+    color: #F2E9E4;
+    background-color: #48483A;
+    margin: 3px;
+    list-style-type: none;
+   
+}
+
+.title span {
+    border-top: none;
+}
+
+// Location form styling
+
+div.new-event-location-form input {
+    margin-left: 8px;
+    width: 290px;
+}
+
+div.location ul li {
+    margin-left: 8px;
+}
+
+div.input-fields {
+    margin-left: 10px;
+}
+
+h4.location {
+    margin-left: 14px;
+}
+
+button.location-buttons {
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 12px;
+}
+
+button.google-button {
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-bottom: 20px;
+    margin-left: 5px;
+}
+
+// Employee Form Styling
+
+div.employee-form {
+     margin-left:20px;
+     width: 320px;
+}
+
+h4.employee {
+    margin-left: 30px;
+}
+
+input.employee-fields {
+    list-style-type: none;
+    width: 300px;
+    margin-left: 30px;
+}
+
+button.employee-buttons {
+    background-color: #48483A;
+    color: #F2E9E4;
+    border: 1px solid #F2E9E4;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+// Advance Form Styling 
+
+div.advance-form > * {
+     width: 100%;
+     margin: 1.5rem auto;
+     input {
+        display: block;
+        padding: .5rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+}
+
+h4 {
+    margin-left: 30px;
+}
+
+ div.advance-form  {
+    border: 1px solid #35393C;
+    display: block;
+    
+}
+
+ul.input-fields textarea {
+    clear: right;
+    width: 350px;
+    background-color: #48483A;
+    color: #F2E9E4;
+    text-align: center;
+    list-style-type: none;
+    margin-left: 30px;
+}
+
+
+
+div.option input {
+    float: right;
+    width: 150px;
+    margin-left: 100px;
+    background-color: #48483A;
+    color: #F2E9E4;
+    text-align: center;
+    list-style-type: none;
+}
+
+.advance-category-button {
+    display: inline;
+    margin: 40px;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none; 
+}
+
+div.option-form {
+    width: 150px;
+    margin-left: 41px;
+}
+
+h6.option {
+    margin-left: 100px;
+}
+div.section-form input {
+    width: 350px;
+    margin-left: 30px;
+}
+
+h4.section {
+    margin-left: 30px;
+}
+
+div.category-form input {
+    width: 300px;
+    margin-left: 60px;
+}
+
+h5.category {
+    margin-left: 60px;
+}
+
+
+
+
+
 button.create-event {
     background-color: #48483A;
     color: #F2E9E4;
@@ -300,80 +346,41 @@ button.create-event {
     margin-left: 3px;
 }
 
-ul.input-fields textarea {
-    clear: left;
-    width: 250px;
-    background-color: #48483A;
-    color: #F2E9E4;
-    text-align: center;
-    margin: 3px;
-    list-style-type: none;
-}
-
-div.option input {
-    clear: left;
-    width: 250px;
-    background-color: #48483A;
-    color: #F2E9E4;
-    text-align: center;
-    margin: 3px;
-    list-style-type: none;
-}
-
-input.input-fields {
-    clear: left;
-    width: 250px;
-    background-color: #48483A;
-    color: #F2E9E4;
-    text-align: center;
-    margin: 3px;
-    list-style-type: none;
-}
-
-input.input-fields {
-    clear: left;
-    width: 250px;
-    background-color: #48483A;
-    color: #F2E9E4;
-    text-align: center;
-    margin: 3px;
-    list-style-type: none;
-        }
-
 button.form-buttons {
     background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
     margin-bottom: 20px;
-    margin-left: 3px;
+    float: right;
 }
 
-button.google-button {
-    background-color: #48483A;
-    color: #F2E9E4;
-    border: 1px solid #F2E9E4;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    margin-left: 3px;
-}
-
-button.create-employee {
+button.advance-buttons {
     background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
     margin-bottom: 20px;
-    margin-left: 3px;
-    list-style-type: none;
+    margin-left: 30px;
 }
+
+
+
+button.newAdvent {
+    margin: 20px;
+    display: block;
+    border: 1px solid #564D4A;
+    color: #F2E9E4;
+    padding: 15px;
+}
+
+
 
 button.build-button {
     background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
     margin-top: 10px;
-    margin-bottom: 20px;
     margin-left: 3px;
     list-style-type: none;
 }
@@ -382,81 +389,19 @@ button.view-button {
     background-color: #48483A;
     color: #F2E9E4;
     border: 1px solid #F2E9E4;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 3px;
-    list-style-type: none;
-}
-
-button.save-location {
-    background-color: #48483A;
-    color: #F2E9E4;
-    border: 1px solid #F2E9E4;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    margin-left: 3px;
     list-style-type: none;
 }
 
 
-div.employee-form {
+ul.advent-list li {
+    list-style-type: none;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+ul.employee-list li {
     display: inline;
-}
 
-ul.employee-list {
-    list-style-type: none;
-}
-
-ul.advent-list {
-    list-style-type: none;
-    margin-top: 20px;
-}
-
-div.advent-element {
-    display: inline;
-    border-bottom: 5px solid #564D4A;
-    list-style-type: none;
-    padding: 5px;
-    margin-left: 15px;
-    align-content: center;
-    text-align: center;
-    color: #F2E9E4;
-    a {
-        color: #564D4A;
-    }
-}
-
-ul.input-fields {
-    list-style-type: none;
-}
-
-div.advent-input-fields {
-    background-color: #48483A;
-    display: inline;
-    color: #F2E9E4;
-    text-align: left;
-    
-}
-
-ul {
-    padding: 0;
-    list-style-type: none; 
-}
-
-
-
-div.new-RO-form {
-    border: 1px solid #48483A;
-    display: block;
-        span {
-            margin-left: 3px;
-        }
-}
-
-div.location {
-    li {
-        list-style-type: none;
-    }
 }
 
 span {
@@ -466,15 +411,15 @@ span {
     border-top: 1px solid #E3D7FF;
     }
 
-.title span {
-    border-top: none;
-}
+
 
 span.advent-view {
     margin-left: 0;
     padding-left: 0;
 }
 
-div.new-event-location-form input {
-    width: 400px;
-}
+
+
+
+
+
